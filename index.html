@@ -524,6 +524,14 @@
                                     3. If <strong>H</strong> says "D runs forever" &rarr; Halt immediately!
                                 </div>
                             </div>
+                            <div class="halting-game">
+                                <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself — make your prediction:</p>
+                                <div class="controls-row" style="justify-content: center;">
+                                    <button class="btn halting-btn" id="halt-predict-halt">D will HALT</button>
+                                    <button class="btn halting-btn" id="halt-predict-loop">D runs FOREVER</button>
+                                </div>
+                                <div id="halting-result" class="halting-result"></div>
+                            </div>
                             <div style="margin-top: 1.5rem; color: var(--text-main); font-weight: bold; font-size: 1.1rem;">
                                 What happens when D is given itself as input?<br><br><span style="font-size: 1rem; font-weight: normal;">Any answer produces a contradiction. The assumption that H exists must therefore be false. The obstacle appears when a system attempts to mechanically predict the behavior of systems like itself.</span>
                             </div>

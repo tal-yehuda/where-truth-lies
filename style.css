@@ -740,6 +740,15 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .godel-goal-status { font-size: var(--fs-sm); color: var(--text-muted); min-height: 1.4rem; }
 .godel-goal-status.done { color: var(--accent-green); font-weight: 600; }
 
+/* Halting paradox interaction */
+.halting-game { margin-top: 1.5rem; text-align: center; }
+.halting-prompt { font-weight: bold; margin-bottom: 0.75rem; }
+.halting-btn { width: auto; margin: 0; background: var(--soft-orange); color: var(--accent-orange); border: 1px solid var(--accent-orange); }
+.halting-btn:hover { background: var(--soft-orange-border); }
+.halting-result { margin-top: 1rem; font-size: var(--fs-sm); min-height: 1.5rem; color: var(--accent-red); }
+.halting-result.show { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.75rem 1rem; }
+.halting-nudge { color: var(--text-muted); font-style: italic; }
+
 /* Turing build-a-machine challenges */
 .tm-challenges { margin-top: 0.5rem; }
 .tm-challenge-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; align-items: center; }

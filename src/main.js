@@ -13,6 +13,7 @@ import * as gameOfLife from './demos/game-of-life.js';
 import * as miu from './demos/miu.js';
 import * as interpretationToggle from './demos/interpretation-toggle.js';
 import * as physics from './demos/physics.js';
+import * as halting from './demos/halting.js';
 
 // Expose the functions still referenced by inline on* attributes in index.html
 // (and by the markup generated at runtime by some demos).
@@ -40,6 +41,7 @@ turing.init();
 gameOfLife.init();
 miu.init();
 physics.init();
+halting.init();
 
 // Re-layout demos that need their (previously hidden) container to be visible.
 onTabShow('applied', turing.onShow);
