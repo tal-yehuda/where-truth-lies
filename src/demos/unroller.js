@@ -29,7 +29,7 @@ let lhs = 0;
 let rhs = 0;
 const history = createHistory({ lhs: 0, rhs: 0 });
 
-let lhsContainer, rhsContainer, progressCounter, undoBtn, redoBtn;
+let lhsContainer, rhsContainer, progressCounter, undoBtn, redoBtn, statusEl;
 
 function render() {
   lhsContainer.innerHTML = LHS_STATES[lhs];
@@ -38,6 +38,19 @@ function render() {
   progressCounter.textContent = lhs + rhs;
   undoBtn.disabled = !history.canUndo();
   redoBtn.disabled = !history.canRedo();
+
+  if (statusEl) {
+    const done = lhs === LHS_STATES.length - 1 && rhs === RHS_STATES.length - 1;
+    if (done) {
+      statusEl.className = 'unroller-status done';
+      statusEl.innerHTML =
+        '<b>✓ Both sides collapsed to the same string.</b> G is literally &not;Prov(&ulcorner;G&urcorner;) — in pure syntax it asserts that it has no proof. No meaning was needed, only substitution.';
+    } else {
+      statusEl.className = 'unroller-status';
+      statusEl.innerHTML =
+        'Click the highlighted macros on each side. When both fully unfold, they become the <em>same</em> string.';
+    }
+  }
 }
 
 function stepLHS() {
@@ -93,6 +106,7 @@ export function init() {
   progressCounter = document.getElementById('progress-counter');
   undoBtn = document.getElementById('undo-btn');
   redoBtn = document.getElementById('redo-btn');
+  statusEl = document.getElementById('unroller-status');
   resetUnroller();
 }
 

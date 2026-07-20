@@ -13,6 +13,15 @@ const memory = {
   epsilon: { symbol: 'ε', constant: 'E', formula: null, godelNumber: null },
 };
 
+// Encoding challenges: build a formula that hits a target Gödel number.
+const GODEL_CHALLENGES = {
+  s0: { label: 'Encode S0', desc: 'Build a formula whose Gödel number is exactly 12 = 2²·3¹. (Try S then 0.)', test: (n) => n === 12n },
+  eq: { label: 'Encode 0=0', desc: 'Build a formula whose Gödel number is exactly 270 = 2¹·3³·5¹.', test: (n) => n === 270n },
+  big: { label: 'Break a million', desc: 'Build any formula whose Gödel number exceeds 1,000,000 — notice how few symbols it takes.', test: (n) => n > 1000000n },
+};
+let activeGodel = null;
+const godelDone = new Set();
+
 let formulaTokens = [];
 let cursorIndex = 0;
 const history = createHistory({ tokens: [], cursor: 0 });
@@ -77,6 +86,7 @@ function updateFormulaDisplay() {
     factorizationDisplay.innerHTML = '2<sup>?</sup> &times; 3<sup>?</sup> ...';
     scientificNumberDisplay.innerHTML = '&ulcorner;Formula&urcorner; &approx; 0';
     unfoldedDisplay.innerHTML = '<span class="placeholder">Awaiting input...</span>';
+    checkGodelChallenge(0n);
     return;
   }
 
@@ -97,6 +107,35 @@ function updateFormulaDisplay() {
   factorizationDisplay.innerHTML = result.factorization;
   scientificNumberDisplay.innerHTML = `&ulcorner;Formula&urcorner; &approx; ${formatScientific(result.godelNumber)}`;
   unfoldedDisplay.innerHTML = result.visualHTML;
+  checkGodelChallenge(result.godelNumber);
+}
+
+function setGodelChallenge(id) {
+  activeGodel = id;
+  formulaTokens = [];
+  cursorIndex = 0;
+  history.reset({ tokens: [], cursor: 0 });
+  document.querySelectorAll('.godel-challenge').forEach((b) => b.classList.toggle('active', b.dataset.gc === id));
+  updateFormulaDisplay();
+}
+
+function checkGodelChallenge(n) {
+  if (!activeGodel) return;
+  const c = GODEL_CHALLENGES[activeGodel];
+  const s = document.getElementById('godel-goal-status');
+  if (!s) return;
+  if (c.test(n)) {
+    if (!godelDone.has(activeGodel)) {
+      godelDone.add(activeGodel);
+      const btn = document.querySelector(`.godel-challenge[data-gc="${activeGodel}"]`);
+      if (btn) btn.classList.add('done');
+    }
+    s.className = 'godel-goal-status done';
+    s.innerHTML = '<b>✓ Solved!</b> That formula encodes to the target.';
+  } else {
+    s.className = 'godel-goal-status';
+    s.innerHTML = c.desc;
+  }
 }
 
 function onKeydown(e) {
@@ -198,6 +237,9 @@ export function init() {
   memoryGrid = document.getElementById('memory-grid');
 
   document.addEventListener('keydown', onKeydown);
+  document.querySelectorAll('.godel-challenge').forEach((b) =>
+    b.addEventListener('click', () => setGodelChallenge(b.dataset.gc)),
+  );
   renderMemoryBank();
 }
 
