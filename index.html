@@ -59,52 +59,52 @@
                         <div style="margin-top: 3rem;">
                             <h3 style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.5rem;">How to navigate this site</h3>
 
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-green-border); border-left: 6px solid var(--accent-green); display: flex; justify-content: space-between; align-items: center;">
+                            <div class="nav-card accent-green">
                                 <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-green); font-size: 1.2rem;">About the Project</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">Goals, design choices, AI contributions, and references for this applied project.</p>
+                                    <h4>About the Project</h4>
+                                    <p>Goals, design choices, AI contributions, and references for this applied project.</p>
                                 </div>
-                                <button class="btn btn-primary" onclick="switchTab('about')" style="width: 160px; background: var(--soft-green); color: var(--accent-green); border-color: var(--accent-green); margin: 0;">Read About &rarr;</button>
-                            </div>
-                            
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-blue-border); border-left: 6px solid var(--accent-blue); display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-blue); font-size: 1.2rem;">1. Formal Systems</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">The mechanics of syntax and the interpretation split: how meaning is assigned to string-rewriting systems.</p>
-                                </div>
-                                <button class="btn btn-primary" onclick="switchTab('foundations')" style="width: 160px; background: var(--soft-blue); color: var(--accent-blue); border-color: var(--accent-blue); margin: 0;">Start Here &rarr;</button>
-                            </div>
-                            
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-orange-border); border-left: 6px solid var(--accent-orange); display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-orange); font-size: 1.2rem;">2. Truth</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">The structural limits of formal systems, self-reference, and the tension between derivability and truth.</p>
-                                </div>
-                                <button class="btn btn-primary" onclick="switchTab('truth')" style="width: 160px; background: var(--soft-orange); color: var(--accent-orange); border-color: var(--accent-orange); margin: 0;">Go to Chapter 2</button>
+                                <button class="btn btn-primary" onclick="switchTab('about')">Read About &rarr;</button>
                             </div>
 
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-blue-border); border-left: 6px solid var(--accent-blue); display: flex; justify-content: space-between; align-items: center;">
+                            <div class="nav-card">
                                 <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-blue); font-size: 1.2rem;">3. Computability</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">The boundaries of mechanical execution: Turing machines, the Halting Problem, and why grammatical meaning does not guarantee a coherently specified object.</p>
+                                    <h4>1. Formal Systems</h4>
+                                    <p>The mechanics of syntax and the interpretation split: how meaning is assigned to string-rewriting systems.</p>
                                 </div>
-                                <button class="btn btn-primary" onclick="switchTab('applied')" style="width: 160px; background: var(--soft-blue); color: var(--accent-blue); border-color: var(--accent-blue); margin: 0;">Go to Chapter 3</button>
+                                <button class="btn btn-primary" onclick="switchTab('foundations')">Start Here &rarr;</button>
                             </div>
 
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-purple-border); border-left: 6px solid var(--accent-purple); display: flex; justify-content: space-between; align-items: center;">
+                            <div class="nav-card accent-orange">
                                 <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-purple); font-size: 1.2rem;">4. Interpretation</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">Cellular automata and emergence: how complex "objects" arise from simple syntactic rules.</p>
+                                    <h4>2. Truth</h4>
+                                    <p>The structural limits of formal systems, self-reference, and the tension between derivability and truth.</p>
                                 </div>
-                                <button class="btn btn-primary" onclick="switchTab('interpretation')" style="width: 160px; background: var(--soft-purple); color: var(--accent-purple); border-color: var(--accent-purple); margin: 0;">Go to Chapter 4</button>
+                                <button class="btn btn-primary" onclick="switchTab('truth')">Go to Chapter 2</button>
                             </div>
 
-                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-yellow-border); border-left: 6px solid var(--accent-yellow); display: flex; justify-content: space-between; align-items: center;">
+                            <div class="nav-card">
                                 <div>
-                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-yellow); font-size: 1.2rem;">5. Physics</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">Physics as reverse mathematics: infer the hidden law of a universe from the record it leaves, in a scripted model-elimination game.</p>
+                                    <h4>3. Computability</h4>
+                                    <p>The boundaries of mechanical execution: Turing machines, the Halting Problem, and why grammatical meaning does not guarantee a coherently specified object.</p>
                                 </div>
-                                <button class="btn btn-primary" onclick="switchTab('conclusion')" style="width: 160px; background: var(--soft-yellow); color: var(--accent-yellow); border-color: var(--accent-yellow); margin: 0;">Go to Chapter 5</button>
+                                <button class="btn btn-primary" onclick="switchTab('applied')">Go to Chapter 3</button>
+                            </div>
+
+                            <div class="nav-card accent-purple">
+                                <div>
+                                    <h4>4. Interpretation</h4>
+                                    <p>Cellular automata and emergence: how complex "objects" arise from simple syntactic rules.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('interpretation')">Go to Chapter 4</button>
+                            </div>
+
+                            <div class="nav-card accent-yellow">
+                                <div>
+                                    <h4>5. Physics</h4>
+                                    <p>Physics as reverse mathematics: infer the hidden law of a universe from the record it leaves, in a scripted model-elimination game.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('conclusion')">Go to Chapter 5</button>
                             </div>
 
                         </div>
