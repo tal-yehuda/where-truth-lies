@@ -230,6 +230,16 @@ export function init() {
   document.getElementById('miu-reset').addEventListener('click', () => loadLevel(li));
   document.getElementById('miu-free').addEventListener('click', toggleFreePlay);
 
+  // Keyboard shortcuts (only while the Formal Systems chapter is on screen).
+  document.addEventListener('keydown', (e) => {
+    const foundations = document.getElementById('tab-foundations');
+    if (!foundations || !foundations.classList.contains('active')) return;
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (['1', '2', '3', '4'].includes(e.key)) { applyRule(Number(e.key)); e.preventDefault(); }
+    else if (e.key === 'u' || e.key === 'U') { undo(); e.preventDefault(); }
+  });
+
   loadLevel(0);
 }
 

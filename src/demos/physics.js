@@ -307,6 +307,16 @@ export function init() {
   document.getElementById('phys-hint').addEventListener('click', useHint);
   document.getElementById('phys-reset').addEventListener('click', resetGame);
 
+  // Keyboard: O observes, H hints (only while the Physics chapter is on screen).
+  document.addEventListener('keydown', (e) => {
+    const conclusion = document.getElementById('tab-conclusion');
+    if (!conclusion || !conclusion.classList.contains('active')) return;
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (e.key === 'o' || e.key === 'O') { observeNext(); e.preventDefault(); }
+    else if (e.key === 'h' || e.key === 'H') { useHint(); e.preventDefault(); }
+  });
+
   loadLevel(0);
 }
 
