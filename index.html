@@ -52,7 +52,9 @@
                             <li>It treats mathematics as symbol manipulation governed by rules.</li>
                             <li>It investigates how meaning emerges from structure rather than interpretation.</li>
                         </ul>
-                    
+
+                        <p class="prose" style="margin-top: 1.5rem;">One thread runs through all five chapters. Mathematics normally runs <strong>forwards</strong> — from axioms to theorems — and its deepest limits (Gödel, Turing) appear when a system turns that machinery on itself. Physics, read carefully, runs the machine <strong>backwards</strong>: starting from observations, it tries to <em>figure out</em> the rules. Every chapter is a hands-on version of that idea — you don't read about it, you play it.</p>
+
                         <div style="margin-top: 3rem;">
                             <h3 style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.5rem;">How to navigate this site</h3>
 
@@ -99,7 +101,7 @@
                             <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-yellow-border); border-left: 6px solid var(--accent-yellow); display: flex; justify-content: space-between; align-items: center;">
                                 <div>
                                     <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-yellow); font-size: 1.2rem;">5. Physics</h4>
-                                    <p style="margin: 0; color: var(--text-muted);">Physical laws as formal systems: model selection and the search for a viable mathematical compression scheme.</p>
+                                    <p style="margin: 0; color: var(--text-muted);">Physics as reverse mathematics: infer the hidden law of a universe from the record it leaves, in a scripted model-elimination game.</p>
                                 </div>
                                 <button class="btn btn-primary" onclick="switchTab('conclusion')" style="width: 160px; background: var(--soft-yellow); color: var(--accent-yellow); border-color: var(--accent-yellow); margin: 0;">Go to Chapter 5</button>
                             </div>
@@ -141,7 +143,7 @@
 
                     <div class="section-block" style="margin-bottom: 2rem;">
                         <h3 style="color: var(--accent-green);">Challenges & AI Contributions</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The main intellectual challenge when writing the content was navigating the tension between different philosophies without falling into extremes—such as sliding into pure Platonism when discussing Gödel, or pure Formalism when discussing physics. It requires effort to keep an open mind when dealing with such absolute mathematical boundaries, but this struggle ultimately resulted in the open-minded and balanced takes presented throughout the site.</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The main intellectual challenge when writing the content was navigating the tension between different philosophies without falling into extremes—such as sliding into pure Platonism when discussing Gödel, or pure Formalism when discussing physics. It requires effort to keep an open mind when dealing with such absolute mathematical boundaries, but that effort is what produced the even-handed treatment we aimed for throughout the site.</p>
                         <p style="font-size: 1.05rem; line-height: 1.6;">On the technical side, AI tools were used to help write the frontend code (HTML, CSS, and JavaScript), fix bugs in the interactive sandboxes, and clarify the text. However, we made all final design and conceptual decisions to ensure the project met its educational goals. We are especially proud of the original physics game, which is both a fun sandbox and a powerful philosophical analogy, as well as the Gödel proof re-roller and logical calculator, as building them is what finally made Gödel's reasoning click for us.</p>
                     </div>
 
@@ -176,7 +178,7 @@
                     </div>
 
                     <div class="section-block" style="margin-bottom: 2rem;">
-                        <h3>Platonism vs Formalism: What Gödel Actually Forces You to See</h3>
+                        <h3>Platonism vs Formalism: Where Gödel Actually Leaves Us</h3>
                         <p style="margin-bottom: 1rem;">The Platonist interpretation posits a completed mathematical structure in which all statements have fixed status independent of our descriptions. This view is powerful and coherent: it explains why mathematical practice feels discovery-like, and why independent systems often seem to converge on the same results. But it introduces a strong ontological commitment—the existence of a fully determinate mathematical universe—that is not itself a consequence of formal reasoning. It is a philosophical choice that elevates one interpretation of formal success into a claim about what mathematics ultimately is.</p>
                         <p style="margin-bottom: 1rem;">Seen this way, Gödel’s construction is not a portal to metaphysical truth but a clean illustration of a more general phenomenon: expressive systems can generate statements that reflect their own limitations. This is not unique to logic. It appears whenever a language, model, or theory becomes rich enough to refer to its own mechanisms.</p>
                         <p>The important point is not that there exists a privileged “truth” outside the system, but that internal expressivity and self-reference create unavoidable boundaries in what can be settled within a fixed rule set.</p>
@@ -360,7 +362,7 @@
                     </div>
 
                     <div class="section-block" style="margin-top: 2.5rem;">
-                        <h3>Platonism vs Formalism: What Gödel Actually Forces You to See</h3>
+                        <h3>Platonism vs Formalism: Where Gödel Actually Leaves Us</h3>
                         <p style="font-size: 1.05rem; margin-bottom: 1rem;">The Platonist reading of Gödel's theorem interprets the unprovability of <em>G</em> as evidence of a world beyond the system. Since we "know" <em>G</em> is true, mathematical truth must extend beyond mechanical proof.</p>
                         <p style="font-size: 1.05rem; margin-bottom: 1rem;">But a rigorous formalist perspective clarifies something vital: the Gödel numbering we used above is merely a technical apparatus. It forces us to ask: <strong style="color: var(--accent-blue);">Does the formal system actually possess an internal truth predicate?</strong></p>
                         
@@ -530,7 +532,7 @@
                     <div class="section-block" style="margin-top: 2.5rem;">
                         <h3>The Missing Philosophical Tension</h3>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">A visitor will naturally think: <em>"Fine. No Turing machine can solve the Halting Problem. But I can still imagine such a machine."</em></p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">And now the interesting part begins. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a program and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">But notice what has actually been ruled out. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a program and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem; font-weight: bold; color: var(--accent-orange);">The description is perfectly meaningful. Yet no Turing machine can instantiate it. So what is the ontological status of this thing?</p>
 
                         <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem;">
@@ -778,7 +780,7 @@
         <main class="single-view tab-content" id="tab-conclusion" style="display: none;">
             <section class="panel derivation-panel">
                 <div class="panel-header">
-                    <h2>Physics as Model Selection</h2>
+                    <h2>Physics as Reverse Mathematics</h2>
                     <span class="badge" style="background: var(--accent-yellow); color: #fff; border: none;">The Universe as a System</span>
                 </div>
                 <div class="panel-body">
@@ -801,6 +803,14 @@
                             How well does a model organize and predict what we observe?
                         </div>
                         <p style="margin-bottom: 1rem;">In this view, a physical law is essentially a <strong>mathematical compression scheme</strong>. Instead of recording the exact position of every falling apple in history (an uncompressed list of raw data), we compress all those observations into a single, compact syntactic rule: <em>F = ma</em>. A formal system in physics is considered "viable" if it can compress vast amounts of observational data into a small set of axioms and transition rules without losing predictive accuracy.</p>
+                    </div>
+                    <div class="section-block">
+                        <h3>Physics as Reverse Mathematics</h3>
+                        <p class="prose">Here is the cleanest way to say what physics is really doing. Ordinary mathematics runs <strong>forwards</strong>: fix your axioms, turn the crank of the rules, and read off the theorems they generate. Every derivation you have done so far — the MIU strings, the Gödel unrolling — ran in that direction.</p>
+                        <p class="prose">Physics runs the same machine <strong>backwards</strong>. You are never handed the axioms. You are handed the <em>theorems</em> — the observations, the data, the way the world actually went — and your task is to <strong>figure out a system that could have produced them</strong>. That is the move worth taking seriously: not deriving consequences from given rules, but inferring the rules from their consequences, then keeping whichever system compresses the most observation into the fewest laws.</p>
+                        <div class="callout accent-yellow" style="font-weight: bold;">
+                            The sandbox below makes this literal. A universe is already running under one hidden law. You watch it evolve and rule out every candidate that could not have produced what you saw — reverse-engineering the rules from the record, one observation at a time.
+                        </div>
                     </div>
                     <div class="section-block">
                         <h3>The Dictionary</h3>
@@ -871,7 +881,7 @@
                     
                     <div class="section-block" style="margin-top: 2rem;">
                         <h3>When Models Reach Their Limits</h3>
-                        <p style="margin-bottom: 1rem;">Now a fascinating question emerges.</p>
+                        <p style="margin-bottom: 1rem;">Now push the picture one step further.</p>
                         <p style="margin-bottom: 1rem;">Suppose we observe a phenomenon that is not described by our current model, yet never directly contradicts it. Is this merely a gap in the model? Or is it revealing something deeper about the nature of formal descriptions themselves?</p>
                         <p style="margin-bottom: 1rem;">Gödel's incompleteness theorem provides an intriguing analogy. It shows that sufficiently expressive formal systems encounter statements that cannot be settled from within the system itself. Whether or not this phenomenon appears in physics is a separate question, but it suggests a broader philosophical possibility:</p>
                         
