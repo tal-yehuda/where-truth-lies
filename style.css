@@ -756,6 +756,20 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .interp-btn:hover { background: var(--soft-green); }
 .interp-btn.active { background: var(--accent-green); color: #fff; }
 
+/* Gödel independence: two consistent universes */
+.independence-game { margin-top: 1.5rem; }
+.independence-prompt { margin-bottom: 0.75rem; }
+.independence-btn { width: auto; margin: 0; background: var(--soft-blue); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+.independence-btn:hover { background: var(--soft-blue-border); }
+.independence-result { margin-top: 1rem; }
+.indep-branches { display: flex; gap: 1rem; flex-wrap: wrap; }
+.indep-branch { flex: 1 1 200px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem; text-align: center; display: flex; flex-direction: column; gap: 0.3rem; opacity: 0.55; transition: all var(--dur-base) var(--ease); }
+.indep-branch.chosen { opacity: 1; border-color: var(--accent-blue); box-shadow: 0 0 0 2px var(--soft-blue); }
+.indep-tag { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.06rem; color: var(--text-muted); }
+.indep-branch b { font-size: 1.15rem; color: var(--text-main); }
+.indep-note { color: var(--accent-green); font-size: var(--fs-sm); }
+.indep-caption { margin-top: 1rem; font-size: 0.95rem; color: var(--text-muted); }
+
 /* Halting paradox interaction */
 .halting-game { margin-top: 1.5rem; text-align: center; }
 .halting-prompt { font-weight: bold; margin-bottom: 0.75rem; }

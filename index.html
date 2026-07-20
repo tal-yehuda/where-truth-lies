@@ -373,7 +373,16 @@
                             <p style="font-size: 0.95rem; margin-bottom: 1rem;">Therefore, <em>G</em> does not logically follow from the axioms. It is strictly <strong>independent</strong>. You could create a perfectly consistent mathematical universe by adding <em>G</em> as a new axiom, and an equally consistent universe by adding &not;<em>G</em> as a new axiom.</p>
                             <p style="font-size: 0.95rem; font-weight: bold;">This does not mean truth is arbitrary, but rather that the system does not uniquely determine truth-values for all sentences. Inside the bare syntax, there is no notion of truth—only derivability. Truth arises only relative to an interpretation (a model).</p>
                         </div>
-                        
+
+                        <div class="independence-game">
+                            <p class="independence-prompt"><strong>G is independent</strong> — neither it nor &not;G can be derived. So <em>you</em> get to extend the system. Which axiom do you add?</p>
+                            <div class="controls-row" style="justify-content: center;">
+                                <button class="btn independence-btn" id="indep-g">Add G &nbsp;(G is &ldquo;true&rdquo;)</button>
+                                <button class="btn independence-btn" id="indep-ng">Add &not;G &nbsp;(G is &ldquo;false&rdquo;)</button>
+                            </div>
+                            <div id="independence-result" class="independence-result"></div>
+                        </div>
+
                         <p style="font-size: 1.05rem; margin-bottom: 1rem;">We can step outside the system and say "<em>G</em> is true," but we only do this by mapping the symbols to standard arithmetic in our minds. By doing so, we introduce a distinction between mechanical <em>derivability</em> and <em>truth-in-a-structure</em>.</p>
                         
                         <div style="font-size: 1.1rem; color: var(--accent-blue); font-weight: bold; margin-top: 1.5rem; padding-left: 1rem; border-left: 4px solid var(--accent-blue);">
