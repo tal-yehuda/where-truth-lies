@@ -3,6 +3,7 @@
 // unsolvable MU capstone reveals the I-count invariant — a first taste of a
 // formal system proving its own limits. Puzzles/par verified in
 // scratchpad/validate-miu.mjs.
+import { markProgress } from '../core/progress.js';
 
 const LEVELS = [
   {
@@ -147,6 +148,7 @@ function checkWin() {
   const L = level();
   if (!freePlay && !L.unsolvable && current === L.target) {
     solved.add(li);
+    markProgress('foundations');
     pulseCurrent();
     const overPar = moves() - L.par;
     const grade =

@@ -3,6 +3,7 @@
 import { switchTab, navPrev, navNext, updateFloatingNav } from './core/tabs.js';
 import { onTabShow } from './core/registry.js';
 import { initTheme, toggleTheme } from './core/theme.js';
+import { initProgress } from './core/progress.js';
 import { highlightRef, clearRef } from './lib/dom.js';
 
 import * as unroller from './demos/unroller.js';
@@ -45,3 +46,4 @@ onTabShow('applied', turing.onShow);
 onTabShow('interpretation', gameOfLife.onShow);
 
 updateFloatingNav('home');
+initProgress();

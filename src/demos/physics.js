@@ -8,6 +8,7 @@
 // curve is precise and always solvable, yet feels like genuine detective work.
 // (Solvability is proven by scratchpad/validate-levels.mjs.)
 import { triggerReflow } from '../lib/dom.js';
+import { markProgress } from '../core/progress.js';
 
 const T = '△', S = '◻', O = '◯', St = '☆', N = '∇', F = '✦';
 
@@ -248,6 +249,7 @@ function attemptEliminate(id) {
 }
 
 function advanceEpoch() {
+  markProgress('conclusion');
   if (li < LEVELS.length - 1) {
     loadLevel(li + 1);
     triggerReflow(elEpoch, 'pulse-anim');

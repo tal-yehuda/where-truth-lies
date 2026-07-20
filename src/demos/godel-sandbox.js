@@ -4,6 +4,7 @@
 import { formatScientific } from '../lib/dom.js';
 import { createHistory } from '../lib/history.js';
 import { calculateEncoding } from '../lib/godel.js';
+import { markProgress } from '../core/progress.js';
 
 const memory = {
   alpha: { symbol: 'α', constant: 'A', formula: null, godelNumber: null },
@@ -127,6 +128,7 @@ function checkGodelChallenge(n) {
   if (c.test(n)) {
     if (!godelDone.has(activeGodel)) {
       godelDone.add(activeGodel);
+      markProgress('truth');
       const btn = document.querySelector(`.godel-challenge[data-gc="${activeGodel}"]`);
       if (btn) btn.classList.add('done');
     }

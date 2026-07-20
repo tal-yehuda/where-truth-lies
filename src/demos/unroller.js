@@ -2,6 +2,7 @@
 // both sides of G ≡ ¬Prov(⌜G⌝) until they are visibly identical.
 import { highlightRefPulse } from '../lib/dom.js';
 import { createHistory } from '../lib/history.js';
+import { markProgress } from '../core/progress.js';
 
 const LHS_STATES = [
   `<span class="expandable expanded-node" onclick="stepLHS()">G</span>`,
@@ -42,6 +43,7 @@ function render() {
   if (statusEl) {
     const done = lhs === LHS_STATES.length - 1 && rhs === RHS_STATES.length - 1;
     if (done) {
+      markProgress('truth');
       statusEl.className = 'unroller-status done';
       statusEl.innerHTML =
         '<b>✓ Both sides collapsed to the same string.</b> G is literally &not;Prov(&ulcorner;G&urcorner;) — in pure syntax it asserts that it has no proof. No meaning was needed, only substitution.';

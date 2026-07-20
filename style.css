@@ -214,6 +214,10 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
     border-bottom: 3px solid var(--accent-blue);
 }
 
+.tab-button.completed::after { content: ' ✓'; color: var(--accent-green); font-weight: 700; }
+.progress-indicator { text-align: center; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08rem; color: var(--text-muted); margin: -1rem 0 1.5rem; }
+.progress-indicator.all { color: var(--accent-green); font-weight: 700; }
+
 .app-container { display: flex; flex-direction: column; min-height: 100vh; }
 
 .single-view {

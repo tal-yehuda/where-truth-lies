@@ -5,6 +5,7 @@
 // the chapter's point about interpretation.
 import { createPlayback } from '../lib/playback.js';
 import { cssVar } from '../lib/dom.js';
+import { markProgress } from '../core/progress.js';
 
 let golCanvas, golCtx;
 let golGrid = {}; // Set of live cell coordinates: "x,y"
@@ -213,6 +214,7 @@ function handleDetection() {
   if (!d || !GOALS[d.type]) return;
   if (!golCompleted.has(d.type)) {
     golCompleted.add(d.type);
+    markProgress('interpretation');
     updateGoalUI();
   }
   if (statusEl) {

@@ -1,6 +1,7 @@
 // Chapter 3 — Turing Machine simulator over an infinite sparse tape, with
 // preset programs and a custom-program editor.
 import { createPlayback } from '../lib/playback.js';
+import { markProgress } from '../core/progress.js';
 
 let tmTape = {}; // key: index, value: symbol ('0', '1', ' ')
 let tmHead = 0;
@@ -281,6 +282,7 @@ function tmRunCheck() {
     status.className = 'tm-challenge-status fail';
     status.innerHTML = `<b>Didn't halt</b> after ${res.steps} steps — your machine loops forever on this input.`;
   } else if (out === targetNorm) {
+    markProgress('applied');
     status.className = 'tm-challenge-status done';
     status.innerHTML = `<b>✓ Solved!</b> Halted in ${res.steps} steps with tape <span class="mono">${out || '(blank)'}</span> — exactly the target.`;
   } else {
