@@ -40,6 +40,7 @@ godelSandbox.init();
 turing.init();
 gameOfLife.init();
 miu.init();
+interpretationToggle.init();
 physics.init();
 halting.init();
 
