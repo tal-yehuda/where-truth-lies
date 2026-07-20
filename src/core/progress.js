@@ -36,4 +36,13 @@ export function markProgress(id) {
   done.add(id);
   localStorage.setItem(KEY, JSON.stringify([...done]));
   updateUI();
+  // One-shot celebration when the last chapter is explored.
+  if (CHAPTERS.filter((c) => done.has(c)).length === 5) {
+    const el = document.getElementById('progress-indicator');
+    if (el) {
+      el.classList.remove('pulse-anim');
+      void el.offsetWidth;
+      el.classList.add('pulse-anim');
+    }
+  }
 }
