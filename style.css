@@ -722,6 +722,17 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 
 @media (max-width: 600px) { .miu-rules { grid-template-columns: repeat(2, 1fr); } .miu-current { font-size: 2rem; } }
 
+/* Turing build-a-machine challenges */
+.tm-challenges { margin-top: 0.5rem; }
+.tm-challenge-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; align-items: center; }
+.tm-challenge-btn { width: auto; margin: 0; }
+.tm-challenge-btn.active { border-color: var(--accent-orange); background: var(--soft-orange); color: var(--accent-orange); }
+.tm-check-btn { width: auto; margin: 0; background: var(--accent-orange); color: #fff; border: 1px solid var(--accent-orange); }
+.tm-check-btn:hover { filter: brightness(1.05); }
+.tm-challenge-status { font-size: var(--fs-sm); color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.75rem 1rem; }
+.tm-challenge-status.done { color: var(--accent-green); border-color: var(--soft-green-border); background: var(--soft-green); }
+.tm-challenge-status.fail { color: var(--accent-red); }
+
 /* Game of Life pattern challenges */
 .gol-challenges { margin-top: 1rem; padding: 0.9rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); }
 .gol-goal-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }

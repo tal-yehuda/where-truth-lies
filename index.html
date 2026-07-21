@@ -432,6 +432,8 @@
                                     <h5 style="margin: 0; color: var(--text-main);">Transition Rules</h5>
                                     <select id="tm-program-select" onchange="tmLoadProgram()" style="padding: 0.3rem; border-radius: 4px; border: 1px solid var(--soft-blue-border); font-family: 'Outfit';">
                                         <option value="binary_counter">Binary Counter</option>
+                                        <option value="flip_bits">Flip Bits (0↔1)</option>
+                                        <option value="append_one">Append a 1</option>
                                         <option value="infinite_loop">Infinite Loop</option>
                                         <option value="custom">Custom Program</option>
                                     </select>
@@ -470,6 +472,20 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>Build a Machine</h3>
+                        <p class="prose">Reading a machine run is one thing; <em>designing</em> one is where computation stops feeling abstract. Pick a task below, then write transition rules in the Custom editor above until your machine transforms the input into the target. There is no trick &mdash; only rules, a head, and a tape.</p>
+                        <div class="tm-challenges">
+                            <div class="tm-challenge-btns">
+                                <button class="btn btn-icon tm-challenge-btn" data-tmc="flip">Flip every bit</button>
+                                <button class="btn btn-icon tm-challenge-btn" data-tmc="append">Append a 1</button>
+                                <button class="btn btn-icon tm-challenge-btn" data-tmc="erase">Erase the tape</button>
+                                <button class="btn tm-check-btn" id="tm-check">Run &amp; Check</button>
+                            </div>
+                            <div id="tm-challenge-status" class="tm-challenge-status">Choose a task, then build its machine in the Custom editor above.</div>
                         </div>
                     </div>
 

@@ -32,12 +32,36 @@ const tmPrograms = {
       { s: 'q1', r: ' ', w: '1', m: 'L', n: 'q0' },
     ],
   },
+  flip_bits: {
+    initial: 'q0',
+    tape: { 0: '1', 1: '0', 2: '1', 3: '1' },
+    rules: [
+      { s: 'q0', r: '0', w: '1', m: 'R', n: 'q0' },
+      { s: 'q0', r: '1', w: '0', m: 'R', n: 'q0' },
+    ],
+  },
+  append_one: {
+    initial: 'q0',
+    tape: { 0: '1', 1: '1', 2: '1' },
+    rules: [
+      { s: 'q0', r: '1', w: '1', m: 'R', n: 'q0' },
+      { s: 'q0', r: ' ', w: '1', m: 'R', n: 'q1' },
+    ],
+  },
   custom: {
     initial: 'q0',
     tape: { 0: '1' },
     rules: [],
   },
 };
+
+// Build-a-machine challenges: the player authors custom rules, then runs & checks.
+const TM_CHALLENGES = {
+  flip: { title: 'Flip every bit', start: '101', target: '010', hint: 'Move right across the tape; swap each 0↔1 as you go; stop when you reach the blank.' },
+  append: { title: 'Append a 1', start: '11', target: '111', hint: 'Walk right to the first blank cell, then write a 1 there.' },
+  erase: { title: 'Erase the tape', start: '101', target: '(blank)', hint: 'Move right and blank out every symbol you read.' },
+};
+let tmActiveChallenge = null;
 
 let currentProgram = 'binary_counter';
 
@@ -187,6 +211,84 @@ function tmRemoveCustomRule(index) {
   tmReset();
 }
 
+// ---------- build-a-machine challenges ----------
+function tapeToString(tape) {
+  const keys = Object.keys(tape).map(Number).filter((k) => tape[k] && tape[k] !== ' ');
+  if (!keys.length) return '';
+  const min = Math.min(...keys);
+  const max = Math.max(...keys);
+  let s = '';
+  for (let i = min; i <= max; i++) s += tape[i] && tape[i] !== ' ' ? tape[i] : '_';
+  return s;
+}
+
+function runCustomToHalt(cap = 3000) {
+  const prog = tmPrograms.custom;
+  const tape = { ...prog.tape };
+  let head = 0;
+  let state = prog.initial;
+  let steps = 0;
+  while (steps < cap) {
+    const sym = tape[head] || ' ';
+    const rule = prog.rules.find((r) => r.s === state && r.r === sym);
+    if (!rule) break;
+    if (rule.w !== ' ') tape[head] = rule.w;
+    else delete tape[head];
+    if (rule.m === 'R') head++;
+    else if (rule.m === 'L') head--;
+    state = rule.n;
+    steps++;
+  }
+  return { tape, halted: steps < cap, steps };
+}
+
+function tmLoadChallengeTape(ch) {
+  const tapeObj = {};
+  for (let i = 0; i < ch.start.length; i++) tapeObj[i] = ch.start[i];
+  tmPrograms.custom.tape = tapeObj;
+  tmPrograms.custom.initial = 'q0';
+  document.getElementById('tm-custom-tape').value = ch.start;
+  document.getElementById('tm-custom-state').value = 'q0';
+}
+
+function tmSelectChallenge(id) {
+  tmActiveChallenge = id;
+  const ch = TM_CHALLENGES[id];
+  document.getElementById('tm-program-select').value = 'custom';
+  tmPrograms.custom.rules = [];
+  tmLoadChallengeTape(ch);
+  tmLoadProgram();
+  document.querySelectorAll('.tm-challenge-btn').forEach((b) => b.classList.toggle('active', b.dataset.tmc === id));
+  const status = document.getElementById('tm-challenge-status');
+  status.className = 'tm-challenge-status';
+  status.innerHTML = `<b>${ch.title}:</b> turn <span class="mono">${ch.start}</span> into <span class="mono">${ch.target}</span>. ${ch.hint} Add transition rules below, then press <b>Run &amp; Check</b>.`;
+}
+
+function tmRunCheck() {
+  const status = document.getElementById('tm-challenge-status');
+  if (!tmActiveChallenge) {
+    status.innerHTML = 'Pick a challenge above first.';
+    return;
+  }
+  const ch = TM_CHALLENGES[tmActiveChallenge];
+  currentProgram = 'custom';
+  tmLoadChallengeTape(ch); // always test against the intended input
+  const res = runCustomToHalt();
+  const out = tapeToString(res.tape);
+  const targetNorm = ch.target === '(blank)' ? '' : ch.target;
+  tmReset();
+  if (!res.halted) {
+    status.className = 'tm-challenge-status fail';
+    status.innerHTML = `<b>Didn't halt</b> after ${res.steps} steps — your machine loops forever on this input.`;
+  } else if (out === targetNorm) {
+    status.className = 'tm-challenge-status done';
+    status.innerHTML = `<b>✓ Solved!</b> Halted in ${res.steps} steps with tape <span class="mono">${out || '(blank)'}</span> — exactly the target.`;
+  } else {
+    status.className = 'tm-challenge-status fail';
+    status.innerHTML = `<b>Not yet.</b> Halted in ${res.steps} steps with <span class="mono">${out || '(blank)'}</span>, but the target is <span class="mono">${ch.target}</span>. Tweak your rules.`;
+  }
+}
+
 export function init() {
   tmPlayback = createPlayback({
     button: document.getElementById('tm-play-btn'),
@@ -197,6 +299,13 @@ export function init() {
     pauseBg: 'var(--soft-orange)',
     pauseColor: 'var(--accent-orange)',
   });
+
+  document.querySelectorAll('.tm-challenge-btn').forEach((b) =>
+    b.addEventListener('click', () => tmSelectChallenge(b.dataset.tmc)),
+  );
+  const checkBtn = document.getElementById('tm-check');
+  if (checkBtn) checkBtn.addEventListener('click', tmRunCheck);
+
   tmReset();
 }
 
