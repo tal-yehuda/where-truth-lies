@@ -1,10 +1,10 @@
 # Where Truth Lies
 
 An interactive, playable tour of the philosophy of mathematics — formal systems,
-Gödel, Turing, emergence, and physics — built as a single-page site. The guiding
-thread: **mathematics runs forwards (axioms → theorems); physics runs the machine
-backwards (observations → rules).** Every chapter is a hands-on game, not an essay
-you skim.
+Gödel, Turing, emergence, and inference — built as a single-page site. The guiding
+thread: **mathematics runs forwards (axioms → theorems); run the machine backwards
+(record → rules) and you get reverse mathematics — of which physics is just the
+most familiar instance.** Every chapter is a hands-on game, not an essay you skim.
 
 ## Run it
 
@@ -33,10 +33,11 @@ the ☾/☀ button in the header.
 4. **Interpretation — Game of Life pattern challenges.** Build a still life, an
    oscillator, or a spaceship; the engine auto-detects each phenomenon as it
    emerges from purely local rules.
-5. **Physics — reverse-mathematics game.** A universe runs under one hidden law.
-   Watch it evolve and eliminate every candidate law that couldn't have produced
-   the record, through three scripted, precisely-paced epochs and paradigm shifts.
-   Keys `O` observe, `H` hint.
+5. **Reverse Mathematics — inference game.** A source runs under one hidden
+   rule-set. Watch its record evolve and eliminate every candidate rule-set that
+   couldn't have produced it, through three scripted, precisely-paced epochs and
+   paradigm shifts. Physics is one reading of the game — the symbols could mean
+   anything, or nothing. Keys `O` observe, `H` hint.
 
 A cross-chapter **progress tracker** marks each chapter explored (✓ on the tab,
 persisted in `localStorage`).

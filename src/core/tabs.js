@@ -14,7 +14,7 @@ export const tabNames = {
   truth: '2. Truth',
   applied: '3. Computability',
   interpretation: '4. Interpretation',
-  conclusion: '5. Physics',
+  conclusion: '5. Reverse Mathematics',
 };
 
 export function switchTab(tabId) {

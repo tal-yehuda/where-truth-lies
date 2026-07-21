@@ -1,9 +1,11 @@
-// Chapter 5 — Physics as Reverse Mathematics (scripted edition).
+// Chapter 5 — Reverse Mathematics (scripted edition). You're handed a record and
+// must infer which rule-set generated it; physics is only the loudest reading of
+// that move, so the framing stays domain-neutral (a "source", not a universe).
 //
-// The old sandbox generated random systems and evolved the universe
+// The old sandbox generated random systems and evolved the source
 // probabilistically, which made pacing and solvability a matter of luck. This
-// version is fully AUTHORED: each epoch has a hand-designed true law, a fixed
-// observation history, and a set of "distractor" laws that each become
+// version is fully AUTHORED: each epoch has a hand-designed true rule-set, a fixed
+// observation history, and a set of "distractor" rule-sets that each become
 // impossible to sustain at exactly one designed observation — so the pruning
 // curve is precise and always solvable, yet feels like genuine detective work.
 // (Solvability is proven by scratchpad/validate-levels.mjs.)
@@ -147,7 +149,7 @@ function renderGrid() {
     if (eliminated.has(c.id)) div.classList.add('eliminated');
     div.addEventListener('click', () => attemptEliminate(c.id));
     const rules = c.rules.map(([l, r]) => `<span class="phys-rule">${l} <span class="phys-arrow">&rarr;</span> ${r}</span>`).join('');
-    div.innerHTML = `<h4>Law ${c.label}</h4><div class="phys-rules">${rules}</div>`;
+    div.innerHTML = `<h4>Rule-set ${c.label}</h4><div class="phys-rules">${rules}</div>`;
     elGrid.appendChild(div);
   });
 }
@@ -178,7 +180,7 @@ function observeNext() {
   const lvl = L();
 
   if (anomalyRevealed) {
-    setExplain(`Your surviving law cannot explain the anomaly. Click it to rule it out and force a paradigm shift.`, 'accent-red');
+    setExplain(`Your surviving rule-set can't explain the anomaly. Click it to rule it out and force a paradigm shift.`, 'accent-red');
     return;
   }
 
@@ -187,16 +189,16 @@ function observeNext() {
     renderHistory();
     updateStatus();
     if (observed === lvl.history.length - 1) {
-      setExplain(`<strong>Full record observed.</strong> You've now seen every state of this epoch. Rule out every law that can't reproduce it — exactly one should survive.`, 'accent-yellow');
+      setExplain(`<strong>Full record observed.</strong> You've now seen every state of this epoch. Rule out every rule-set that can't reproduce it — exactly one should survive.`, 'accent-yellow');
     } else {
-      setExplain(`<strong>Observation ${observed}.</strong> The universe advanced to ${mono(visibleHistory()[observed])}. Which surviving laws can no longer produce the record?`, 'accent-yellow');
+      setExplain(`<strong>Observation ${observed}.</strong> The source advanced to ${mono(visibleHistory()[observed])}. Which surviving rule-sets can no longer produce the record?`, 'accent-yellow');
     }
     return;
   }
 
   // Full history already shown.
   if (remaining().length > 1) {
-    setExplain(`You've seen the whole record. The universe won't reveal anything new until you've ruled out the laws that can't reproduce it.`, 'accent-blue');
+    setExplain(`You've seen the whole record. The source won't reveal anything new until you've ruled out the rule-sets that can't reproduce it.`, 'accent-blue');
     return;
   }
 
@@ -204,7 +206,7 @@ function observeNext() {
   anomalyRevealed = true;
   renderHistory();
   updateStatus();
-  setExplain(`<strong style="color:var(--accent-red)">Anomaly.</strong> The universe produced ${mono(lvl.anomaly)} — a state even your surviving law cannot generate. Your best theory is falsified. Rule it out.`, 'accent-red');
+  setExplain(`<strong style="color:var(--accent-red)">Anomaly.</strong> The source produced ${mono(lvl.anomaly)} — a state even your surviving rule-set can't generate. Your best theory is falsified. Rule it out.`, 'accent-red');
 }
 
 function attemptEliminate(id) {
@@ -214,7 +216,7 @@ function attemptEliminate(id) {
   const card = document.getElementById('law-' + id);
 
   if (hist.length < 2) {
-    setExplain(`Observe at least one state before ruling out a law.`, 'accent-blue');
+    setExplain(`Observe at least one state before ruling out a rule-set.`, 'accent-blue');
     return;
   }
 
@@ -222,7 +224,7 @@ function attemptEliminate(id) {
     misfires++;
     updateStatus();
     triggerReflow(card, 'shake');
-    setExplain(`<strong style="color:var(--accent-red)">Not yet.</strong> Law ${cand.label} can reproduce every observation so far — you need more evidence before you can rule it out.`, 'accent-red');
+    setExplain(`<strong style="color:var(--accent-red)">Not yet.</strong> Rule-set ${cand.label} can reproduce every observation so far — you need more evidence before you can rule it out.`, 'accent-red');
     return;
   }
 
@@ -235,16 +237,16 @@ function attemptEliminate(id) {
   const b = hist[failIdx + 1];
 
   if (cand.isTruth) {
-    setExplain(`Law ${cand.label} — your best theory — cannot produce ${mono(a)} &rarr; ${mono(b)}. Even it has fallen.`, 'accent-red');
+    setExplain(`Rule-set ${cand.label} — your best theory — can't produce ${mono(a)} &rarr; ${mono(b)}. Even it has fallen.`, 'accent-red');
     setTimeout(advanceEpoch, 1200);
     return;
   }
 
   const rem = remaining();
   if (rem.length > 1) {
-    setExplain(`<strong style="color:var(--accent-green)">Ruled out.</strong> Law ${cand.label} can't produce ${mono(a)} &rarr; ${mono(b)}. ${rem.length} laws remain.`, 'accent-green');
+    setExplain(`<strong style="color:var(--accent-green)">Ruled out.</strong> Rule-set ${cand.label} can't produce ${mono(a)} &rarr; ${mono(b)}. ${rem.length} rule-sets remain.`, 'accent-green');
   } else {
-    setExplain(`<strong style="color:var(--accent-green)">One law stands.</strong> Only Law ${rem[0].label} survives the whole record. Observe once more to put it to the test.`, 'accent-green');
+    setExplain(`<strong style="color:var(--accent-green)">One rule-set stands.</strong> Only Rule-set ${rem[0].label} survives the whole record. Observe once more to put it to the test.`, 'accent-green');
   }
 }
 
@@ -253,11 +255,11 @@ function advanceEpoch() {
   if (li < LEVELS.length - 1) {
     loadLevel(li + 1);
     triggerReflow(elEpoch, 'pulse-anim');
-    setExplain(`<strong style="color:var(--accent-purple)">Paradigm shift.</strong> A new epoch opens with ${candidates.length} fresh laws — each explains the entire past <em>and</em> the anomaly that broke the last theory. One symbol richer, begin the inference again.`, 'accent-purple');
+    setExplain(`<strong style="color:var(--accent-purple)">Paradigm shift.</strong> A new epoch opens with ${candidates.length} fresh rule-sets — each explains the entire past <em>and</em> the anomaly that broke the last theory. One symbol richer, begin the inference again.`, 'accent-purple');
   } else {
     ended = true;
     elObserveBtn.disabled = true;
-    setExplain(`<strong>The end of physics?</strong> Every epoch you inferred the single law consistent with the record — then the universe produced something it couldn't contain, and you began again one symbol richer. Read backwards, physics never reaches a final axiom: there is only the next anomaly. Meaning doesn't sit beyond the models; it lives in the fit between what you observe and the law you can still defend.`, 'accent-yellow');
+    setExplain(`<strong>The end of physics?</strong> Physics was only the loudest way to read this game. Each epoch you inferred the one rule-set consistent with the record — then the source produced something it couldn't contain, and you started again one symbol richer. Run backwards, the search never reaches a final axiom: there is only the next anomaly. And the record never had to be a universe — read it as a language, a dataset, or nothing at all. Meaning doesn't sit beyond the models; it lives in the fit between what you observe and the rule-set you can still defend.`, 'accent-yellow');
   }
 }
 
@@ -265,7 +267,7 @@ function useHint() {
   if (ended) return;
   const hist = visibleHistory();
   if (hist.length < 2) {
-    setExplain(`Observe a state first, then I can point to an impossible law.`, 'accent-blue');
+    setExplain(`Observe a state first, then I can point to an impossible rule-set.`, 'accent-blue');
     return;
   }
   hints++;
@@ -274,9 +276,9 @@ function useHint() {
   if (target) {
     const card = document.getElementById('law-' + target.id);
     triggerReflow(card, 'hintable');
-    setExplain(`<strong>Hint.</strong> Look closely at Law ${target.label} — it cannot reproduce the current record.`, 'accent-blue');
+    setExplain(`<strong>Hint.</strong> Look closely at Rule-set ${target.label} — it can't reproduce the current record.`, 'accent-blue');
   } else {
-    setExplain(`<strong>Hint.</strong> Every surviving law still fits the record. Observe another state to force them apart.`, 'accent-blue');
+    setExplain(`<strong>Hint.</strong> Every surviving rule-set still fits the record. Observe another state to force them apart.`, 'accent-blue');
   }
 }
 

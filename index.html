@@ -34,7 +34,7 @@
             <button class="tab-button" onclick="switchTab('truth')" id="tab-btn-truth">2. Truth</button>
             <button class="tab-button" onclick="switchTab('applied')" id="tab-btn-applied">3. Computability</button>
             <button class="tab-button" onclick="switchTab('interpretation')" id="tab-btn-interpretation">4. Interpretation</button>
-            <button class="tab-button" onclick="switchTab('conclusion')" id="tab-btn-conclusion">5. Physics</button>
+            <button class="tab-button" onclick="switchTab('conclusion')" id="tab-btn-conclusion">5. Reverse Mathematics</button>
         </div>
         <div id="progress-indicator" class="progress-indicator">0/5 chapters explored</div>
 
@@ -54,7 +54,7 @@
                             <li>That view is not a shrug. What a system can derive, what it can't, and how systems stack on top of each other is where the structure lives.</li>
                         </ul>
 
-                        <p class="prose" style="margin-top: 1.5rem;">One thread runs through all five chapters. Mathematics runs <strong>forwards</strong> &mdash; from axioms to theorems &mdash; and its sharpest limits (Gödel, Turing) show up when a system turns that machinery on itself. Physics runs the machine <strong>backwards</strong>: it starts from the observations and works out the rules that could have produced them. Every chapter is a hands-on version of that idea. You don't read about it, you play it.</p>
+                        <p class="prose" style="margin-top: 1.5rem;">One thread runs through all five chapters. Mathematics runs <strong>forwards</strong> &mdash; from axioms to theorems &mdash; and its sharpest limits (Gödel, Turing) show up when a system turns that machinery on itself. The last chapter runs the machine <strong>backwards</strong>: hand it a record of output and it works out the rules that could have produced it &mdash; physics is just the most familiar name for that move. Every chapter is a hands-on version of the idea. You don't read about it, you play it.</p>
 
                         <div style="margin-top: 3rem;">
                             <h3 style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.5rem;">How to navigate this site</h3>
@@ -101,8 +101,8 @@
 
                             <div class="nav-card accent-yellow">
                                 <div>
-                                    <h4>5. Physics</h4>
-                                    <p>Physics as reverse mathematics: infer the hidden law of a universe from the record it leaves, in a scripted model-elimination game.</p>
+                                    <h4>5. Reverse Mathematics</h4>
+                                    <p>Run the derivation machine backwards: infer the hidden rules of a system from the record it leaves. Physics is one reading of the game &mdash; the symbols could mean anything, or nothing at all.</p>
                                 </div>
                                 <button class="btn btn-primary" onclick="switchTab('conclusion')">Go to Chapter 5</button>
                             </div>
@@ -815,46 +815,31 @@
         <main class="single-view tab-content" id="tab-conclusion" style="display: none;">
             <section class="panel derivation-panel">
                 <div class="panel-header">
-                    <h2>Physics as Reverse Mathematics</h2>
-                    <span class="badge" style="background: var(--accent-yellow); color: #fff; border: none;">The Universe as a System</span>
+                    <h2>Reverse Mathematics</h2>
+                    <span class="badge" style="background: var(--accent-yellow); color: #fff; border: none;">Recovering Rules from a Record</span>
                 </div>
                 <div class="panel-body">
                     <div class="section-block">
-                        <h3>Physics Through a Formalist Lens</h3>
-                        <p style="margin-bottom: 1rem;">Start with a strong assumption:</p>
-                        <div style="background: var(--surface-2); border: 1px solid var(--soft-yellow-border); border-left: 4px solid var(--accent-yellow); padding: 1rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 1.1rem; font-weight: bold;">
-                            The universe, and everything that exists within it, is governed by a consistent formal system.
-                        </div>
-                        <p style="margin-bottom: 1rem;">Take that assumption seriously and there's no room for anything "existing" outside the rules. Every event, every particle, every observation is already a consequence of the system. No external realm of truth waits beyond the axioms.</p>
-                        <p style="margin-bottom: 1rem;">This can look like the opposite of Platonism, but notice where it lands: it closes the conversation just as fast. If reality simply <em>is</em> a formal system, every observation is already accounted for by definition. The claim is as final as the Platonic one that reality rests on a fully determined mathematical structure. Either way, there's little left to investigate.</p>
-                        <p style="font-weight: bold; margin-bottom: 1rem;">Physics traditionally proceeds differently.</p>
-                        <p style="margin-bottom: 1rem;">Physics doesn't start from a claim about what reality ultimately is. It starts from observation. In the spirit of <em>"I think, therefore I am"</em>:</p>
-                        <p style="margin: 1rem 0; font-size: 1.1rem; font-style: italic; color: var(--accent-yellow);">"I observe, therefore there is something to explain."</p>
-                        <p style="margin-bottom: 1rem;">Or more practically:</p>
-                        <p style="margin: 1rem 0; font-size: 1.1rem; font-style: italic; color: var(--accent-yellow);">"I model, therefore I understand."</p>
-                        <p style="margin-bottom: 1rem;">A model is not reality. A model is a formal structure that organizes observations. Newtonian mechanics isn't reality, yet it stays useful because it compresses an enormous range of phenomena into a handful of laws.</p>
-                        <p style="margin-bottom: 1rem;">The shift is small, and it changes everything. The formalist doesn't ask whether a model captures ultimate truth. The question becomes:</p>
+                        <h3>Running the Machine Backwards</h3>
+                        <p class="prose">Every chapter so far ran mathematics <strong>forwards</strong>: fix the axioms, turn the crank of the rules, read off the theorems. The MIU strings, the Gödel unrolling, the Turing tape — all of it moved in that one direction, from rules to consequences.</p>
+                        <p class="prose">This chapter runs the same machine <strong>backwards</strong>. You're not handed the rules. You're handed a <em>record</em> — a run of states, the output, the way things actually went — and your job is to infer a rule-system that could have produced it. Not deriving consequences from given rules, but recovering the rules from their consequences, and keeping whichever system reproduces the record with the fewest, simplest rules.</p>
+                        <p class="prose">In the formalist spirit, this is pure syntax. The record is a sequence of strings, nothing more. What those strings <em>mean</em> is a separate layer you can bolt on or leave off — read them as a physical universe, as a language, as a stream of data, or as nothing at all. The backward move runs the same either way. That's the point: it isn't a fact about matter, it's a move you can make on any generated record.</p>
                         <div style="font-size: 1.1rem; font-weight: bold; text-align: center; margin: 1.5rem 0; color: var(--accent-yellow);">
-                            How well does a model organize and predict what we observe?
+                            Given the output, which rules could have written it?
                         </div>
-                        <p style="margin-bottom: 1rem;">On this view, a physical law is a <strong>compression scheme</strong>. Instead of recording where every apple in history fell — raw data, uncompressed — we squeeze all of it into one compact rule: <em>F = ma</em>. A theory counts as "viable" when it packs a huge amount of observation into a few axioms and transition rules without losing predictive accuracy. That is a positive job, and a hard one: the formalist isn't giving up on truth, but trading it for something you can actually check.</p>
-                    </div>
-                    <div class="section-block">
-                        <h3>Physics as Reverse Mathematics</h3>
-                        <p class="prose">Here is the cleanest way to say what physics is really doing. Ordinary mathematics runs <strong>forwards</strong>: fix your axioms, turn the crank of the rules, and read off the theorems they generate. Every derivation you have done so far — the MIU strings, the Gödel unrolling — ran in that direction.</p>
-                        <p class="prose">Physics runs the same machine <strong>backwards</strong>. You are never handed the axioms. You are handed the <em>theorems</em> — the observations, the data, the way the world actually went — and your task is to <strong>figure out a system that could have produced them</strong>. That is the move worth taking seriously: not deriving consequences from given rules, but inferring the rules from their consequences, then keeping whichever system compresses the most observation into the fewest laws.</p>
+                        <p class="prose">Physics happens to be the loudest reading of this. Science is never handed the laws; it only ever gets the data, and it looks for rules that <strong>compress</strong> the data — one compact <em>F = ma</em> standing in for where every apple that ever fell landed. A theory earns its keep when it packs a huge record into a few rules without losing predictive grip. That's a real job, and a hard one: the formalist isn't giving up on truth, just trading it for something you can actually check. But strip the physics away and the same game is still there: a record, and the search for what could have generated it.</p>
                         <div class="callout accent-yellow" style="font-weight: bold;">
-                            The sandbox below makes this literal. A universe is already running under one hidden law. You watch it evolve and rule out every candidate that could not have produced what you saw — reverse-engineering the rules from the record, one observation at a time.
+                            The sandbox below makes the move literal. A source is already running under one hidden rule-set. Watch its record unfold and rule out every candidate that couldn't have produced it — recovering the rules from the record, one state at a time. Call the source a universe if you like; it doesn't have to be one.
                         </div>
                     </div>
                     <div class="section-block">
-                        <h3>The Dictionary</h3>
-                        <p>If we want to use formal systems to describe reality, we must map abstract symbols to physical concepts:</p>
+                        <h3>One Dictionary Among Many</h3>
+                        <p>The game is abstract on purpose. To make it vivid, lay an interpretation over the symbols — here is the physics one. Swap it for language, or chemistry, or a market, or leave the symbols bare; the backward move doesn't change.</p>
                         <table class="analogy-table" style="width: 100%; max-width: 600px; margin: 1.5rem auto; border-collapse: collapse; text-align: left; background-color: var(--surface); box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--soft-yellow-border); border-radius: 8px; overflow: hidden;">
                             <thead>
                                 <tr style="background-color: var(--surface); border-bottom: 2px solid var(--accent-yellow);">
                                     <th style="padding: 0.8rem; color: var(--text-main);">Formal System</th>
-                                    <th style="padding: 0.8rem; color: var(--text-main);">Physics</th>
+                                    <th style="padding: 0.8rem; color: var(--text-main);">One reading: Physics</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -884,10 +869,10 @@
 
                     <div class="section-block physics-sandbox">
                         <div class="physics-topbar">
-                            <h3>Reverse-Engineering the Laws</h3>
+                            <h3>Recovering the Rules</h3>
                             <span id="paradigm-counter" class="pill physics-epoch">Epoch 1 / 3</span>
                         </div>
-                        <p class="prose">You are handed a running universe and <strong id="physics-candidate-count">5</strong> candidate law-systems &mdash; each a set of rewrite rules over the alphabet {<strong id="physics-alphabet-display" class="mono">△, ◻, ◯</strong>}. Exactly one generates what you see. Reverse the usual direction of physics: watch the universe evolve and <em>rule out</em> every law that cannot reproduce the record.</p>
+                        <p class="prose">You're handed a running source and <strong id="physics-candidate-count">5</strong> candidate rule-sets &mdash; each a bundle of rewrite rules over the alphabet {<strong id="physics-alphabet-display" class="mono">△, ◻, ◯</strong>}. Exactly one generates the record you see. Run inference backwards: watch the record unfold and <em>rule out</em> every rule-set that can't reproduce it. (Read the source as a universe, or don't — the reasoning is identical.)</p>
 
                         <div class="physics-stage">
                             <div class="physics-obs-panel">
@@ -895,7 +880,7 @@
                                 <div id="physics-history" class="physics-history"></div>
                             </div>
                             <div class="physics-status">
-                                <div class="physics-stat"><span class="physics-stat-num" id="physics-remaining">5</span><span class="physics-stat-label">laws left</span></div>
+                                <div class="physics-stat"><span class="physics-stat-num" id="physics-remaining">5</span><span class="physics-stat-label">rule-sets left</span></div>
                                 <div class="physics-stat"><span class="physics-stat-num" id="physics-obs-count">0</span><span class="physics-stat-label">observations</span></div>
                                 <div class="physics-stat-mini">Misfires <span id="bad-elim-counter">0</span> &middot; Hints <span id="hint-counter">0</span></div>
                             </div>
@@ -909,7 +894,7 @@
                             <button id="phys-reset" class="btn btn-icon">Reset</button>
                         </div>
 
-                        <p class="physics-hint-text">Click a law-system you believe is impossible to rule it out.</p>
+                        <p class="physics-hint-text">Click a rule-set you believe is impossible to rule it out.</p>
 
                         <div id="physics-models-grid" class="physics-grid"></div>
                     </div>
@@ -943,7 +928,7 @@
                         </div>
                         <p style="margin-bottom: 1rem;">This doesn't make mathematics or physics smaller. It makes them more open.</p>
                         <p style="margin-bottom: 1rem;">Instead of asking what ultimate truths exist beyond our theories, we can investigate why certain descriptions succeed, why others fail, how complexity emerges from simple rules, and whether the idea of a final complete description is itself meaningful.</p>
-                        <p style="margin-bottom: 1rem;">The sharpest edge of this viewpoint is the following:</p>
+                        <p style="margin-bottom: 1rem;">The strongest form of the view:</p>
                         <div style="background: var(--soft-yellow); padding: 1rem; border-radius: 8px; margin: 1.5rem 0; font-weight: bold; text-align: center;">
                             If all we ever have are observations, and all our explanations take the form of formal models, then "truth" may never be something we discover outside those models.
                         </div>
