@@ -15,6 +15,7 @@ import * as interpretationToggle from './demos/interpretation-toggle.js';
 import * as physics from './demos/physics.js';
 import * as halting from './demos/halting.js';
 import * as independence from './demos/independence.js';
+import * as ladder from './demos/ladder.js';
 
 // Expose the functions still referenced by inline on* attributes in index.html
 // (and by the markup generated at runtime by some demos).
@@ -45,6 +46,7 @@ interpretationToggle.init();
 physics.init();
 halting.init();
 independence.init();
+ladder.init();
 
 // Re-layout demos that need their (previously hidden) container to be visible.
 onTabShow('applied', turing.onShow);
