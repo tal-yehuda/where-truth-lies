@@ -7,23 +7,23 @@ import { markProgress } from '../core/progress.js';
 
 const LEVELS = [
   {
-    start: 'MI', target: 'MIU', par: 1,
+    start: 'MI', target: 'MIU', par: 1, solution: [1],
     teach: '<b>Rule 1</b> appends a U whenever the string ends in I. Just one move here.',
   },
   {
-    start: 'MI', target: 'MIIII', par: 2,
+    start: 'MI', target: 'MIIII', par: 2, solution: [2, 2],
     teach: '<b>Rule 2</b> copies everything after the M, so the number of I&rsquo;s doubles: 1 &rarr; 2 &rarr; 4.',
   },
   {
-    start: 'MI', target: 'MIIIIIIII', par: 3,
+    start: 'MI', target: 'MIIIIIIII', par: 3, solution: [2, 2, 2],
     teach: 'Keep doubling with Rule 2. Notice the I-count only ever doubles &mdash; 1, 2, 4, 8&hellip; it never lands on a multiple of 3.',
   },
   {
-    start: 'MI', target: 'MUI', par: 3,
+    start: 'MI', target: 'MUI', par: 3, solution: [2, 2, 3],
     teach: '<b>Rule 3</b> collapses three <em>consecutive</em> I&rsquo;s into a single U. First manufacture a run of at least three I&rsquo;s.',
   },
   {
-    start: 'MI', target: 'MUIU', par: 4,
+    start: 'MI', target: 'MUIU', par: 4, solution: [2, 2, 3, 1],
     teach: 'Combine everything to reach MUIU &mdash; the string Hofstadter first sets you chasing.',
   },
   {
@@ -208,6 +208,35 @@ function toggleFreePlay() {
   setFeedback('');
 }
 
+function showSolution() {
+  if (freePlay) {
+    setFeedback('Free play has no target &mdash; leave free play to see a puzzle&rsquo;s solution.', 'warn');
+    return;
+  }
+  const L = level();
+  if (L.unsolvable) {
+    current = L.start;
+    trail = [{ str: current, rule: null }];
+    render();
+    setFeedback('<b>There is no solution to this puzzle!</b>', 'warn');
+    return;
+  }
+  // Replay the authored solution so the full derivation appears in the trail.
+  current = L.start;
+  trail = [{ str: current, rule: null }];
+  for (const n of L.solution) {
+    const r = ruleResult(current, n);
+    if (r === null || r === current) break; // safety
+    current = r;
+    trail.push({ str: current, rule: n });
+  }
+  render();
+  setFeedback(
+    `<b style="color:var(--accent-green)">Solution shown.</b> ${L.target} in ${L.solution.length} move${L.solution.length === 1 ? '' : 's'}. Press <b>Reset</b> to try it yourself.`,
+    'win',
+  );
+}
+
 export function init() {
   elLevel = document.getElementById('miu-level');
   elTarget = document.getElementById('miu-target');
@@ -228,6 +257,7 @@ export function init() {
   );
   document.getElementById('miu-undo').addEventListener('click', undo);
   document.getElementById('miu-reset').addEventListener('click', () => loadLevel(li));
+  document.getElementById('miu-solution').addEventListener('click', showSolution);
   document.getElementById('miu-free').addEventListener('click', toggleFreePlay);
 
   // Keyboard shortcuts (only while the Formal Systems chapter is on screen).

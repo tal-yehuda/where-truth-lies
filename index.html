@@ -49,12 +49,13 @@
                     <div style="max-width: 800px; margin: 0 auto;">
                         <h3 style="color: var(--text-main); margin-bottom: 1rem; font-size: 1.5rem;">What this project is</h3>
                         <ul class="instruction" style="font-size: 1.1rem; line-height: 1.6; padding-left: 1.5rem;">
-                            <li>It reads mathematics from a formalist angle: symbols moved by rules.</li>
-                            <li>Meaning isn't carried by the symbols. You add it &mdash; and the same system can take more than one reading.</li>
-                            <li>That view is not a shrug. What a system can derive, what it can't, and how systems stack on top of each other is where the structure lives.</li>
+                            <li>It circles one question: is mathematics <strong>discovered</strong> or <strong>invented</strong>?</li>
+                            <li>The <strong>realist</strong> (Platonist) says the objects are out there — numbers and structures exist independently, and we uncover truths about them.</li>
+                            <li>The <strong>formalist</strong> says it's symbols moved by rules — meaning is a layer we add, and the same system can take more than one reading.</li>
+                            <li>The site doesn't pick a winner. Each chapter hands the same result to both sides and lets you feel the pull of each.</li>
                         </ul>
 
-                        <p class="prose" style="margin-top: 1.5rem;">One thread runs through all five chapters. Mathematics runs <strong>forwards</strong> &mdash; from axioms to theorems &mdash; and its sharpest limits (Gödel, Turing) show up when a system turns that machinery on itself. The last chapter runs the machine <strong>backwards</strong>: hand it a record of output and it works out the rules that could have produced it &mdash; physics is just the most familiar name for that move. Every chapter is a hands-on version of the idea. You don't read about it, you play it.</p>
+                        <p class="prose" style="margin-top: 1.5rem;">One thread runs through all five chapters. Mathematics runs <strong>forwards</strong> &mdash; from axioms to theorems &mdash; and its sharpest limits (Gödel, Turing) show up when a system turns that machinery on itself. The last chapter runs the machine <strong>backwards</strong>: hand it a record of output and it works out the rules that could have produced it. Every chapter is a hands-on version of the idea. You don't read about it, you play it.</p>
 
                         <div style="margin-top: 3rem;">
                             <h3 style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.5rem;">How to navigate this site</h3>
@@ -144,8 +145,8 @@
 
                     <div class="section-block" style="margin-bottom: 2rem;">
                         <h3 style="color: var(--accent-green);">Challenges & AI Contributions</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The main intellectual challenge when writing the content was navigating the tension between different philosophies without falling into extremes—such as sliding into pure Platonism when discussing Gödel, or pure Formalism when discussing physics. It requires effort to keep an open mind when dealing with such absolute mathematical boundaries, but that effort is what produced the even-handed treatment we aimed for throughout the site.</p>
-                        <p style="font-size: 1.05rem; line-height: 1.6;">On the technical side, AI tools were used to help write the frontend code (HTML, CSS, and JavaScript), fix bugs in the interactive sandboxes, and clarify the text. However, we made all final design and conceptual decisions to ensure the project met its educational goals. We are especially proud of the original physics game, which works as both a sandbox and a philosophical analogy, along with the Gödel proof unroller and logical calculator — building them is what finally made Gödel's reasoning click for us.</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The main intellectual challenge when writing the content was navigating the tension between different philosophies without falling into extremes—such as sliding into pure Platonism when discussing Gödel, or pure Formalism when discussing reverse mathematics. It requires effort to keep an open mind when dealing with such absolute mathematical boundaries, but that effort is what produced the even-handed treatment we aimed for throughout the site.</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">On the technical side, AI tools were used to help write the frontend code (HTML, CSS, and JavaScript), fix bugs in the interactive sandboxes, and clarify the text. However, we made all final design and conceptual decisions to ensure the project met its educational goals. We are especially proud of the original reverse-mathematics game, which works as both a sandbox and a philosophical analogy, along with the Gödel proof unroller and logical calculator — building them is what finally made Gödel's reasoning click for us.</p>
                     </div>
 
                     <div class="section-block">
@@ -172,16 +173,10 @@
                     <h2>Truth, Proof, and the Illusion of Mathematical Existence</h2>
                 </div>
                 <div class="panel-body">
-                    <div class="instruction" style="text-align: left; padding: 1.5rem; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--soft-orange-border); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
-                        <p style="margin-bottom: 1rem;">Gödel’s theorem is often sold as a metaphysical turning point: no formal system captures every truth about arithmetic, so truth must live beyond proof. But that reading smuggles in an assumption — that there is a fixed stock of truths sitting there, waiting to be checked against our derivations. Drop the assumption, keep only what the system actually has (consistency, derivability, models), and the construction stops being a doorway to a hidden realm. It becomes something sharper: an exact account of how a system meets its own limits.</p>
-                        <p style="margin-bottom: 1rem;">A bare formal system has no semantics. It is symbols and rules for rewriting them. Meaning shows up only when someone outside reads the symbols as numbers, or states of the world, or anything at all. So the complaint that a system “fails to capture truth” is already spoken from outside it. Inside, there is just what can and cannot be derived — nothing there marks a string as “true,” “about reality,” or “incomplete.” Those are layers we add.</p>
-                        <p>That changes what incompleteness <em>is</em>. Not a scar left by some missing fact, but what any system rich enough to talk about itself must run into. Once a system can encode its own reasoning, some of its questions loop back onto it — and it starts describing not just numbers, but its own reach. That is a feature of the machinery, and it is where the depth begins, not where it stops.</p>
-                    </div>
-
                     <div class="section-block" style="margin-bottom: 2rem;">
                         <h3>Two Ways to Read the Same Proof</h3>
                         <p style="margin-bottom: 1rem;">The Platonist reads Gödel as pointing at a completed mathematical world, where every statement already has a fixed status with or without us. It is a serious position, and it earns its keep: it explains why doing mathematics feels like discovery, and why people working from different directions keep landing on the same results. What it adds is a commitment the proof never delivers on its own — that a fully determinate mathematical universe is really out there. That step is a choice, not a theorem.</p>
-                        <p style="margin-bottom: 1rem;">The formalist takes the same proof and reads it as structure rather than shortfall. Any system expressive enough to describe its own workings will throw off sentences it can't settle — and that isn't a quirk of logic. It happens wherever a language gets rich enough to point back at itself.</p>
+                        <p style="margin-bottom: 1rem;">For the formalist, that missing truth was never promised. A formal system is a machine for deriving consequences from axioms — not a window onto some pre-existing world of facts. So an undecidable sentence isn't a truth the system <em>failed</em> to reach; it's simply a sentence the axioms don't settle, one you can add either way. "Incompleteness" only stings if you expected the system to capture an outside truth in the first place. The formalist never did — so for them it isn't a wound at all, just an accurate map of what these particular axioms do and don't fix.</p>
                         <p>Neither reading is forced on you by the mathematics. Build the sentence yourself below, then decide which reading you find you're already using.</p>
                     </div>
                     
@@ -208,42 +203,42 @@
                                 <h4>Formula Constructor</h4>
                                 
                                 <div class="keyboard-section">
-                                    <h5>Logic & Math</h5>
+                                    <h5>Logic & Math <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal;">— hover any key for what it means</span></h5>
                                     <div class="keyboard">
-                                        <button class="key-btn" onclick="addSymbol('0')">0<span class="code-badge">1</span></button>
-                                        <button class="key-btn" onclick="addSymbol('S')">S<span class="code-badge">2</span></button>
-                                        <button class="key-btn" onclick="addSymbol('=')">=<span class="code-badge">3</span></button>
-                                        <button class="key-btn" onclick="addSymbol('&not;')">&not;<span class="code-badge">4</span></button>
-                                        <button class="key-btn" onclick="addSymbol('x')">x<span class="code-badge">5</span></button>
-                                        <button class="key-btn" onclick="addSymbol('(')">(<span class="code-badge">6</span></button>
-                                        <button class="key-btn" onclick="addSymbol(')')">)<span class="code-badge">7</span></button>
-                                        <button class="key-btn" onclick="addSymbol('⌜')">⌜<span class="code-badge">8</span></button>
-                                        <button class="key-btn" onclick="addSymbol('⌝')">⌝<span class="code-badge">9</span></button>
-                                        <button class="key-btn" onclick="addSymbol(',')">,<span class="code-badge">10</span></button>
-                                        <button class="key-btn macro-btn" onclick="addSymbol('Prov')">Prov<span class="code-badge">11</span></button>
-                                        <button class="key-btn macro-btn" onclick="addSymbol('Sub')">Sub<span class="code-badge">12</span></button>
+                                        <button class="key-btn" onclick="addSymbol('0')" title="Zero — the constant 0.">0<span class="code-badge">1</span></button>
+                                        <button class="key-btn" onclick="addSymbol('S')" title="Successor. S0 is 1, SS0 is 2, SSS0 is 3, … — this is how numbers are written.">S<span class="code-badge">2</span></button>
+                                        <button class="key-btn" onclick="addSymbol('=')" title="Equals.">=<span class="code-badge">3</span></button>
+                                        <button class="key-btn" onclick="addSymbol('&not;')" title="Logical NOT (negation): ¬P means ‘not P’.">&not;<span class="code-badge">4</span></button>
+                                        <button class="key-btn" onclick="addSymbol('x')" title="A variable — a placeholder that can stand for any number.">x<span class="code-badge">5</span></button>
+                                        <button class="key-btn" onclick="addSymbol('(')" title="Open parenthesis — groups a sub-expression.">(<span class="code-badge">6</span></button>
+                                        <button class="key-btn" onclick="addSymbol(')')" title="Close parenthesis.">)<span class="code-badge">7</span></button>
+                                        <button class="key-btn" onclick="addSymbol('⌜')" title="Left Gödel quote. ⌜φ⌝ means ‘the Gödel number of the formula φ’ — a formula named as a number.">⌜<span class="code-badge">8</span></button>
+                                        <button class="key-btn" onclick="addSymbol('⌝')" title="Right Gödel quote — closes ⌜ … ⌝.">⌝<span class="code-badge">9</span></button>
+                                        <button class="key-btn" onclick="addSymbol(',')" title="Comma — separates arguments, e.g. Sub(a, b).">,<span class="code-badge">10</span></button>
+                                        <button class="key-btn macro-btn" onclick="addSymbol('Prov')" title="Provability. Prov(f) says ‘f is provable’ — there exists a proof p of f.">Prov<span class="code-badge">11</span></button>
+                                        <button class="key-btn macro-btn" onclick="addSymbol('Sub')" title="Substitution. Sub(a, b) is the Gödel number you get by plugging numeral b into the formula numbered a.">Sub<span class="code-badge">12</span></button>
                                     </div>
                                 </div>
 
                                 <div class="keyboard-section">
-                                    <h5>Defined Formulas</h5>
+                                    <h5>Defined Formulas <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal;">— a whole formula you saved, reused as one symbol</span></h5>
                                     <div class="keyboard">
-                                        <button class="key-btn formula-btn" onclick="addSymbol('α')" id="btn-macro-alpha" disabled>&alpha;</button>
-                                        <button class="key-btn formula-btn" onclick="addSymbol('β')" id="btn-macro-beta" disabled>&beta;</button>
-                                        <button class="key-btn formula-btn" onclick="addSymbol('γ')" id="btn-macro-gamma" disabled>&gamma;</button>
-                                        <button class="key-btn formula-btn" onclick="addSymbol('δ')" id="btn-macro-delta" disabled>&delta;</button>
-                                        <button class="key-btn formula-btn" onclick="addSymbol('ε')" id="btn-macro-epsilon" disabled>&epsilon;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('α')" id="btn-macro-alpha" title="A formula you saved into slot α, reused as a single symbol. Save one below to enable this." disabled>&alpha;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('β')" id="btn-macro-beta" title="A formula you saved into slot β, reused as a single symbol." disabled>&beta;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('γ')" id="btn-macro-gamma" title="A formula you saved into slot γ, reused as a single symbol." disabled>&gamma;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('δ')" id="btn-macro-delta" title="A formula you saved into slot δ, reused as a single symbol." disabled>&delta;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('ε')" id="btn-macro-epsilon" title="A formula you saved into slot ε, reused as a single symbol." disabled>&epsilon;</button>
                                     </div>
                                 </div>
                                 
                                 <div class="keyboard-section">
-                                    <h5>Numeral Constants</h5>
+                                    <h5>Numeral Constants <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal;">— a saved formula&rsquo;s Gödel number, used as a plain number</span></h5>
                                     <div class="keyboard">
-                                        <button class="key-btn const-btn" onclick="addSymbol('A')" id="btn-const-A" disabled>A<span class="code-badge">13</span></button>
-                                        <button class="key-btn const-btn" onclick="addSymbol('B')" id="btn-const-B" disabled>B<span class="code-badge">14</span></button>
-                                        <button class="key-btn const-btn" onclick="addSymbol('C')" id="btn-const-C" disabled>C<span class="code-badge">15</span></button>
-                                        <button class="key-btn const-btn" onclick="addSymbol('D')" id="btn-const-D" disabled>D<span class="code-badge">16</span></button>
-                                        <button class="key-btn const-btn" onclick="addSymbol('E')" id="btn-const-E" disabled>E<span class="code-badge">17</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('A')" id="btn-const-A" title="A numeral constant standing for the Gödel number of the formula saved in slot α. Save one below to enable this." disabled>A<span class="code-badge">13</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('B')" id="btn-const-B" title="A numeral standing for the Gödel number of the formula saved in slot β." disabled>B<span class="code-badge">14</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('C')" id="btn-const-C" title="A numeral standing for the Gödel number of the formula saved in slot γ." disabled>C<span class="code-badge">15</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('D')" id="btn-const-D" title="A numeral standing for the Gödel number of the formula saved in slot δ." disabled>D<span class="code-badge">16</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('E')" id="btn-const-E" title="A numeral standing for the Gödel number of the formula saved in slot ε." disabled>E<span class="code-badge">17</span></button>
                                     </div>
                                 </div>
                                 
@@ -296,56 +291,17 @@
                         </div>
                     </div>
 
-                    <div class="section-block">
-                        <h3>2. Symbols and primitives</h3>
-                        <p>We assume a base theory <em>T</em> (e.g. Peano Arithmetic).</p>
-                        <ul class="symbol-list">
-                            <li><code>&ulcorner;x&urcorner;</code> : Gödel number of expression <em>x</em></li>
-                            <li><code>Sub(a,b)</code> : Computes the Gödel number of the formula that results from taking the formula with Gödel number <em>a</em> and substituting numeral <em>b</em> into its free variable.</li>
-                            <li><code>Proof(p,f)</code> : <em>p</em> encodes a valid proof of formula <em>f</em></li>
-                            <li><code>Prov(f) := &exist;p Proof(p,f)</code></li>
-                        </ul>
-                    </div>
-
-                    <div class="section-block">
-                        <h3>3. Definitions</h3>
-                        <p>Let:</p>
-                        <ol class="derivation-list">
-                            <li id="def-1"><code>Prov(f) := &exist;p Proof(p,f)</code> <span class="justification">"Formula f is provable (there exists a proof p for f)"</span></li>
-                            <li id="def-2"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">"The formula with Gödel number x is unprovable"</span></li>
-                            <li id="def-3"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">"If you substitute x into its own formula, the result is unprovable"</span></li>
-                            <li id="def-4"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">"Let n be the Gödel number of the formula &psi;"</span></li>
-                            <li id="def-5"><code>G := &psi;(n)</code> <span class="justification">"Construct G by applying &psi; to its own Gödel number n"</span></li>
-                        </ol>
-                    </div>
-
-                    <div class="section-block">
-                        <h3>4. Pure Derivation (Line-by-Line)</h3>
-                        <ol class="derivation-list derivation-steps">
-                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">(Define property &varphi; as "is unprovable")</span></li>
-                            <li onmouseover="highlightRef(['def-3'])" onmouseout="clearRef()"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">(Define property &psi; as applying &varphi; to self-substitution)</span></li>
-                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">(Let n be the literal Gödel number of formula &psi;)</span></li>
-                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()"><code>G := &psi;(n)</code> <span class="justification">(Construct G by evaluating &psi; with its own Gödel number)</span></li>
-                            <li onmouseover="highlightRef(['def-3', 'def-5'])" onmouseout="clearRef()" id="step-5"><code>G = &varphi;(Sub(n,n))</code> <span class="justification">(Expand &psi; using its definition from step 3)</span></li>
-                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()" id="step-6"><code>G = &not;Prov(Sub(n,n))</code> <span class="justification">(Expand &varphi; using its definition from step 2)</span></li>
-                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()" id="step-7"><code>Sub(n,n) = &ulcorner;&psi;(n)&urcorner;</code> <span class="justification">(Mechanically, Sub(n,n) computes the Gödel number of &psi;(n))</span></li>
-                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()" id="step-8"><code>Sub(n,n) = &ulcorner;G&urcorner;</code> <span class="justification">(Since G is exactly &psi;(n), their Gödel numbers are identical)</span></li>
-                            <li class="final-step" id="step-9">Therefore: <br><code>G = &not;Prov(&ulcorner;G&urcorner;)</code> <span class="justification">(Substitute the string &ulcorner;G&urcorner; for Sub(n,n) into step 6)</span></li>
-                        </ol>
-                    </div>
-
                     <div class="section-block final-section">
-                        <h3>5. Final Gödel Sentence</h3>
+                        <h3>2. Build the Gödel Sentence</h3>
+                        <p class="prose">Section 1 showed that every formula is a number. Now put that to work. We assemble one special formula, <strong>G</strong>, out of a few reusable parts &mdash; and because a formula can be handed its own Gödel number, G ends up talking about <em>itself</em>. The claim to test is this:</p>
                         <div class="math-box highlight-green">
                             G &harr; &not;Prov(&ulcorner;G&urcorner;)
                         </div>
-                        
+                        <p class="prose">Both sides are built from the same handful of parts. Click each highlighted <strong>part of the formula</strong> to replace it with its definition, stepping <em>backwards</em> until both sides collapse to the identical string. The legend underneath spells out every part on screen and updates as you go &mdash; no meaning is smuggled in, only substitution.</p>
+
                         <div class="unroller-sub-panel">
-                            <h4>The Proof Unroller</h4>
-                            <p class="instruction">Click the highlighted macros below to step <strong>backwards</strong> through the definitions. Prove to yourself that both sides of the equation are mechanically identical.</p>
-                            
                             <div class="stats-bar" style="align-items: center;">
-                                <div class="stat">Definitions Applied: <span id="progress-counter" class="highlight-number">0</span></div>
+                                <div class="stat">Parts expanded: <span id="progress-counter" class="highlight-number">0</span></div>
                                 <div class="history-controls">
                                     <button class="btn btn-icon" id="undo-btn" onclick="undoStep()" disabled>&larr; Undo</button>
                                     <button class="btn btn-icon" id="redo-btn" onclick="redoStep()" disabled>Redo &rarr;</button>
@@ -358,7 +314,12 @@
                                     <span id="lhs-container" class="logic-text"></span><span id="rhs-container" class="logic-text"></span>
                                 </div>
                             </div>
-                            <div id="unroller-status" class="unroller-status">Click the highlighted macros on each side. When both fully unfold, they become the <em>same</em> string.</div>
+                            <div id="unroller-status" class="unroller-status">Click the highlighted <strong>parts of the formula</strong> on each side. When both fully unfold, they become the <em>same</em> string.</div>
+
+                            <div class="unroller-legend">
+                                <h5>What each part means <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal;">— updates as you unfold</span></h5>
+                                <ul id="unroller-legend-list" class="unroller-legend-list"></ul>
+                            </div>
                         </div>
                     </div>
 
@@ -404,6 +365,10 @@
                             <br><br>
                             So the theorem proves neither side. It hands Platonist and formalist the same fact and lets each furnish it. And you've now handled it both ways: you chose a branch, and you climbed a rung. For the formalist, that is the whole point — a blind spot is not where the mathematics ends. It's where the systems multiply.
                         </div>
+                    </div>
+
+                    <div class="instruction" style="text-align: left; padding: 1.5rem; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--soft-orange-border); font-size: 1.05rem; line-height: 1.6; margin-top: 2.5rem;">
+                        <p style="margin: 0;"><strong>The one-line version.</strong> Gödel is usually sold as proof that truth lives beyond proof. But inside a bare system there is only what can and can't be derived — "true" is a label we add from outside. So incompleteness isn't a hidden realm leaking through; it's what any system rich enough to describe itself must run into. That's not where the depth ends. It's where it begins.</p>
                     </div>
 
                 </div>
@@ -760,6 +725,7 @@
                             <div class="controls-row miu-controls">
                                 <button id="miu-undo" class="btn btn-icon">&larr; Undo</button>
                                 <button id="miu-reset" class="btn btn-icon">Reset</button>
+                                <button id="miu-solution" class="btn btn-icon">Show solution</button>
                                 <button id="miu-free" class="btn btn-icon">Free play</button>
                             </div>
                             <div class="miu-keys-hint">Tip: press keys <b>1</b>–<b>4</b> to apply rules, <b>U</b> to undo.</div>
@@ -803,7 +769,7 @@
                         </div>
                     </div>
                     <div class="section-block" style="margin-top: 2rem;">
-                        <h3>Meaning is Layered, Not Inherent</h3>
+                        <h3>In the Formalist View &mdash; Meaning is Layered, Not Inherent</h3>
                         <p>The string has no intrinsic meaning. It is not a claim, not a statement, not a description. It is only a configuration produced by rule application.</p>
                         <p style="margin-top: 1rem;">Whether it becomes “math”, “language”, or “data about apples” depends entirely on the interpretation layer placed on top of it.</p>
                         <p style="margin-top: 1rem;"><strong>Open Question:</strong> Does a formal system "fail to capture truth," or is "truth" just an interpretive layer we place on top of what can be derived?</p>

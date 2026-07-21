@@ -741,6 +741,16 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .unroller-status { margin-top: 1rem; font-size: var(--fs-sm); color: var(--text-muted); text-align: center; }
 .unroller-status.done { color: var(--accent-green); background: var(--soft-green); border-radius: var(--radius-sm); padding: 0.75rem 1rem; }
 
+/* Proof unroller live legend: meaning of each part currently on screen */
+.unroller-legend { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+.unroller-legend h5 { color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.05rem; margin-bottom: 0.75rem; font-size: 0.9rem; }
+.unroller-legend-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.unroller-legend-list li { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); transition: background var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease); }
+.unroller-legend-list li.highlighted { background: var(--highlight-bg); border-color: var(--accent-blue); }
+.legend-key { flex: 0 0 3.5rem; font-weight: bold; color: var(--accent-blue); font-size: 1.05rem; }
+.legend-meaning { color: var(--text-main); font-size: var(--fs-sm); line-height: 1.5; }
+.legend-meaning code { background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 3px; }
+
 /* Gödel encoding challenges */
 .godel-challenges { margin-top: 1.25rem; padding: 0.9rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); }
 .godel-goal-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }
