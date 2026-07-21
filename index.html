@@ -349,26 +349,26 @@
 
                     <div class="section-block ladder-block" style="margin-top: 2.5rem;">
                         <h3>Incompleteness as a Staircase</h3>
-                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">The branch you just took runs sideways — <em>G</em> or &not;<em>G</em>, two universes. There is also a way <strong>up</strong>. A consistent system can never prove its own consistency; that sentence, written <span class="mono">Con(T)</span>, is a blind spot exactly like <em>G</em>. So make it an axiom. The stronger system you land on has a <em>new</em> blind spot of its own. Then climb again.</p>
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">The branch you took runs sideways — <em>G</em> or &not;<em>G</em>. There is also a way <strong>up</strong>. Gödel's proof is carried out in <strong>Peano Arithmetic</strong> (PA), the standard axioms for the whole numbers, so PA is our base level. PA can't prove its own consistency — the statement <span class="mono">Con(PA)</span>, a blind spot just like <em>G</em> — so add that as a new axiom. Each level is simply <strong>the level below plus one new axiom</strong>: PA, then PA + <span class="mono">Con(PA)</span>, then that system plus <em>its</em> consistency, and on up. Every level is stronger, and every level has a fresh blind spot of its own.</p>
                         <div class="ladder-game">
                             <div class="ladder-stack" id="ladder-stack"></div>
                             <div class="controls-row" style="justify-content: center;">
                                 <button class="btn btn-primary" id="ladder-climb">Add Con(current) &amp; climb &uarr;</button>
-                                <button class="btn btn-icon" id="ladder-reset">Back to the ground</button>
+                                <button class="btn btn-icon" id="ladder-reset">Back to the base</button>
                             </div>
                             <div id="ladder-status" class="ladder-status"></div>
                         </div>
-                        <p style="font-size: 1.05rem; margin-top: 1.5rem;">Every rung is a genuinely stronger theory: it proves everything below it, and its own consistency besides. The blind spot never closes — but it never traps you either. This is the formalist's reply to "truth beyond proof": not a single fixed realm hovering above the system, but an endless, ordered tower of systems, each one seeing a little further than the last.</p>
+                        <p style="font-size: 1.05rem; margin-top: 1.5rem;">Every level is a genuinely stronger theory: it proves everything below it, and its own consistency besides. The blind spot never closes — but it never traps you either. This is the formalist's reply to "truth beyond proof": not a single fixed realm hovering above the system, but an endless, ordered tower of systems, each one seeing a little further than the last.</p>
 
                         <div style="font-size: 1.1rem; color: var(--accent-blue); font-weight: bold; margin-top: 2rem; padding-left: 1rem; border-left: 4px solid var(--accent-blue);">
                             Gödel doesn't just prise truth apart from proof. He pins down the shape of the gap: no system rich enough to describe itself can also fully contain its own truth. It can reflect on itself — that is what let you build <em>G</em> in the first place — but it can't close the loop.
                             <br><br>
-                            So the theorem proves neither side. It hands Platonist and formalist the same fact and lets each furnish it. And you've now handled it both ways: you chose a branch, and you climbed a rung. For the formalist, that is the whole point — a blind spot is not where the mathematics ends. It's where the systems multiply.
+                            So the theorem proves neither side. It hands Platonist and formalist the same fact and lets each furnish it. And you've now handled it both ways: you chose a branch, and you climbed a level. For the formalist, that is the whole point — a blind spot is not where the mathematics ends. It's where the systems multiply.
                         </div>
                     </div>
 
                     <div class="instruction" style="text-align: left; padding: 1.5rem; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--soft-orange-border); font-size: 1.05rem; line-height: 1.6; margin-top: 2.5rem;">
-                        <p style="margin: 0;"><strong>The one-line version.</strong> Gödel is usually sold as proof that truth lives beyond proof. But inside a bare system there is only what can and can't be derived — "true" is a label we add from outside. So incompleteness isn't a hidden realm leaking through; it's what any system rich enough to describe itself must run into. That's not where the depth ends. It's where it begins.</p>
+                        <p style="margin: 0;"><strong>The short version.</strong> Gödel opens a gap between what is <em>true</em> and what is <em>provable</em>, and hands both camps the same fact. The <strong>realist</strong> reads it as truth outrunning the rules: <em>G</em> really is true, out there, even though no derivation reaches it — a sign that mathematics is discovered, not just generated. The <strong>formalist</strong> reads it as structure, not shortfall: inside a bare system there is only what can and can't be derived, and "true" is a label we add from outside, so incompleteness is simply what any self-describing system must run into. One theorem, two honest readings — this chapter is built to let you feel the pull of each.</p>
                     </div>
 
                 </div>

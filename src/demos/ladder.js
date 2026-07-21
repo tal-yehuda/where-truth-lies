@@ -23,16 +23,16 @@ function render() {
     rung.className = 'ladder-rung' + (n === level ? ' current' : '');
     if (n === level && n > 0) rung.classList.add('just-added');
 
-    const ground = n === 0 ? ' — Peano Arithmetic, the ground floor' : '';
+    const ground = n === 0 ? ' — Peano Arithmetic, the base level' : ` = ${rungName(n - 1)} + Con(${rungName(n - 1)})`;
     const proves =
       n === 0
         ? ''
-        : `<div class="ladder-proves">proves Con(${rungName(n - 1)}) ✓ — the rung below can't</div>`;
+        : `<div class="ladder-proves">proves Con(${rungName(n - 1)}) ✓ — the level below can't</div>`;
 
     rung.innerHTML = `
       <div class="ladder-rung-head">
         <span class="ladder-name">${rungName(n)}${ground}</span>
-        <span class="ladder-role">${n === level ? 'you are here' : 'rung ' + n}</span>
+        <span class="ladder-role">${n === level ? 'you are here' : 'level ' + n}</span>
       </div>
       ${proves}
       <div class="ladder-blind">blind spot: can't prove Con(${rungName(n)}) — its own consistency</div>`;
@@ -42,11 +42,11 @@ function render() {
   if (status) {
     if (level >= MAX_RUNG) {
       status.innerHTML =
-        '…and it keeps going, right up through the infinite ordinals. The ladder has no top rung.';
+        '…and it keeps going, right up through the infinite ordinals. The ladder has no top level.';
       if (climb) climb.disabled = true;
     } else if (level === 0) {
       status.innerHTML =
-        "You're on <b>PA</b>, the ground floor. It can't prove its own consistency — so climb.";
+        "You're on <b>PA</b>, the base level. It can't prove its own consistency — so climb.";
       if (climb) climb.disabled = false;
     } else {
       status.innerHTML = `You're standing on <b>${rungName(level)}</b>. It proves the consistency of every system below it — and still can't prove its own.`;
