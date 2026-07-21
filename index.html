@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where Truth Lies</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>%E2%96%B3</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container" id="main-content">
+        <header>
+            <div style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; width: 100%;">
+                <button onclick="navPrev()" id="floating-prev" class="nav-arrow" style="margin-right: 1rem;">&larr; Prev</button>
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+                        <div style="background: var(--accent-blue); width: 8px; height: 8px; border-radius: 50%;"></div>
+                        <h1 style="font-size: 1.8rem;">Where Truth Lies</h1>
+                        <div style="background: var(--accent-red); width: 8px; height: 8px; border-radius: 50%;"></div>
+                    </div>
+                    <span id="floating-current" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05rem;">Derivations Over Meaning</span>
+                </div>
+                <button onclick="navNext()" id="floating-next" class="nav-arrow" style="margin-left: 1rem;">Next &rarr;</button>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">&#9790;</button>
+        </header>
+        
+        <div class="tabs-container">
+            <button class="tab-button" onclick="switchTab('proposal')" id="tab-btn-proposal">Project Proposal</button>
+            <button class="tab-button" onclick="switchTab('about')" id="tab-btn-about">About the Project</button>
+            <button class="tab-button active" onclick="switchTab('home')" id="tab-btn-home">Home</button>
+            <button class="tab-button" onclick="switchTab('foundations')" id="tab-btn-foundations">1. Formal Systems</button>
+            <button class="tab-button" onclick="switchTab('truth')" id="tab-btn-truth">2. Truth</button>
+            <button class="tab-button" onclick="switchTab('applied')" id="tab-btn-applied">3. Computability</button>
+            <button class="tab-button" onclick="switchTab('interpretation')" id="tab-btn-interpretation">4. Interpretation</button>
+            <button class="tab-button" onclick="switchTab('conclusion')" id="tab-btn-conclusion">5. Physics</button>
+        </div>
+
+        <main class="single-view tab-content active" id="tab-home">
+            <section class="panel derivation-panel">
+                <div class="panel-header hero">
+                    <h2>Mathematics as Formal Manipulation:<br>A Structural Perspective</h2>
+                    <span class="hero-sub">An exploration of mathematical meaning, proof, and truth as rule-based symbol systems</span>
+                </div>
+                <div class="panel-body">
+                    
+                    <div style="max-width: 800px; margin: 0 auto;">
+                        <h3 style="color: var(--text-main); margin-bottom: 1rem; font-size: 1.5rem;">What this project is</h3>
+                        <ul class="instruction" style="font-size: 1.1rem; line-height: 1.6; padding-left: 1.5rem;">
+                            <li>This project explores mathematics from a formalist perspective.</li>
+                            <li>It treats mathematics as symbol manipulation governed by rules.</li>
+                            <li>It investigates how meaning emerges from structure rather than interpretation.</li>
+                        </ul>
+                    
+                        <div style="margin-top: 3rem;">
+                            <h3 style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.5rem;">How to navigate this site</h3>
+
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-green-border); border-left: 6px solid var(--accent-green); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-green); font-size: 1.2rem;">About the Project</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">Goals, design choices, AI contributions, and references for this applied project.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('about')" style="width: 160px; background: var(--soft-green); color: var(--accent-green); border-color: var(--accent-green); margin: 0;">Read About &rarr;</button>
+                            </div>
+                            
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-blue-border); border-left: 6px solid var(--accent-blue); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-blue); font-size: 1.2rem;">1. Formal Systems</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">The mechanics of syntax and the interpretation split: how meaning is assigned to string-rewriting systems.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('foundations')" style="width: 160px; background: var(--soft-blue); color: var(--accent-blue); border-color: var(--accent-blue); margin: 0;">Start Here &rarr;</button>
+                            </div>
+                            
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-orange-border); border-left: 6px solid var(--accent-orange); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-orange); font-size: 1.2rem;">2. Truth</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">The structural limits of formal systems, self-reference, and the tension between derivability and truth.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('truth')" style="width: 160px; background: var(--soft-orange); color: var(--accent-orange); border-color: var(--accent-orange); margin: 0;">Go to Chapter 2</button>
+                            </div>
+
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-blue-border); border-left: 6px solid var(--accent-blue); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-blue); font-size: 1.2rem;">3. Computability</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">The boundaries of mechanical execution: Turing machines, the Halting Problem, and why grammatical meaning does not guarantee a coherently specified object.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('applied')" style="width: 160px; background: var(--soft-blue); color: var(--accent-blue); border-color: var(--accent-blue); margin: 0;">Go to Chapter 3</button>
+                            </div>
+
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-purple-border); border-left: 6px solid var(--accent-purple); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-purple); font-size: 1.2rem;">4. Interpretation</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">Cellular automata and emergence: how complex "objects" arise from simple syntactic rules.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('interpretation')" style="width: 160px; background: var(--soft-purple); color: var(--accent-purple); border-color: var(--accent-purple); margin: 0;">Go to Chapter 4</button>
+                            </div>
+
+                            <div class="section-block" style="background-color: var(--surface); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid var(--soft-yellow-border); border-left: 6px solid var(--accent-yellow); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-yellow); font-size: 1.2rem;">5. Physics</h4>
+                                    <p style="margin: 0; color: var(--text-muted);">Physical laws as formal systems: model selection and the search for a viable mathematical compression scheme.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('conclusion')" style="width: 160px; background: var(--soft-yellow); color: var(--accent-yellow); border-color: var(--accent-yellow); margin: 0;">Go to Chapter 5</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </section>
+        </main>
+
+        <main class="single-view tab-content" id="tab-proposal" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Project Proposal: Syntax vs Semantics</h2>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">This project is an interactive website that explores how mathematical rules (syntax) relate to human interpretation and meaning (semantics). It focuses on computability and the foundations of mathematics through five interactive chapters. A guiding principle of this work is the deliberate use of the tension between different interpretations of mathematics (such as formalist and realist perspectives) as a framework for exploration rather than resolution.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">Each chapter uses a specialized sandbox to ground abstract ideas in concrete mechanics. The MIU string-rewriting system introduces the nature of formal systems. A logical calculator illustrates Gödel's incompleteness results in an accessible way. A Turing machine simulator demonstrates the limits of formal computation and specification. The Game of Life explores how complex patterns emerge from simple rules and how interpretation depends on the observer. Finally, a physics simulation connects these ideas to the role of modeling in scientific understanding.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">Overall, the project uses hands-on interaction to help users reflect on how meaning and interpretation arise from formal structures.</p>
+                </div>
+            </section>
+        </main>
+
+        <main class="single-view tab-content" id="tab-about" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>About the Project</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="section-block" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--accent-blue);">Goals and Main Outcomes</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">The main goal of this project is to make difficult concepts in mathematics easier to understand, and help develop philosophical thinking and reasoning in the context of mathematics. It covers topics like Gödel's Incompleteness, Turing's Halting Problem, and the tension between Formalism and Realism. The final product is a digital learning tool that uses interactive games to help users easily grasp the limits of mathematical systems, ultimately asking them to consider where mathematical truth actually lies.</p>
+                    </div>
+
+                    <div class="section-block" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--accent-orange);">Design Choices</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">The main design choice for this project is "experience first, interpretation second." Each of the five chapters requires the user to interact with a specific formal model—a string-rewriting game, a logical calculator, a Turing machine, a cellular automaton, and a physics simulation—before reading the essays explaining them. This hands-on structure is meant to clearly show the difference between blindly following mechanical rules and assigning higher-level meaning to those rules.</p>
+                    </div>
+
+                    <div class="section-block" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--accent-green);">Challenges & AI Contributions</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The main intellectual challenge when writing the content was navigating the tension between different philosophies without falling into extremes—such as sliding into pure Platonism when discussing Gödel, or pure Formalism when discussing physics. It requires effort to keep an open mind when dealing with such absolute mathematical boundaries, but this struggle ultimately resulted in the open-minded and balanced takes presented throughout the site.</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">On the technical side, AI tools were used to help write the frontend code (HTML, CSS, and JavaScript), fix bugs in the interactive sandboxes, and clarify the text. However, we made all final design and conceptual decisions to ensure the project met its educational goals. We are especially proud of the original physics game, which is both a fun sandbox and a powerful philosophical analogy, as well as the Gödel proof re-roller and logical calculator, as building them is what finally made Gödel's reasoning click for us.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 style="color: var(--accent-purple);">References & Acknowledgments</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">The project is inspired by foundational work in computability and formal systems:</p>
+                        <ul style="font-size: 1.05rem; line-height: 1.6; padding-left: 2rem;">
+                            <li><strong>Kurt Gödel:</strong> For the Incompleteness Theorems and the mathematical mapping of self-reference.</li>
+                            <li><strong>Alan Turing:</strong> For the formalization of computability and the Halting Problem.</li>
+                            <li><strong>John Horton Conway:</strong> For the Game of Life, demonstrating emergence from simple rules.</li>
+                            <li><strong>Douglas Hofstadter:</strong> The MIU formal system sandbox is an homage to the MU puzzle from his book: <em>Gödel, Escher, Bach</em>.</li>
+                            <li><strong>Dustin Lazarovici:</strong> For teaching the Philosophy of Mathematics, clarifying different schools of thought, and providing the initial spark for this project through his lectures.</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+
+        <main class="single-view tab-content" id="tab-truth" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Truth, Proof, and the Illusion of Mathematical Existence</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="instruction" style="text-align: left; padding: 1.5rem; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--soft-orange-border); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                        <p style="margin-bottom: 1rem;">Gödel’s incompleteness theorem is often presented as a metaphysical turning point: a formal system cannot capture all “truths” about arithmetic, therefore mathematical truth must exist beyond formal proof. But this reading already commits to a strong assumption—that there is a fixed notion of truth waiting to be compared against derivations. If we remove that assumption and focus only on consistency, derivability, and modeling, Gödel’s construction becomes less a statement about a hidden realm and more a case study in a broader tension: the relationship between formal systems and the meanings we project onto them.</p>
+                        <p style="margin-bottom: 1rem;">A formal system, in its bare form, contains no semantics. It consists of symbols and rules for transforming those symbols. Meaning enters only when an external perspective interprets those symbols as referring to numbers, physical states, or anything else. From this angle, the idea that a system “fails to capture truth” is already a step outside the system. Inside the system, there is only what can or cannot be derived. Nothing in the formalism itself distinguishes between “describing reality,” “being true,” or “being incomplete.” Those are interpretive layers we place on top.</p>
+                        <p>This shift matters because it changes what we take incompleteness to be. Instead of viewing it as evidence of a Platonic domain of mathematical facts, we can view it as evidence that any sufficiently expressive system of rules will inevitably interact with its own descriptive limits. When a system becomes powerful enough to encode its own reasoning processes, questions about its behavior begin to refer back to the system itself. At that point, the system is no longer just describing external structure; it is also partially describing its own capacity for description.</p>
+                    </div>
+
+                    <div class="section-block" style="margin-bottom: 2rem;">
+                        <h3>Platonism vs Formalism: What Gödel Actually Forces You to See</h3>
+                        <p style="margin-bottom: 1rem;">The Platonist interpretation posits a completed mathematical structure in which all statements have fixed status independent of our descriptions. This view is powerful and coherent: it explains why mathematical practice feels discovery-like, and why independent systems often seem to converge on the same results. But it introduces a strong ontological commitment—the existence of a fully determinate mathematical universe—that is not itself a consequence of formal reasoning. It is a philosophical choice that elevates one interpretation of formal success into a claim about what mathematics ultimately is.</p>
+                        <p style="margin-bottom: 1rem;">Seen this way, Gödel’s construction is not a portal to metaphysical truth but a clean illustration of a more general phenomenon: expressive systems can generate statements that reflect their own limitations. This is not unique to logic. It appears whenever a language, model, or theory becomes rich enough to refer to its own mechanisms.</p>
+                        <p>The important point is not that there exists a privileged “truth” outside the system, but that internal expressivity and self-reference create unavoidable boundaries in what can be settled within a fixed rule set.</p>
+                    </div>
+                    
+                    <div class="section-block">
+                        <h3>1. Gödel Numbering Sandbox</h3>
+                        <p class="instruction">Build formulas using logic and math, then save them into slots. You can use saved formulas inside new ones to build incredibly dense Gödel numbers.</p>
+                        
+                        <div class="explanation-box" style="background: var(--surface); border: 1px solid var(--soft-green-border); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <h5 style="color: var(--accent-green); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05rem;">How Gödel Numbers are Constructed</h5>
+                            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">1. Every basic symbol is assigned a unique numerical code (shown in <strong style="color: var(--accent-green)">light green</strong> on the keys).</p>
+                            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">2. A formula is a sequence of symbols. We encode the entire sequence into a single number by taking consecutive prime numbers (2, 3, 5, 7...) and raising them to the power of each symbol's code.</p>
+                            <p style="font-size: 0.95rem;">3. This guarantees that every formula has a unique, computable number, and every number can be factored back into exactly one sequence of symbols!</p>
+                        </div>
+                        
+                        <div class="sandbox-container">
+                            <div class="memory-bank">
+                                <h4>Memory Bank (Saved Formulas)</h4>
+                                <div class="memory-grid" id="memory-grid">
+                                    <!-- Slots generated by JS -->
+                                </div>
+                            </div>
+
+                            <div class="input-area">
+                                <h4>Formula Constructor</h4>
+                                
+                                <div class="keyboard-section">
+                                    <h5>Logic & Math</h5>
+                                    <div class="keyboard">
+                                        <button class="key-btn" onclick="addSymbol('0')">0<span class="code-badge">1</span></button>
+                                        <button class="key-btn" onclick="addSymbol('S')">S<span class="code-badge">2</span></button>
+                                        <button class="key-btn" onclick="addSymbol('=')">=<span class="code-badge">3</span></button>
+                                        <button class="key-btn" onclick="addSymbol('&not;')">&not;<span class="code-badge">4</span></button>
+                                        <button class="key-btn" onclick="addSymbol('x')">x<span class="code-badge">5</span></button>
+                                        <button class="key-btn" onclick="addSymbol('(')">(<span class="code-badge">6</span></button>
+                                        <button class="key-btn" onclick="addSymbol(')')">)<span class="code-badge">7</span></button>
+                                        <button class="key-btn" onclick="addSymbol('⌜')">⌜<span class="code-badge">8</span></button>
+                                        <button class="key-btn" onclick="addSymbol('⌝')">⌝<span class="code-badge">9</span></button>
+                                        <button class="key-btn" onclick="addSymbol(',')">,<span class="code-badge">10</span></button>
+                                        <button class="key-btn macro-btn" onclick="addSymbol('Prov')">Prov<span class="code-badge">11</span></button>
+                                        <button class="key-btn macro-btn" onclick="addSymbol('Sub')">Sub<span class="code-badge">12</span></button>
+                                    </div>
+                                </div>
+
+                                <div class="keyboard-section">
+                                    <h5>Defined Formulas</h5>
+                                    <div class="keyboard">
+                                        <button class="key-btn formula-btn" onclick="addSymbol('α')" id="btn-macro-alpha" disabled>&alpha;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('β')" id="btn-macro-beta" disabled>&beta;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('γ')" id="btn-macro-gamma" disabled>&gamma;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('δ')" id="btn-macro-delta" disabled>&delta;</button>
+                                        <button class="key-btn formula-btn" onclick="addSymbol('ε')" id="btn-macro-epsilon" disabled>&epsilon;</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="keyboard-section">
+                                    <h5>Numeral Constants</h5>
+                                    <div class="keyboard">
+                                        <button class="key-btn const-btn" onclick="addSymbol('A')" id="btn-const-A" disabled>A<span class="code-badge">13</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('B')" id="btn-const-B" disabled>B<span class="code-badge">14</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('C')" id="btn-const-C" disabled>C<span class="code-badge">15</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('D')" id="btn-const-D" disabled>D<span class="code-badge">16</span></button>
+                                        <button class="key-btn const-btn" onclick="addSymbol('E')" id="btn-const-E" disabled>E<span class="code-badge">17</span></button>
+                                    </div>
+                                </div>
+                                
+                                <div class="formula-display" id="formula-display" tabindex="0">
+                                    <span class="placeholder">Select symbols to build a formula...</span>
+                                </div>
+                                
+                                <div class="formula-actions">
+                                    <button class="btn btn-icon" id="sandbox-undo-btn" onclick="undoSandbox()" disabled>&larr; Undo</button>
+                                    <button class="btn btn-icon" id="sandbox-redo-btn" onclick="redoSandbox()" disabled>Redo &rarr;</button>
+                                    <button class="btn btn-danger" onclick="clearFormula()">Clear</button>
+                                    <div class="save-dropdown">
+                                        <button class="btn btn-primary" id="btn-save-menu">Save to Slot &blacktriangledown;</button>
+                                        <div class="dropdown-content">
+                                            <button onclick="saveToSlot('alpha')">Slot &alpha; &rarr; Constant A</button>
+                                            <button onclick="saveToSlot('beta')">Slot &beta; &rarr; Constant B</button>
+                                            <button onclick="saveToSlot('gamma')">Slot &gamma; &rarr; Constant C</button>
+                                            <button onclick="saveToSlot('delta')">Slot &delta; &rarr; Constant D</button>
+                                            <button onclick="saveToSlot('epsilon')">Slot &epsilon; &rarr; Constant E</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="encoding-result">
+                                <h4>Gödel Encoding</h4>
+                                <div class="factorization-display" id="factorization-display">
+                                    2<sup>?</sup> &times; 3<sup>?</sup> ...
+                                </div>
+                                <div class="scientific-number" id="scientific-number">
+                                    &ulcorner;Formula&urcorner; &approx; 0
+                                </div>
+                                
+                                <div class="unfolded-view">
+                                    <h5>Unfolded View (Primitives)</h5>
+                                    <div class="unfolded-display" id="unfolded-display">
+                                        <span class="placeholder">Awaiting input...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>2. Symbols and primitives</h3>
+                        <p>We assume a base theory <em>T</em> (e.g. Peano Arithmetic).</p>
+                        <ul class="symbol-list">
+                            <li><code>&ulcorner;x&urcorner;</code> : Gödel number of expression <em>x</em></li>
+                            <li><code>Sub(a,b)</code> : Computes the Gödel number of the formula that results from taking the formula with Gödel number <em>a</em> and substituting numeral <em>b</em> into its free variable.</li>
+                            <li><code>Proof(p,f)</code> : <em>p</em> encodes a valid proof of formula <em>f</em></li>
+                            <li><code>Prov(f) := &exist;p Proof(p,f)</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>3. Definitions</h3>
+                        <p>Let:</p>
+                        <ol class="derivation-list">
+                            <li id="def-1"><code>Prov(f) := &exist;p Proof(p,f)</code> <span class="justification">"Formula f is provable (there exists a proof p for f)"</span></li>
+                            <li id="def-2"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">"The formula with Gödel number x is unprovable"</span></li>
+                            <li id="def-3"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">"If you substitute x into its own formula, the result is unprovable"</span></li>
+                            <li id="def-4"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">"Let n be the Gödel number of the formula &psi;"</span></li>
+                            <li id="def-5"><code>G := &psi;(n)</code> <span class="justification">"Construct G by applying &psi; to its own Gödel number n"</span></li>
+                        </ol>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>4. Pure Derivation (Line-by-Line)</h3>
+                        <ol class="derivation-list derivation-steps">
+                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">(Define property &varphi; as "is unprovable")</span></li>
+                            <li onmouseover="highlightRef(['def-3'])" onmouseout="clearRef()"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">(Define property &psi; as applying &varphi; to self-substitution)</span></li>
+                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">(Let n be the literal Gödel number of formula &psi;)</span></li>
+                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()"><code>G := &psi;(n)</code> <span class="justification">(Construct G by evaluating &psi; with its own Gödel number)</span></li>
+                            <li onmouseover="highlightRef(['def-3', 'def-5'])" onmouseout="clearRef()" id="step-5"><code>G = &varphi;(Sub(n,n))</code> <span class="justification">(Expand &psi; using its definition from step 3)</span></li>
+                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()" id="step-6"><code>G = &not;Prov(Sub(n,n))</code> <span class="justification">(Expand &varphi; using its definition from step 2)</span></li>
+                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()" id="step-7"><code>Sub(n,n) = &ulcorner;&psi;(n)&urcorner;</code> <span class="justification">(Mechanically, Sub(n,n) computes the Gödel number of &psi;(n))</span></li>
+                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()" id="step-8"><code>Sub(n,n) = &ulcorner;G&urcorner;</code> <span class="justification">(Since G is exactly &psi;(n), their Gödel numbers are identical)</span></li>
+                            <li class="final-step" id="step-9">Therefore: <br><code>G = &not;Prov(&ulcorner;G&urcorner;)</code> <span class="justification">(Substitute the string &ulcorner;G&urcorner; for Sub(n,n) into step 6)</span></li>
+                        </ol>
+                    </div>
+
+                    <div class="section-block final-section">
+                        <h3>5. Final Gödel Sentence</h3>
+                        <div class="math-box highlight-green">
+                            G &harr; &not;Prov(&ulcorner;G&urcorner;)
+                        </div>
+                        
+                        <div class="unroller-sub-panel">
+                            <h4>The Proof Unroller</h4>
+                            <p class="instruction">Click the highlighted macros below to step <strong>backwards</strong> through the definitions. Prove to yourself that both sides of the equation are mechanically identical.</p>
+                            
+                            <div class="stats-bar" style="align-items: center;">
+                                <div class="stat">Definitions Applied: <span id="progress-counter" class="highlight-number">0</span></div>
+                                <div class="history-controls">
+                                    <button class="btn btn-icon" id="undo-btn" onclick="undoStep()" disabled>&larr; Undo</button>
+                                    <button class="btn btn-icon" id="redo-btn" onclick="redoStep()" disabled>Redo &rarr;</button>
+                                    <button class="btn btn-icon" onclick="resetUnroller()">Reset</button>
+                                </div>
+                            </div>
+
+                            <div class="unroller-canvas-container">
+                                <div class="unroller-canvas" id="unroller-canvas">
+                                    <span id="lhs-container" class="logic-text"></span><span id="rhs-container" class="logic-text"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block" style="margin-top: 2.5rem;">
+                        <h3>Platonism vs Formalism: What Gödel Actually Forces You to See</h3>
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">The Platonist reading of Gödel's theorem interprets the unprovability of <em>G</em> as evidence of a world beyond the system. Since we "know" <em>G</em> is true, mathematical truth must extend beyond mechanical proof.</p>
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">But a rigorous formalist perspective clarifies something vital: the Gödel numbering we used above is merely a technical apparatus. It forces us to ask: <strong style="color: var(--accent-blue);">Does the formal system actually possess an internal truth predicate?</strong></p>
+                        
+                        <div style="background: var(--surface-2); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border-left: 4px solid var(--accent-blue);">
+                            <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">Analyzing G From the Outside</h4>
+                            <p style="font-size: 0.95rem; margin-bottom: 1rem;">Let us analyze the situation purely structurally. If we assume system <em>A</em> is consistent, then <em>G</em> cannot be proven. However, we also know that &not;<em>G</em> cannot be proven (otherwise <em>A</em> would be inconsistent).</p>
+                            <p style="font-size: 0.95rem; margin-bottom: 1rem;">Therefore, <em>G</em> does not logically follow from the axioms. It is strictly <strong>independent</strong>. You could create a perfectly consistent mathematical universe by adding <em>G</em> as a new axiom, and an equally consistent universe by adding &not;<em>G</em> as a new axiom.</p>
+                            <p style="font-size: 0.95rem; font-weight: bold;">This does not mean truth is arbitrary, but rather that the system does not uniquely determine truth-values for all sentences. Inside the bare syntax, there is no notion of truth—only derivability. Truth arises only relative to an interpretation (a model).</p>
+                        </div>
+                        
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">We can step outside the system and say "<em>G</em> is true," but we only do this by mapping the symbols to standard arithmetic in our minds. By doing so, we introduce a distinction between mechanical <em>derivability</em> and <em>truth-in-a-structure</em>.</p>
+                        
+                        <div style="font-size: 1.1rem; color: var(--accent-blue); font-weight: bold; margin-top: 1.5rem; padding-left: 1rem; border-left: 4px solid var(--accent-blue);">
+                            Gödel's theorem does not just "separate" truth from provability—it shows that any attempt to fully unify them inside a single system breaks in a very specific, structural way. The system can reflect on itself, but it can never completely internalize its own truth without incompleteness arising.
+                            <br><br>
+                            In this way, Gödel does not prove Platonism, nor does it force strict formalism. Instead, it proves that no sufficiently rich formal system can close the gap between syntax and semantics. Philosophical interpretations—whether Platonist, Formalist, or Structuralist—are simply our different ways of deciding what that uncapturable "truth" ultimately means.
+                        </div>
+                    </div>
+
+                </div>
+                </section>
+        </main>
+
+        <main class="single-view tab-content" id="tab-applied" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Computability</h2>
+                    <span class="badge" style="background: var(--accent-orange); color: #fff; border: none;">The Limit of Algorithms</span>
+                </div>
+                <div class="panel-body">
+                    <div class="section-block">
+                        <h3>From Formal Systems to Machines</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">In the previous sections, we treated mathematics as a formal system: a collection of symbols together with rules that determine which strings may be transformed into which others. Proofs were viewed not as discoveries of meaning, but as legal sequences of symbolic manipulations.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Computability extends this perspective. Instead of asking which strings can be derived, it asks which tasks can be carried out by a purely mechanical procedure. To study this question, mathematicians developed one of the most influential abstractions in the history of mathematics and computer science: the Turing Machine.</p>
+
+                        <h3 style="margin-top: 2rem;">The Turing Machine</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">A Turing Machine is an idealized computational device consisting of an infinite tape divided into cells, a read/write head, a finite set of internal states, and a collection of rules.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">At every step, the machine reads the current symbol, consults its transition rules, writes a symbol, changes state, and moves left or right.</p>
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); padding: 1rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 1.1rem; font-weight: bold;">
+                            Nothing in this description involves intelligence, understanding, creativity, or meaning. A Turing Machine simply follows rules.
+                        </div>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">From a formalist perspective, this is exactly what makes it interesting. A Turing Machine is not fundamentally different from the formal systems encountered earlier. The primary difference is that a proof system rewrites formulas while a Turing Machine rewrites tape configurations.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">When viewed formally, computation is simply another form of derivation. A computer executing software is not fundamentally different from a formal proof system generating theorems. Both are engines of syntax. Meaning enters only when an observer interprets the resulting symbols as numbers, images, predictions, or answers.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>Turing Machine Simulator</h3>
+                        <p>Watch a Turing Machine execute in real-time. The tape slides under the head. The machine reads the current symbol, looks at its current state, and follows its rules to write a new symbol, move the tape, and switch states.</p>
+                        
+                        <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--soft-orange-border);">
+                            
+                            <!-- Tape Visualizer -->
+                            <div style="position: relative; height: 80px; background: var(--surface); border: 2px solid var(--accent-orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 2rem;">
+                                <!-- Center marker for head -->
+                                <div style="position: absolute; top: 0; bottom: 0; left: 50%; width: 50px; transform: translateX(-50%); border-left: 3px solid var(--accent-orange); border-right: 3px solid var(--accent-orange); background: rgba(255, 140, 26, 0.1); z-index: 5; pointer-events: none;">
+                                    <div style="position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid var(--accent-orange);"></div>
+                                    <div style="position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 10px solid var(--accent-orange);"></div>
+                                </div>
+                                <!-- Sliding Tape -->
+                                <div id="tm-tape" style="display: flex; position: absolute; left: 50%; transition: left 0.2s ease;">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                <div>
+                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--text-main);">Current State: <span id="tm-current-state" style="color: var(--accent-orange); font-family: 'JetBrains Mono', monospace;">q0</span></div>
+                                    <div style="font-size: 1rem; color: var(--text-muted); margin-top: 0.2rem;">Step: <span id="tm-step-count">0</span></div>
+                                </div>
+                                <div class="input-area" style="margin:0; padding:0; display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-primary" onclick="tmStep()" id="tm-step-btn" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--soft-orange); border-color: var(--accent-orange); color: var(--accent-orange);">Step</button>
+                                    <button class="btn btn-primary" onclick="tmTogglePlay()" id="tm-play-btn" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--accent-orange); border-color: var(--accent-orange); color: #fff;">Play</button>
+                                    <button class="btn btn-primary" onclick="tmReset()" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--surface); border-color: var(--text-muted); color: var(--text-muted);">Reset</button>
+                                </div>
+                            </div>
+                            
+                            <div style="background: var(--surface); padding: 1rem; border-radius: 8px; border: 1px solid var(--soft-orange-border);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h5 style="margin: 0; color: var(--text-main);">Transition Rules</h5>
+                                    <select id="tm-program-select" onchange="tmLoadProgram()" style="padding: 0.3rem; border-radius: 4px; border: 1px solid var(--soft-blue-border); font-family: 'Outfit';">
+                                        <option value="binary_counter">Binary Counter</option>
+                                        <option value="infinite_loop">Infinite Loop</option>
+                                        <option value="custom">Custom Program</option>
+                                    </select>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: bold; color: var(--text-muted); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); text-align: center;">
+                                    <div>State</div>
+                                    <div>Read</div>
+                                    <div>Write</div>
+                                    <div>Move</div>
+                                    <div>Next State</div>
+                                </div>
+                                <div id="tm-rules" style="max-height: 200px; overflow-y: auto;">
+                                    <!-- JS populated rules -->
+                                </div>
+                                <div id="tm-custom-editor" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--soft-blue-border);">
+                                    <div style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+                                        <div>
+                                            <label style="font-size: 0.8rem; color: var(--text-muted); display: block;">Init Tape (e.g. 1010)</label>
+                                            <input type="text" id="tm-custom-tape" value="1" oninput="tmUpdateCustomInit()" style="width: 120px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.8rem; color: var(--text-muted); display: block;">Init State</label>
+                                            <input type="text" id="tm-custom-state" value="q0" oninput="tmUpdateCustomInit()" style="width: 60px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 0.3rem; align-items: flex-end; flex-wrap: wrap;">
+                                        <input type="text" id="tm-rule-s" placeholder="State" style="width: 60px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        <input type="text" id="tm-rule-r" placeholder="Read" style="width: 50px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        <input type="text" id="tm-rule-w" placeholder="Write" style="width: 50px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        <select id="tm-rule-m" style="padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace; min-width: 50px;">
+                                            <option value="R">R</option>
+                                            <option value="L">L</option>
+                                        </select>
+                                        <input type="text" id="tm-rule-n" placeholder="Next" style="width: 60px; padding: 0.3rem; border: 1px solid var(--soft-blue-border); border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+                                        <button class="btn btn-primary" onclick="tmAddCustomRule()" style="padding: 0.3rem 0.8rem; width: auto; margin: 0; font-size: 0.9rem;">+ Add Rule</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>The Question of Decidability</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Once computation is viewed as mechanical rule-following, a natural question arises: <strong>Can every well-defined question be answered by a mechanical procedure?</strong></p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">If a problem is clearly stated and precise enough, shouldn't there exist some sufficiently clever method for solving it? Computability theory revealed that this intuition is false. Some questions are not merely difficult. They are undecidable. No algorithm can answer them in all cases.</p>
+
+                        <h3 style="margin-top: 2rem;">The Halting Problem</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Suppose we are given a program (P) and an input (I). We ask: <em>Will program (P) eventually stop when run on input (I), or will it continue forever?</em></p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">At first glance it appears reasonable. Yet Alan Turing proved that no universal algorithm can correctly answer it for every possible program and input. No matter how sophisticated the algorithm becomes, there will always exist programs for which its prediction fails.</p>
+
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); border-radius: 8px; padding: 2rem; margin: 2rem 0; display: flex; flex-direction: column;">
+                            <h4 style="color: var(--accent-orange); margin: 0 0 1rem 0;">Why The Halting Problem Appears</h4>
+                            <p style="font-size: 0.95rem; text-align: left; margin-bottom: 1.5rem;">The proof resembles Gödel's incompleteness theorem. Both constructions exploit self-reference.</p>
+                            <div style="font-family: 'JetBrains Mono', monospace; background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1rem; width: 100%; box-sizing: border-box;">
+                                <h4 style="color: var(--text-main); margin: 0 0 1rem 0;">Machine D (Input: Itself)</h4>
+                                <div style="text-align: left; background: var(--surface); padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                                    Imagine a machine <strong>H</strong> that perfectly solves the Halting Problem.<br>
+                                    Now construct a new program <strong>D</strong>:<br><br>
+                                    1. Run <strong>H</strong> on Machine D.<br>
+                                    2. If <strong>H</strong> says "D will Halt" &rarr; Enter infinite loop!<br>
+                                    3. If <strong>H</strong> says "D runs forever" &rarr; Halt immediately!
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem; color: var(--text-main); font-weight: bold; font-size: 1.1rem;">
+                                What happens when D is given itself as input?<br><br><span style="font-size: 1rem; font-weight: normal;">Any answer produces a contradiction. The assumption that H exists must therefore be false. The obstacle appears when a system attempts to mechanically predict the behavior of systems like itself.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block" style="margin-top: 2.5rem;">
+                        <h3>The Missing Philosophical Tension</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">A visitor will naturally think: <em>"Fine. No Turing machine can solve the Halting Problem. But I can still imagine such a machine."</em></p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">And now the interesting part begins. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a program and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem; font-weight: bold; color: var(--accent-orange);">The description is perfectly meaningful. Yet no Turing machine can instantiate it. So what is the ontological status of this thing?</p>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem;">
+                            <div style="border-left: 4px solid var(--accent-blue); padding-left: 1rem;">
+                                <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">The Platonist Response</h4>
+                                <p style="font-size: 0.95rem;">A Platonist is often comfortable saying: The machine is impossible as a Turing machine, but the function it computes still exists. The halting relation itself is perfectly well-defined. For every program P and input I, there is a fact of the matter. The inability of a Turing machine to determine all such facts does not eliminate the facts themselves. From this perspective, computability theory is not discovering the limits of truth. It is discovering the limits of a particular method of accessing truth. The Platonic realm contains more than algorithms can reach.</p>
+                            </div>
+                            
+                            <div style="border-left: 4px solid var(--accent-yellow); padding-left: 1rem;">
+                                <h4 style="color: var(--accent-yellow); margin-bottom: 0.5rem;">The Formalist's Counterquestion</h4>
+                                <p style="font-size: 0.95rem;">The formalist immediately asks: <em>In what sense does this "machine" exist?</em> Not: Can we build it? but: What does existence mean here? The machine cannot be specified as a Turing machine. It cannot be generated by the formal system being discussed. So what exactly is being asserted when someone says: "It exists." Is existence being confused with description? Is the ability to imagine an object enough to grant it ontological status?</p>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 2.5rem;">The Human Problem</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">This leads to an even stranger question. Humans routinely discuss objects that no Turing machine can realize. We discuss halting oracles, infinite sets, arbitrary real numbers, and complete truth predicates. The concepts themselves appear perfectly understandable. Yet the systems we study cannot generate them.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem; font-weight: bold;">So where did the concepts come from?</p>
+                        
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The Platonist sees this as evidence that human thought is reaching toward a genuine mathematical reality. The fact that we can meaningfully refer to non-computable objects suggests that mathematics is not exhausted by computation. The oracle cannot be computed. Yet it can be understood. For the Platonist, understanding is not identical to computation. The mind is capable of referring to structures that no algorithm can fully capture.</p>
+                        
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The formalist is less willing to grant this conclusion. The formalist asks: Have we actually understood the oracle? Or have we merely attached a label to a gap in our formal machinery? Saying <em>"A machine that always solves the Halting Problem"</em> may not represent genuine understanding. It may merely be a placeholder. After all, one can also say: <em>"A machine that answers every question."</em> <strong>The sentence is grammatically meaningful. That does not mean the object itself has been coherently specified.</strong></p>
+                        
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The formalist therefore treats the oracle not as a discovered entity but as a useful boundary marker. It identifies where a formal system stops. Nothing more needs to be assumed.</p>
+
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); padding: 1.5rem; border-radius: 8px; margin-top: 2rem; font-weight: bold; text-align: center;">
+                            <span style="display: block; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--accent-orange); margin-bottom: 0.5rem;">Final Question</span>
+                            <span style="font-size: 1.1rem; line-height: 1.5; color: var(--text-main);">Human beings can describe entities that exceed every Turing-computable procedure.<br><br>Does this reveal a deeper mathematical reality beyond computation, or does it merely reveal the ability of language to speak about things no formal system can generate?</span>
+                        </div>
+                    </div>
+                </div>
+                </section>
+        </main>
+        <main class="single-view tab-content" id="tab-interpretation" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Interpretation Layer: When Syntax Becomes “Objects”</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="section-block">
+                        <h3>The Rules of the Grid</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The Game of Life is a cellular automaton created by mathematician John Conway. Despite having only four simple rules, it can generate surprisingly complex behavior.</p>
+                        <p>The Game takes place on an unbounded grid of square cells. Each cell is either <strong>Alive</strong> or <strong>Dead</strong>. The grid updates every "generation" based on four simple rules regarding its 8 neighbors:</p>
+                        <ul class="symbol-list" style="margin-top: 1rem; font-size: 1rem;">
+                            <li><strong>Underpopulation:</strong> A live cell with &lt; 2 live neighbors dies.</li>
+                            <li><strong>Survival:</strong> A live cell with 2 or 3 live neighbors lives on.</li>
+                            <li><strong>Overpopulation:</strong> A live cell with &gt; 3 live neighbors dies.</li>
+                            <li><strong>Reproduction:</strong> A dead cell with exactly 3 live neighbors becomes alive.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>Interactive Grid</h3>
+                        <p>Draw on the grid to create life, then step or run it continuously (scroll to zoom, drag to pan). The four rules below never mention "objects" or "motion" &mdash; yet try the <strong>pattern challenges</strong>: build a shape that survives unchanged, one that pulses forever, or one that <em>glides</em>. The game detects each the moment it emerges.</p>
+                        
+                        <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--soft-purple-border);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                <div>
+                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--text-main);">Generation: <span id="gol-generation" style="color: var(--accent-purple);">0</span></div>
+                                    <div style="font-size: 1rem; color: var(--text-muted); margin-top: 0.2rem;">Population: <span id="gol-population">0</span></div>
+                                </div>
+                                <div class="input-area" style="margin:0; padding:0; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <button class="btn btn-primary" onclick="golStep()" id="gol-step-btn" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--soft-purple); border-color: var(--accent-purple); color: var(--accent-purple);">Step</button>
+                                    <button class="btn btn-primary" onclick="golTogglePlay()" id="gol-play-btn" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--accent-purple); border-color: var(--accent-purple); color: #fff;">Play</button>
+                                    <button class="btn btn-primary" onclick="golClear()" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--surface); border-color: var(--accent-red); color: var(--accent-red);">Clear</button>
+                                    <button class="btn btn-primary" onclick="golRandomize()" style="padding: 0.4rem 1rem; width: auto; margin:0; background: var(--surface); border-color: var(--accent-blue); color: var(--accent-blue);">Randomize</button>
+                                </div>
+                            </div>
+                            
+                            <div style="width: 100%; aspect-ratio: 16/9; background: var(--surface); border: 2px solid var(--accent-purple); border-radius: 8px; overflow: hidden; position: relative; cursor: crosshair;">
+                                <canvas id="gol-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: var(--overlay); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted); pointer-events: none;">Scroll to Zoom | Drag to Pan</div>
+                            </div>
+
+                            <div class="gol-challenges">
+                                <span class="miu-caption">Pattern challenges — build one, press Play, and let the rules reveal it</span>
+                                <div class="gol-goal-btns">
+                                    <button class="btn btn-icon gol-goal" data-goal="still">Still life</button>
+                                    <button class="btn btn-icon gol-goal" data-goal="oscillator">Oscillator</button>
+                                    <button class="btn btn-icon gol-goal" data-goal="spaceship">Spaceship</button>
+                                </div>
+                                <div id="gol-goal-status" class="gol-goal-status"></div>
+                            </div>
+
+                            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.5rem;">
+                                <button class="btn btn-primary" onclick="golSpawnGlider()" style="padding: 0.3rem 0.8rem; width: auto; margin:0; font-size: 0.9rem;">Spawn Glider</button>
+                                <button class="btn btn-primary" onclick="golSpawnGosper()" style="padding: 0.3rem 0.8rem; width: auto; margin:0; font-size: 0.9rem;">Spawn Gosper Glider Gun</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block" style="margin-top: 2rem;">
+                        <h3>What Are We Seeing?</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">If you spawned a glider, you may have noticed something unusual. A particular arrangement of cells appears to move diagonally across the grid. If you spawned the Gosper Glider Gun, you may have seen a larger structure repeatedly produce these moving patterns.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Nothing in the rules mentions motion, projectiles, machines, or objects. The rules only describe when individual cells live or die. Yet most observers naturally begin describing the simulation using exactly those concepts.</p>
+                        
+                        <div style="background: var(--surface-2); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--soft-purple-border);">
+                            <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Glider</h4>
+                            <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">A pattern that reappears after several generations in a shifted position.</p>
+                            
+                            <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;">Glider Gun</h4>
+                            <p style="font-size: 0.95rem;">A pattern that repeatedly generates gliders.</p>
+                        </div>
+
+                        <h3 style="margin-top: 2.5rem;">Syntax and the Observer's Eye</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Conway's Game of Life provides a striking example of the distinction between syntax and interpretation. At the level of formal description, the system consists only of a grid of cells and a collection of local update rules.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The rules contain no reference to objects, motion, purpose, or meaning.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Yet observers quickly begin to speak about gliders moving across the screen, guns firing projectiles, and even machines capable of computation.</p>
+                        
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-purple-border); border-left: 4px solid var(--accent-purple); padding: 1rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 1.1rem; font-weight: bold;">
+                            This raises a philosophical question: are such structures discovered within the formal system, or are they imposed by the observer?
+                        </div>
+
+                        <h3 style="margin-top: 2.5rem;">Questions to Consider</h3>
+                        <ul class="symbol-list" style="margin-bottom: 2.5rem;">
+                            <li>If nobody had ever named a glider, would gliders still exist?</li>
+                            <li>Is a glider part of the formal system itself, or part of our interpretation of the system?</li>
+                            <li>Why do independent observers identify the same higher-level structures?</li>
+                            <li>Does emergence reveal new entities, or merely new ways of describing old ones?</li>
+                            <li>At what point does a pattern become an object?</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-block" style="margin-top: 2rem;">
+                        <h3>Where Does "Emergence" Live?</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">From a Platonist perspective, the glider is not merely a useful description. It is an objective mathematical structure. Once the rules of the Game of Life are fixed, the existence and behavior of gliders follow necessarily. Human observers do not invent these patterns any more than they invent prime numbers; they merely discover them. The remarkable fact that independent observers identify the same structures, prove the same properties, and construct the same computational devices is often taken as evidence that these patterns possess a form of objective mathematical reality.</p>
+                        
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">But the formalist asks a different set of questions:</p>
+                        <ul class="symbol-list" style="margin-bottom: 1.5rem;">
+                            <li>Is the glider actually "in" the system, or is it a compression scheme used by the human mind to avoid tracking thousands of individual cell updates?</li>
+                            <li>If the system is just pure syntax, isn't "emergence" simply a name for our inability to avoid interpreting rule-generated structure as objects?</li>
+                        </ul>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Rather than treating the glider as a primitive constituent of the formal system, the formalist treats it as a higher-level description that emerges from the interaction between the system's rules and the observer's way of organizing information. We call it "emergence" when a formal system generates outputs that are easier to describe with a new vocabulary (objects, motion) than with the original rules (cell state updates).</p>
+
+                        <h3 style="margin-top: 2rem;">The Philosophical Layer</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">This brings us back to the core tension. A formal system is just a mechanical generator of strings or states. The moment we say it "computes," "simulates," or "contains objects," we have stepped outside the formalism and added an interpretation layer.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">By recognizing this, we do not destroy the beauty of emergence. Instead, we open a new philosophical horizon: we can study not just the rules themselves, but the extraordinary capacity of simple rule sets to force observers into inventing new vocabularies just to keep up.</p>
+
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-purple-border); border-left: 4px solid var(--accent-purple); padding: 1.5rem; border-radius: 8px; margin-top: 2rem; font-weight: bold; text-align: center;">
+                            <span style="display: block; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--accent-purple); margin-bottom: 0.5rem;">Final Question</span>
+                            <span style="font-size: 1.2rem; color: var(--text-main);">When we say that a glider "exists," are we describing the formal system, or ourselves?</span>
+                        </div>
+                    </div>
+                </div>
+                </section>
+        </main>
+
+
+
+        <main class="single-view tab-content" id="tab-foundations" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Formal Systems & Semantics</h2>
+                    <span class="badge" style="background: var(--accent-blue); color: #fff; border: none;">The Foundation</span>
+                </div>
+                <div class="panel-body">
+                    <div class="instruction" style="text-align: left; padding: 1.5rem; background: var(--surface-2); border-radius: 8px; border: 1px solid var(--soft-blue-border); font-size: 1.05rem; line-height: 1.6;">
+                        <p style="margin-bottom: 1rem;">In the philosophy of mathematics, <strong>Realism</strong> (or Platonism) is the view that mathematical objects—like numbers, sets, and geometric shapes—exist independently of human thought, and that mathematics is the discovery of universal truths about them.</p>
+                        <p>In contrast, <strong>Formalism</strong> is the view that mathematics is not about discovering external truths at all. Instead, it is the study of formal systems: rule-governed games played with symbols. From this perspective, mathematics simply generates strings of symbols according to strict mechanical rules, and any "meaning" or "truth" is just an interpretive layer we choose to project onto those strings afterward.</p>
+                    </div>
+                    <div class="section-block">
+                        <h3>The MIU Puzzle</h3>
+                        <p class="prose">Here is a formal system stripped of all meaning. You begin from the string <strong class="mono">MI</strong> and may only transform it with four mechanical rules &mdash; no arithmetic, no interpretation, just symbol-shuffling. Each puzzle names a <em>target</em>; your job is to reach it. The real question is never <em>what MIU means</em>, but which strings a closed rule-system can and cannot reach.</p>
+
+                        <div class="miu-game demo-panel">
+                            <div class="miu-header">
+                                <span class="pill miu-level" id="miu-level">Puzzle 1 / 6</span>
+                                <div class="miu-goal">Reach <span id="miu-target" class="mono miu-target">MIU</span> from <span class="mono" id="miu-start">MI</span></div>
+                                <div class="miu-moves">Moves <b id="miu-move-count">0</b> &middot; Par <b id="miu-par">1</b></div>
+                            </div>
+
+                            <div id="miu-teach" class="miu-teach"></div>
+
+                            <div class="miu-current-wrap">
+                                <span class="miu-caption">Current theorem</span>
+                                <div id="miu-current" class="miu-current mono">MI</div>
+                            </div>
+
+                            <div class="miu-rules">
+                                <button class="btn miu-rule" data-rule="1"><b>Rule 1</b><span class="mono">xI &rarr; xIU</span></button>
+                                <button class="btn miu-rule" data-rule="2"><b>Rule 2</b><span class="mono">Mx &rarr; Mxx</span></button>
+                                <button class="btn miu-rule" data-rule="3"><b>Rule 3</b><span class="mono">III &rarr; U</span></button>
+                                <button class="btn miu-rule" data-rule="4"><b>Rule 4</b><span class="mono">UU &rarr; &empty;</span></button>
+                            </div>
+
+                            <div class="miu-builder controls-row" id="miu-builder" style="display: none;">
+                                <span class="miu-caption">Append:</span>
+                                <button class="btn btn-icon" data-char="M">M</button>
+                                <button class="btn btn-icon" data-char="I">I</button>
+                                <button class="btn btn-icon" data-char="U">U</button>
+                            </div>
+
+                            <div class="controls-row miu-controls">
+                                <button id="miu-undo" class="btn btn-icon">&larr; Undo</button>
+                                <button id="miu-reset" class="btn btn-icon">Reset</button>
+                                <button id="miu-free" class="btn btn-icon">Free play</button>
+                            </div>
+
+                            <div class="miu-trail-wrap">
+                                <span class="miu-caption">Your derivation</span>
+                                <ol id="miu-trail" class="miu-trail"></ol>
+                            </div>
+
+                            <div id="miu-feedback" class="miu-feedback"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-block" style="margin-top: 2rem;">
+                        <h3>What the Puzzle Just Taught You</h3>
+                        <p>Every move you made was pure syntax — no move ever asked what <span class="mono">M</span>, <span class="mono">I</span>, or <span class="mono">U</span> <em>mean</em>. And yet you hit a wall: <strong class="mono">MU</strong> stayed out of reach no matter how you tried.</p>
+                        <p style="margin-top: 1rem;">That wall is the whole point. It wasn't a lack of cleverness on your part — the rules themselves make <strong class="mono">MU</strong> unreachable, and the system carries the proof of its own limit inside it (the count of I's is doubled, or dropped by three, but never driven to a multiple of three). A formal game with four trivial rules already contains true-looking statements it can never derive. Hold onto that feeling: it is exactly the shape of the deeper limits — Gödel's and Turing's — waiting in the chapters ahead.</p>
+                    </div>
+
+                    <div style="border-top: 2px dashed var(--soft-green-border); margin: 3rem 0; position: relative;">
+                        <span style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--surface-2); padding: 0 1rem; color: var(--accent-green); font-weight: bold; text-transform: uppercase; letter-spacing: 0.1rem; font-size: 0.9rem;">Meaning is External</span>
+                    </div>
+
+                    <p class="instruction" style="margin-top: 2rem;">A semantic interpretation is not part of the system. It is a mapping from syntax into a model that exists outside the system.</p>
+                    
+                    <div class="section-block" style="background-color: var(--surface-2); border: 1px solid var(--soft-green-border); border-left: 4px solid var(--accent-green); padding: 1.5rem; border-radius: 8px;">
+                        <h3>The Interpretation Toggle</h3>
+                        <p>Consider the valid string <code>- p -- q ---</code> generated by a simple rule. How do we interpret it?</p>
+                        
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;">
+                            <button class="btn btn-primary" style="width: auto; background: var(--surface); border-color: var(--accent-green); color: var(--accent-green);" onclick="setInterpretation(1)">Interpretation A (Math)</button>
+                            <button class="btn btn-primary" style="width: auto; background: var(--surface); border-color: var(--accent-green); color: var(--accent-green);" onclick="setInterpretation(2)">Interpretation B (Apples)</button>
+                        </div>
+                        
+                        <div style="margin-top: 2rem; background: var(--surface); padding: 2rem; border-radius: 8px; border: 1px solid var(--soft-green-border); text-align: center;">
+                            <h4 style="font-family: 'JetBrains Mono', monospace; font-size: 2rem; margin-bottom: 1rem; color: var(--text-main);">- p -- q ---</h4>
+                            <div id="interpretation-display" style="font-size: 1.5rem; color: var(--accent-green); font-style: italic; min-height: 2.5rem;">
+                                Select an interpretation above.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-block" style="margin-top: 2rem;">
+                        <h3>Meaning is Layered, Not Inherent</h3>
+                        <p>The string has no intrinsic meaning. It is not a claim, not a statement, not a description. It is only a configuration produced by rule application.</p>
+                        <p style="margin-top: 1rem;">Whether it becomes “math”, “language”, or “data about apples” depends entirely on the interpretation layer placed on top of it.</p>
+                        <p style="margin-top: 1rem;"><strong>Open Question:</strong> Does a formal system "fail to capture truth," or is "truth" just an interpretive layer we place on top of what can be derived?</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main class="single-view tab-content" id="tab-conclusion" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Physics as Model Selection</h2>
+                    <span class="badge" style="background: var(--accent-yellow); color: #fff; border: none;">The Universe as a System</span>
+                </div>
+                <div class="panel-body">
+                    <div class="section-block">
+                        <h3>Physics Through a Formalist Lens</h3>
+                        <p style="margin-bottom: 1rem;">Let us begin with a strong assumption:</p>
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-yellow-border); border-left: 4px solid var(--accent-yellow); padding: 1rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 1.1rem; font-weight: bold;">
+                            The universe, and everything that exists within it, is governed by a consistent formal system.
+                        </div>
+                        <p style="margin-bottom: 1rem;">If we truly adopt this assumption, then there is no room for "things that exist" outside the rules. Every event, every particle, every observation would already be a consequence of the system. There would be no external realm of truth waiting beyond the axioms.</p>
+                        <p style="margin-bottom: 1rem;">At first glance this may seem like a radically different position from Platonism, but notice something surprising: it ends discussion just as quickly. If reality simply <em>is</em> a formal system, then every observation is already accounted for by definition. The statement is as complete and assertive as the Platonic claim that reality is grounded in a fully determined mathematical structure. In both cases, there is little left to investigate philosophically.</p>
+                        <p style="font-weight: bold; margin-bottom: 1rem;">Physics traditionally proceeds differently.</p>
+                        <p style="margin-bottom: 1rem;">Rather than beginning with a claim about what reality ultimately is, physics begins with observation. In the spirit of <em>"I think, therefore I am"</em>, one might say:</p>
+                        <p style="margin: 1rem 0; font-size: 1.1rem; font-style: italic; color: var(--accent-yellow);">"I observe, therefore there is something to explain."</p>
+                        <p style="margin-bottom: 1rem;">Or more practically:</p>
+                        <p style="margin: 1rem 0; font-size: 1.1rem; font-style: italic; color: var(--accent-yellow);">"I model, therefore I understand."</p>
+                        <p style="margin-bottom: 1rem;">A model is not reality. A model is a formal structure that successfully organizes observations. Newtonian mechanics is not reality itself, yet it remains one of the most successful models ever constructed because it consistently describes an enormous range of phenomena.</p>
+                        <p style="margin-bottom: 1rem;">This shift is subtle but important. The formalist need not ask whether a model captures an ultimate truth. Instead, the question becomes:</p>
+                        <div style="font-size: 1.1rem; font-weight: bold; text-align: center; margin: 1.5rem 0; color: var(--accent-yellow);">
+                            How well does a model organize and predict what we observe?
+                        </div>
+                        <p style="margin-bottom: 1rem;">In this view, a physical law is essentially a <strong>mathematical compression scheme</strong>. Instead of recording the exact position of every falling apple in history (an uncompressed list of raw data), we compress all those observations into a single, compact syntactic rule: <em>F = ma</em>. A formal system in physics is considered "viable" if it can compress vast amounts of observational data into a small set of axioms and transition rules without losing predictive accuracy.</p>
+                    </div>
+                    <div class="section-block">
+                        <h3>The Dictionary</h3>
+                        <p>If we want to use formal systems to describe reality, we must map abstract symbols to physical concepts:</p>
+                        <table class="analogy-table" style="width: 100%; max-width: 600px; margin: 1.5rem auto; border-collapse: collapse; text-align: left; background-color: var(--surface); box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--soft-yellow-border); border-radius: 8px; overflow: hidden;">
+                            <thead>
+                                <tr style="background-color: var(--surface); border-bottom: 2px solid var(--accent-yellow);">
+                                    <th style="padding: 0.8rem; color: var(--text-main);">Formal System</th>
+                                    <th style="padding: 0.8rem; color: var(--text-main);">Physics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--soft-yellow-border);">
+                                    <td style="padding: 0.8rem;">State / String</td>
+                                    <td style="padding: 0.8rem;">State of the universe</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--soft-yellow-border);">
+                                    <td style="padding: 0.8rem;">Transition rule</td>
+                                    <td style="padding: 0.8rem;">Physical law</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--soft-yellow-border);">
+                                    <td style="padding: 0.8rem;">Derivation</td>
+                                    <td style="padding: 0.8rem;">Evolution / Prediction</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--soft-yellow-border);">
+                                    <td style="padding: 0.8rem;">Theorem</td>
+                                    <td style="padding: 0.8rem;">Consequence of the laws</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.8rem;">Model</td>
+                                    <td style="padding: 0.8rem;">Possible universe</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section-block physics-sandbox">
+                        <div class="physics-topbar">
+                            <h3>Reverse-Engineering the Laws</h3>
+                            <span id="paradigm-counter" class="pill physics-epoch">Epoch 1 / 3</span>
+                        </div>
+                        <p class="prose">You are handed a running universe and <strong id="physics-candidate-count">5</strong> candidate law-systems &mdash; each a set of rewrite rules over the alphabet {<strong id="physics-alphabet-display" class="mono">△, ◻, ◯</strong>}. Exactly one generates what you see. Reverse the usual direction of physics: watch the universe evolve and <em>rule out</em> every law that cannot reproduce the record.</p>
+
+                        <div class="physics-stage">
+                            <div class="physics-obs-panel">
+                                <p class="physics-label">Observed history</p>
+                                <div id="physics-history" class="physics-history"></div>
+                            </div>
+                            <div class="physics-status">
+                                <div class="physics-stat"><span class="physics-stat-num" id="physics-remaining">5</span><span class="physics-stat-label">laws left</span></div>
+                                <div class="physics-stat"><span class="physics-stat-num" id="physics-obs-count">0</span><span class="physics-stat-label">observations</span></div>
+                                <div class="physics-stat-mini">Misfires <span id="bad-elim-counter">0</span> &middot; Hints <span id="hint-counter">0</span></div>
+                            </div>
+                        </div>
+
+                        <div id="physics-explanation" class="callout accent-yellow" style="display: none;"></div>
+
+                        <div class="controls-row physics-controls">
+                            <button id="phys-observe" class="btn physics-observe-btn">Observe next state &rarr;</button>
+                            <button id="phys-hint" class="btn btn-icon">Hint</button>
+                            <button id="phys-reset" class="btn btn-icon">Reset</button>
+                        </div>
+
+                        <p class="physics-hint-text">Click a law-system you believe is impossible to rule it out.</p>
+
+                        <div id="physics-models-grid" class="physics-grid"></div>
+                    </div>
+                    
+                    <div class="section-block" style="margin-top: 2rem;">
+                        <h3>When Models Reach Their Limits</h3>
+                        <p style="margin-bottom: 1rem;">Now a fascinating question emerges.</p>
+                        <p style="margin-bottom: 1rem;">Suppose we observe a phenomenon that is not described by our current model, yet never directly contradicts it. Is this merely a gap in the model? Or is it revealing something deeper about the nature of formal descriptions themselves?</p>
+                        <p style="margin-bottom: 1rem;">Gödel's incompleteness theorem provides an intriguing analogy. It shows that sufficiently expressive formal systems encounter statements that cannot be settled from within the system itself. Whether or not this phenomenon appears in physics is a separate question, but it suggests a broader philosophical possibility:</p>
+                        
+                        <div style="background: var(--surface-2); border: 1px solid var(--soft-blue-border); border-left: 4px solid var(--accent-blue); padding: 1rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0; font-size: 1.05rem; font-weight: bold;">
+                            Could there be aspects of reality that continually escape complete formal capture, not because the universe is inconsistent, but because formal description itself has limits?
+                        </div>
+                        
+                        <p style="margin-bottom: 1rem;">A Platonist may interpret such situations as evidence that our current framework is only a partial glimpse of a larger mathematical reality.</p>
+                        <p style="margin-bottom: 1rem;">The formalist is inclined to ask different questions:</p>
+                        <ul class="symbol-list" style="margin-bottom: 1.5rem;">
+                            <li>Can there ever be a complete description of reality?</li>
+                            <li>If a final theory existed, how would we recognize it?</li>
+                            <li>Will every sufficiently rich model eventually encounter new forms of incompleteness?</li>
+                            <li>What is the meaning of a limitation that appears in every formal framework we construct?</li>
+                            <li>Are the boundaries we encounter properties of reality, or properties of our methods of description?</li>
+                        </ul>
+                        <p style="margin-bottom: 1rem; font-weight: bold; color: var(--accent-yellow);">These questions do not reject meaning or depth. They relocate them.</p>
+
+                        <h3 style="margin-top: 2.5rem;">Where Does Meaning Live?</h3>
+                        <p style="margin-bottom: 1rem;">The Platonic view often places meaning in an external mathematical reality. Formal systems are valuable because they approximate that reality.</p>
+                        <p style="margin-bottom: 1rem;">The formalist perspective asks us to consider another possibility:</p>
+                        <div style="font-size: 1.1rem; font-style: italic; border-left: 3px solid var(--accent-yellow); padding-left: 1rem; margin: 1.5rem 0;">
+                            Perhaps meaning does not reside beyond the formal system, but in the relationship between observations, models, and the limits of those models.
+                        </div>
+                        <p style="margin-bottom: 1rem;">This does not make mathematics or physics less profound. In many ways it makes them more philosophically open.</p>
+                        <p style="margin-bottom: 1rem;">Instead of asking what ultimate truths exist beyond our theories, we can investigate why certain descriptions succeed, why others fail, how complexity emerges from simple rules, and whether the idea of a final complete description is itself meaningful.</p>
+                        <p style="margin-bottom: 1rem;">The sharpest edge of this viewpoint is the following:</p>
+                        <div style="background: var(--soft-yellow); padding: 1rem; border-radius: 8px; margin: 1.5rem 0; font-weight: bold; text-align: center;">
+                            If all we ever have are observations, and all our explanations take the form of formal models, then "truth" may never be something we discover outside those models.
+                        </div>
+                        <p style="margin-bottom: 1rem;">What we can discuss are observations, consistencies, derivations, predictions, failures, and refinements. The moment we speak about truths beyond every possible model, we have stepped into philosophy rather than physics.</p>
+                        <p>That does not make such discussions invalid. On the contrary, they are some of the deepest discussions available. The formalist contribution is simply to make explicit where the mathematics ends and where the philosophical assumptions begin. It reminds us that the limits revealed by Gödel need not only point toward a higher realm; they can also point toward a richer understanding of models, meaning, and explanation themselves.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="floating-nav" style="display: none;"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1639 @@
+// Derivation Highlight Logic
+function highlightRef(ids) {
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('highlighted');
+    });
+}
+
+function clearRef() {
+    document.querySelectorAll('.derivation-list li').forEach(el => {
+        el.classList.remove('highlighted');
+    });
+}
+
+function highlightRefPulse(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.classList.add('highlighted');
+        setTimeout(() => el.classList.remove('highlighted'), 800);
+    }
+}
+
+// Unroller Logic
+const lhsContainer = document.getElementById('lhs-container');
+const rhsContainer = document.getElementById('rhs-container');
+const progressCounter = document.getElementById('progress-counter');
+const undoBtn = document.getElementById('undo-btn');
+const redoBtn = document.getElementById('redo-btn');
+
+let lhsState = 0;
+let rhsState = 0;
+let defsApplied = 0;
+
+let actionHistory = [];
+let redoHistory = [];
+
+const LHS_STATES = [
+    `<span class="expandable expanded-node" onclick="stepLHS()">G</span>`,
+    `<span class="expandable expanded-node" onclick="stepLHS()">&psi;(n)</span>`,
+    `<span class="expandable expanded-node" onclick="stepLHS()">&psi;(&ulcorner;&psi;&urcorner;)</span>`,
+    `<span class="expandable expanded-node" onclick="stepLHS()">&varphi;(Sub(&ulcorner;&psi;&urcorner;, &ulcorner;&psi;&urcorner;))</span>`,
+    `<span class="expandable expanded-node" onclick="stepLHS()" style="color: var(--accent-green);">&not;Prov(Sub(&ulcorner;&psi;&urcorner;, &ulcorner;&psi;&urcorner;))</span>`,
+    `<span class="expandable expanded-node" onclick="stepLHS()">&not;Prov(Sub(&ulcorner;&varphi;(Sub(x,x))&urcorner;, &ulcorner;&varphi;(Sub(x,x))&urcorner;))</span>`,
+    `<span class="expanded-node" style="color: var(--accent-green);">&not;Prov(Sub(&ulcorner;&not;Prov(Sub(x,x))&urcorner;, &ulcorner;&not;Prov(Sub(x,x))&urcorner;))</span>`
+];
+
+const LHS_DEF_REFS = [
+    null,
+    'def-5', // G -> psi(n)
+    'def-4', // n -> quote psi
+    'def-3', // psi(x) -> phi(Sub(x,x))
+    'def-2', // phi(x) -> ~Prov(x)
+    'def-3', // quote psi -> quote phi(Sub(x,x))
+    'def-2'  // quote phi -> quote ~Prov
+];
+
+const RHS_STATES = [
+    ` &equiv; &not;Prov(<span class="expandable expanded-node" onclick="stepRHS()">&ulcorner;G&urcorner;</span>)`,
+    ` &equiv; &not;Prov(<span class="expandable expanded-node" onclick="stepRHS()">Sub(n, n)</span>)`,
+    ` &equiv; <span class="expandable expanded-node" onclick="stepRHS()" style="color: var(--accent-green);">&not;Prov(Sub(&ulcorner;&psi;&urcorner;, &ulcorner;&psi;&urcorner;))</span>`,
+    ` &equiv; <span class="expandable expanded-node" onclick="stepRHS()">&not;Prov(Sub(&ulcorner;&varphi;(Sub(x,x))&urcorner;, &ulcorner;&varphi;(Sub(x,x))&urcorner;))</span>`,
+    ` &equiv; <span class="expanded-node" style="color: var(--accent-green);">&not;Prov(Sub(&ulcorner;&not;Prov(Sub(x,x))&urcorner;, &ulcorner;&not;Prov(Sub(x,x))&urcorner;))</span>`
+];
+
+const RHS_DEF_REFS = [
+    null,
+    'step-8', // quote G -> Sub(n,n)
+    'def-4',   // n -> quote psi
+    'def-3', // quote psi -> quote phi(Sub(x,x))
+    'def-2'  // quote phi -> quote ~Prov
+];
+
+function stepLHS() {
+    if (lhsState < LHS_STATES.length - 1) {
+        actionHistory.push('LHS');
+        redoHistory = [];
+        lhsState++;
+        defsApplied++;
+        lhsContainer.innerHTML = LHS_STATES[lhsState];
+        if (LHS_DEF_REFS[lhsState]) highlightRefPulse(LHS_DEF_REFS[lhsState]);
+        updateControls();
+    }
+}
+
+function stepRHS() {
+    if (rhsState < RHS_STATES.length - 1) {
+        actionHistory.push('RHS');
+        redoHistory = [];
+        rhsState++;
+        defsApplied++;
+        rhsContainer.innerHTML = RHS_STATES[rhsState];
+        if (RHS_DEF_REFS[rhsState]) highlightRefPulse(RHS_DEF_REFS[rhsState]);
+        updateControls();
+    }
+}
+
+function undoStep() {
+    if (actionHistory.length > 0) {
+        const lastAction = actionHistory.pop();
+        redoHistory.push(lastAction);
+        
+        if (lastAction === 'LHS') {
+            lhsState--;
+            lhsContainer.innerHTML = LHS_STATES[lhsState];
+        } else {
+            rhsState--;
+            rhsContainer.innerHTML = RHS_STATES[rhsState];
+        }
+        
+        defsApplied--;
+        updateControls();
+    }
+}
+
+function redoStep() {
+    if (redoHistory.length > 0) {
+        const nextAction = redoHistory.pop();
+        actionHistory.push(nextAction);
+        
+        if (nextAction === 'LHS') {
+            lhsState++;
+            lhsContainer.innerHTML = LHS_STATES[lhsState];
+            if (LHS_DEF_REFS[lhsState]) highlightRefPulse(LHS_DEF_REFS[lhsState]);
+        } else {
+            rhsState++;
+            rhsContainer.innerHTML = RHS_STATES[rhsState];
+            if (RHS_DEF_REFS[rhsState]) highlightRefPulse(RHS_DEF_REFS[rhsState]);
+        }
+        
+        defsApplied++;
+        updateControls();
+    }
+}
+
+function updateControls() {
+    progressCounter.textContent = defsApplied;
+    undoBtn.disabled = actionHistory.length === 0;
+    redoBtn.disabled = redoHistory.length === 0;
+}
+
+function resetUnroller() {
+    lhsState = 0;
+    rhsState = 0;
+    defsApplied = 0;
+    actionHistory = [];
+    redoHistory = [];
+    
+    lhsContainer.innerHTML = LHS_STATES[0];
+    rhsContainer.innerHTML = RHS_STATES[0];
+    
+    updateControls();
+}
+
+// Initialize Unroller
+resetUnroller();
+
+
+// ==========================================
+// TAB LOGIC
+// ==========================================
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    const targetTab = document.getElementById('tab-' + tabId);
+    if (targetTab) {
+        targetTab.style.display = 'flex';
+        setTimeout(() => targetTab.classList.add('active'), 10);
+    }
+    
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    if (targetBtn) {
+        targetBtn.classList.add('active');
+    }
+    
+    // Scroll to top when switching tabs for walkthrough flow
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Update floating navigation
+    updateFloatingNav(tabId);
+}
+
+const tabOrder = ['proposal', 'about', 'home', 'foundations', 'truth', 'applied', 'interpretation', 'conclusion'];
+const tabNames = {
+    'proposal': 'Project Proposal',
+    'about': 'About the Project',
+    'home': 'Home',
+    'foundations': '1. Formal Systems',
+    'truth': '2. Truth',
+    'applied': '3. Computability',
+    'interpretation': '4. Interpretation',
+    'conclusion': '5. Physics'
+};
+
+function updateFloatingNav(tabId) {
+    const currentIndex = tabOrder.indexOf(tabId);
+    const prevBtn = document.getElementById('floating-prev');
+    const nextBtn = document.getElementById('floating-next');
+    const currentTitle = document.getElementById('floating-current');
+    
+    if (currentTitle) {
+        currentTitle.textContent = tabNames[tabId];
+    }
+    
+    if (prevBtn) {
+        prevBtn.disabled = (currentIndex <= 0);
+    }
+    
+    if (nextBtn) {
+        nextBtn.disabled = (currentIndex >= tabOrder.length - 1);
+    }
+}
+
+function navPrev() {
+    let activeTab = 'home';
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        if (tab.classList.contains('active')) activeTab = tab.id.replace('tab-', '');
+    });
+    let idx = tabOrder.indexOf(activeTab);
+    if (idx > 0) switchTab(tabOrder[idx - 1]);
+}
+
+function navNext() {
+    let activeTab = 'home';
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        if (tab.classList.contains('active')) activeTab = tab.id.replace('tab-', '');
+    });
+    let idx = tabOrder.indexOf(activeTab);
+    if (idx < tabOrder.length - 1) switchTab(tabOrder[idx + 1]);
+}
+
+// ==========================================
+// GÖDEL ARITHMETIZATION SANDBOX LOGIC
+// ==========================================
+
+const dictionary = {
+    '0': 1n, 'S': 2n, '=': 3n, '¬': 4n, 'x': 5n,
+    '(': 6n, ')': 7n, '⌜': 8n, '⌝': 9n, ',': 10n,
+    'Prov': 11n,
+    'Sub': 12n,
+    'A': 13n, 'B': 14n, 'C': 15n, 'D': 16n, 'E': 17n
+};
+
+const primes = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n];
+
+// Sandbox Memory State
+const memory = {
+    'alpha': { symbol: 'α', constant: 'A', formula: null, godelNumber: null },
+    'beta':  { symbol: 'β', constant: 'B', formula: null, godelNumber: null },
+    'gamma': { symbol: 'γ', constant: 'C', formula: null, godelNumber: null },
+    'delta': { symbol: 'δ', constant: 'D', formula: null, godelNumber: null },
+    'epsilon': { symbol: 'ε', constant: 'E', formula: null, godelNumber: null }
+};
+
+let formulaTokens = [];
+let cursorIndex = 0;
+let sandboxHistory = [{ tokens: [], cursor: 0 }];
+let historyIndex = 0;
+
+const formulaDisplay = document.getElementById('formula-display');
+const factorizationDisplay = document.getElementById('factorization-display');
+const scientificNumberDisplay = document.getElementById('scientific-number');
+const unfoldedDisplay = document.getElementById('unfolded-display');
+const memoryGrid = document.getElementById('memory-grid');
+
+function pushSandboxHistory() {
+    sandboxHistory = sandboxHistory.slice(0, historyIndex + 1);
+    sandboxHistory.push({ tokens: [...formulaTokens], cursor: cursorIndex });
+    historyIndex++;
+    updateSandboxControls();
+}
+
+function undoSandbox() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        restoreSandboxHistory();
+    }
+}
+
+function redoSandbox() {
+    if (historyIndex < sandboxHistory.length - 1) {
+        historyIndex++;
+        restoreSandboxHistory();
+    }
+}
+
+function restoreSandboxHistory() {
+    let state = sandboxHistory[historyIndex];
+    formulaTokens = [...state.tokens];
+    cursorIndex = state.cursor;
+    updateFormulaDisplay();
+    updateSandboxControls();
+}
+
+function updateSandboxControls() {
+    const undoBtn = document.getElementById('sandbox-undo-btn');
+    const redoBtn = document.getElementById('sandbox-redo-btn');
+    if (undoBtn) undoBtn.disabled = (historyIndex === 0);
+    if (redoBtn) redoBtn.disabled = (historyIndex === sandboxHistory.length - 1);
+}
+
+function formatScientific(bigIntNum) {
+    if (bigIntNum === 0n) return "0";
+    let str = bigIntNum.toString();
+    if (str.length <= 5) return str;
+    let exponent = str.length - 1;
+    let mantissa = str[0] + "." + str.substring(1, 4);
+    return `${mantissa} &times; 10<sup>${exponent}</sup>`;
+}
+
+function expandFormula(formula, visualOnly = false) {
+    let expanded = formula;
+    let iterations = 0;
+    
+    let needsExpansion = true;
+    while(needsExpansion && iterations < 20) {
+        needsExpansion = false;
+        
+        for (const [key, data] of Object.entries(memory)) {
+            if (!data.formula) continue;
+            
+            let symbolIndex = expanded.indexOf(data.symbol);
+            if (symbolIndex !== -1) {
+                needsExpansion = true;
+                
+                if (symbolIndex + data.symbol.length < expanded.length && expanded[symbolIndex + data.symbol.length] === '(') {
+                    let openCount = 1;
+                    let argStart = symbolIndex + data.symbol.length + 1;
+                    let argEnd = -1;
+                    for (let i = argStart; i < expanded.length; i++) {
+                        if (expanded[i] === '(') openCount++;
+                        else if (expanded[i] === ')') openCount--;
+                        
+                        if (openCount === 0) {
+                            argEnd = i;
+                            break;
+                        }
+                    }
+                    
+                    if (argEnd !== -1) {
+                        let arg = expanded.substring(argStart, argEnd);
+                        let substituted = data.formula.replaceAll('x', arg);
+                        let wrap = substituted.length > 1 ? `(${substituted})` : substituted;
+                        
+                        expanded = expanded.substring(0, symbolIndex) + wrap + expanded.substring(argEnd + 1);
+                        break; 
+                    }
+                }
+                
+                let wrap = data.formula.length > 1 ? `(${data.formula})` : data.formula;
+                expanded = expanded.substring(0, symbolIndex) + wrap + expanded.substring(symbolIndex + data.symbol.length);
+                break;
+            }
+        }
+        iterations++;
+    }
+
+    if (visualOnly) {
+        for (const [key, data] of Object.entries(memory)) {
+            if (data.constant && expanded.includes(data.constant)) {
+                expanded = expanded.replaceAll(data.constant, `[S...S0 (${data.constant} times)]`);
+            }
+        }
+        expanded = expanded.replaceAll("Prov", "∃p Proof");
+    }
+    
+    return expanded;
+}
+
+function calculateEncoding(formula) {
+    if (formula.length === 0) return { factorization: "", godelNumber: 0n, visualHTML: "" };
+    
+    let expandedFormula = expandFormula(formula, false);
+    
+    let factHTML = "";
+    let visualHTML = "";
+    let godelNumber = 1n;
+    
+    let tokens = [];
+    let i = 0;
+    while (i < expandedFormula.length) {
+        if (expandedFormula.startsWith("Prov", i)) { tokens.push("Prov"); i += 4; }
+        else if (expandedFormula.startsWith("Sub", i)) { tokens.push("Sub"); i += 3; }
+        else { tokens.push(expandedFormula[i]); i++; }
+    }
+
+    for (let j = 0; j < tokens.length; j++) {
+        const sym = tokens[j];
+        const code = dictionary[sym] || 1n;
+        const prime = primes[j % primes.length]; 
+        if (j > 0) factHTML += " &times; ";
+        factHTML += `${prime}<sup>${code}</sup>`;
+        godelNumber *= prime ** code;
+        
+        visualHTML += `
+        <div class="token-col">
+            <span class="token-sym">${sym}</span>
+            <span class="token-prime">${prime}</span>
+        </div>`;
+    }
+
+    return { factorization: factHTML, godelNumber: godelNumber, visualHTML: visualHTML };
+}
+
+function addSymbol(sym) {
+    formulaTokens.splice(cursorIndex, 0, sym);
+    cursorIndex++;
+    pushSandboxHistory();
+    formulaDisplay.classList.remove('formula-error');
+    updateFormulaDisplay();
+}
+
+function clearFormula() {
+    formulaTokens = [];
+    cursorIndex = 0;
+    pushSandboxHistory();
+    formulaDisplay.classList.remove('formula-error');
+    updateFormulaDisplay();
+}
+
+function setCursor(idx) {
+    cursorIndex = idx;
+    formulaDisplay.focus();
+    updateFormulaDisplay();
+}
+
+function updateFormulaDisplay() {
+    if (formulaTokens.length === 0) {
+        formulaDisplay.innerHTML = '<span class="sandbox-cursor"></span><span class="placeholder">Select symbols to build a formula...</span>';
+        factorizationDisplay.innerHTML = "2<sup>?</sup> &times; 3<sup>?</sup> ...";
+        scientificNumberDisplay.innerHTML = "&ulcorner;Formula&urcorner; &approx; 0";
+        unfoldedDisplay.innerHTML = '<span class="placeholder">Awaiting input...</span>';
+        return;
+    }
+    
+    let displayHTML = "";
+    // Special clickable zone for index 0
+    displayHTML += `<span class="formula-token" onclick="setCursor(0)" style="padding-left: 5px;">&#8203;</span>`;
+    
+    for (let i = 0; i <= formulaTokens.length; i++) {
+        if (i === cursorIndex) {
+            displayHTML += '<span class="sandbox-cursor"></span>';
+        }
+        if (i < formulaTokens.length) {
+            displayHTML += `<span class="formula-token" onclick="setCursor(${i+1})">${formulaTokens[i]}</span>`;
+        }
+    }
+    
+    formulaDisplay.innerHTML = displayHTML;
+
+    let currentFormulaString = formulaTokens.join('');
+    const result = calculateEncoding(currentFormulaString);
+    factorizationDisplay.innerHTML = result.factorization;
+    scientificNumberDisplay.innerHTML = `&ulcorner;Formula&urcorner; &approx; ${formatScientific(result.godelNumber)}`;
+    
+    unfoldedDisplay.innerHTML = result.visualHTML;
+}
+
+document.addEventListener('keydown', (e) => {
+    if (document.activeElement === formulaDisplay) {
+        if (e.key === 'ArrowLeft') {
+            cursorIndex = Math.max(0, cursorIndex - 1);
+            updateFormulaDisplay();
+            e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+            cursorIndex = Math.min(formulaTokens.length, cursorIndex + 1);
+            updateFormulaDisplay();
+            e.preventDefault();
+        } else if (e.key === 'Backspace') {
+            if (cursorIndex > 0) {
+                formulaTokens.splice(cursorIndex - 1, 1);
+                cursorIndex--;
+                pushSandboxHistory();
+                updateFormulaDisplay();
+            }
+            e.preventDefault();
+        } else if (e.key === 'Delete') {
+            if (cursorIndex < formulaTokens.length) {
+                formulaTokens.splice(cursorIndex, 1);
+                pushSandboxHistory();
+                updateFormulaDisplay();
+            }
+            e.preventDefault();
+        } else {
+            const keyMap = {
+                '0': '0', 'S': 'S', 's': 'S', '=': '=', 'x': 'x', 'X': 'x',
+                '(': '(', ')': ')', ',': ',', '!': '¬', 'p': 'Prov', 'P': 'Prov'
+            };
+            if (keyMap[e.key]) {
+                addSymbol(keyMap[e.key]);
+                e.preventDefault();
+            }
+        }
+    }
+});
+
+function showError() {
+    formulaDisplay.classList.remove('formula-error');
+    void formulaDisplay.offsetWidth;
+    formulaDisplay.classList.add('formula-error');
+}
+
+function renderMemoryBank() {
+    memoryGrid.innerHTML = '';
+    let hasItems = false;
+    
+    for (const [key, data] of Object.entries(memory)) {
+        if (data.formula) {
+            hasItems = true;
+            const slot = document.createElement('div');
+            slot.className = 'memory-slot fade-in';
+            
+            let constHTML = "";
+            if (data.constant) {
+                constHTML = `<span class="slot-constant">${data.constant} &approx; ${formatScientific(data.godelNumber)}</span>`;
+            } else if (data.godelNumber) {
+                constHTML = `<span class="slot-constant" style="color:var(--text-muted); background:transparent;">${formatScientific(data.godelNumber)}</span>`;
+            }
+
+            slot.innerHTML = `
+                <span class="slot-name">${data.symbol}:</span>
+                <span class="slot-formula">${data.formula}</span>
+                ${constHTML}
+            `;
+            memoryGrid.appendChild(slot);
+        }
+    }
+    
+    if (!hasItems) {
+        memoryGrid.innerHTML = '<div class="memory-slot memory-slot-empty">Memory is empty. Save a formula!</div>';
+    }
+}
+
+function saveToSlot(slotKey) {
+    let currentFormulaString = formulaTokens.join('');
+    if (currentFormulaString.length === 0) return;
+
+    // Save to memory
+    const result = calculateEncoding(currentFormulaString);
+    memory[slotKey].formula = currentFormulaString;
+    memory[slotKey].godelNumber = result.godelNumber;
+    
+    // Enable Constant button and Macro button if applicable
+    if (memory[slotKey].constant) {
+        const btnId = `btn-const-${memory[slotKey].constant}`;
+        const btn = document.getElementById(btnId);
+        if (btn) btn.disabled = false;
+    }
+    if (memory[slotKey].symbol) {
+        const btnId = `btn-macro-${slotKey}`;
+        const btn = document.getElementById(btnId);
+        if (btn) btn.disabled = false;
+    }
+
+    renderMemoryBank();
+    clearFormula();
+    document.activeElement.blur(); // close dropdown
+}
+
+// Initialize Sandbox
+renderMemoryBank();
+
+
+
+// ==========================================
+// TURING MACHINE LOGIC
+// ==========================================
+let tmTape = {}; // key: index, value: symbol ('0', '1', ' ')
+let tmHead = 0;
+let tmState = 'q0';
+let tmStepCount = 0;
+let tmIsPlaying = false;
+let tmPlayInterval = null;
+
+let tmPrograms = {
+    binary_counter: {
+        initial: 'q0',
+        tape: {0: '0', 1: '0', 2: '0'},
+        rules: [
+            { s: 'q0', r: '0', w: '0', m: 'R', n: 'q0' },
+            { s: 'q0', r: '1', w: '1', m: 'R', n: 'q0' },
+            { s: 'q0', r: ' ', w: ' ', m: 'L', n: 'q1' },
+            { s: 'q1', r: '1', w: '0', m: 'L', n: 'q1' },
+            { s: 'q1', r: '0', w: '1', m: 'L', n: 'q2' },
+            { s: 'q1', r: ' ', w: '1', m: 'L', n: 'q2' },
+            { s: 'q2', r: '0', w: '0', m: 'L', n: 'q2' },
+            { s: 'q2', r: '1', w: '1', m: 'L', n: 'q2' },
+            { s: 'q2', r: ' ', w: ' ', m: 'R', n: 'q0' }
+        ]
+    },
+    infinite_loop: {
+        initial: 'q0',
+        tape: {0: '1'},
+        rules: [
+            { s: 'q0', r: '1', w: '1', m: 'R', n: 'q1' },
+            { s: 'q1', r: ' ', w: '1', m: 'L', n: 'q0' }
+        ]
+    },
+    custom: {
+        initial: 'q0',
+        tape: {0: '1'},
+        rules: []
+    }
+};
+
+let currentProgram = 'binary_counter';
+
+function tmLoadProgram() {
+    currentProgram = document.getElementById('tm-program-select').value;
+    let editor = document.getElementById('tm-custom-editor');
+    if (editor) {
+        editor.style.display = (currentProgram === 'custom') ? 'block' : 'none';
+    }
+    tmReset();
+}
+
+function tmReset() {
+    let prog = tmPrograms[currentProgram];
+    tmTape = {...prog.tape};
+    tmHead = 0;
+    tmState = prog.initial;
+    tmStepCount = 0;
+    if (tmIsPlaying) tmTogglePlay();
+    renderTMRules();
+    renderTMTape();
+    updateTMUI();
+}
+
+function renderTMRules() {
+    let rulesEl = document.getElementById('tm-rules');
+    if (!rulesEl) return;
+    
+    let rulesHtml = '';
+    let prog = tmPrograms[currentProgram];
+    for (let i = 0; i < prog.rules.length; i++) {
+        let r = prog.rules[i];
+        let isCurrent = (r.s === tmState && r.r === (tmTape[tmHead] || ' '));
+        rulesHtml += `
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0.5rem; text-align: center; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; position: relative; ${isCurrent ? 'background: #ffe6cc; font-weight: bold; color: var(--accent-orange);' : ''}">
+                <div>${r.s}</div>
+                <div>'${r.r}'</div>
+                <div>'${r.w}'</div>
+                <div>${r.m}</div>
+                <div>${r.n}</div>
+                ${currentProgram === 'custom' ? `<button onclick="tmRemoveCustomRule(${i})" style="position: absolute; right: -15px; top: 0; bottom: 0; background: none; border: none; color: var(--accent-red); cursor: pointer; font-weight: bold; font-size: 1rem; padding: 0 5px;" title="Remove Rule">&times;</button>` : ''}
+            </div>
+        `;
+    }
+    rulesEl.innerHTML = rulesHtml;
+}
+
+function renderTMTape() {
+    let tapeEl = document.getElementById('tm-tape');
+    if (!tapeEl) return;
+    
+    let minIdx = tmHead - 10;
+    let maxIdx = tmHead + 10;
+    
+    let keys = Object.keys(tmTape).map(Number);
+    if (keys.length > 0) {
+        minIdx = Math.min(minIdx, Math.min(...keys) - 2);
+        maxIdx = Math.max(maxIdx, Math.max(...keys) + 2);
+    }
+    
+    let html = '';
+    for (let i = minIdx; i <= maxIdx; i++) {
+        let val = tmTape[i] || ' ';
+        html += `<div style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--soft-blue-border); font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; color: var(--text-main); flex-shrink: 0; background: ${i === tmHead ? '#fff' : '#f9f9f9'}; font-weight: ${i === tmHead ? 'bold' : 'normal'}; box-sizing: border-box;">${val === ' ' ? '&nbsp;' : val}</div>`;
+    }
+    
+    tapeEl.innerHTML = html;
+    
+    let headOffset = tmHead - minIdx;
+    let offsetPx = -(headOffset * 50) + (tapeEl.parentElement.clientWidth / 2) - 25;
+    tapeEl.style.left = offsetPx + 'px';
+}
+
+function updateTMUI() {
+    let stEl = document.getElementById('tm-current-state');
+    if (stEl) {
+        stEl.textContent = tmState;
+        document.getElementById('tm-step-count').textContent = tmStepCount;
+        renderTMRules();
+    }
+}
+
+function tmStep() {
+    let prog = tmPrograms[currentProgram];
+    let symbol = tmTape[tmHead] || ' ';
+    
+    let rule = prog.rules.find(r => r.s === tmState && r.r === symbol);
+    if (!rule) {
+        if (tmIsPlaying) tmTogglePlay();
+        document.getElementById('tm-current-state').textContent = tmState + " (HALTED)";
+        return;
+    }
+    
+    if (rule.w !== ' ') tmTape[tmHead] = rule.w;
+    else delete tmTape[tmHead];
+    
+    if (rule.m === 'R') tmHead++;
+    else if (rule.m === 'L') tmHead--;
+    
+    tmState = rule.n;
+    tmStepCount++;
+    
+    renderTMTape();
+    updateTMUI();
+}
+
+function tmTogglePlay() {
+    tmIsPlaying = !tmIsPlaying;
+    let btn = document.getElementById('tm-play-btn');
+    if (tmIsPlaying) {
+        btn.textContent = 'Pause';
+        btn.style.background = 'var(--soft-orange)';
+        btn.style.color = 'var(--accent-orange)';
+        tmPlayInterval = setInterval(tmStep, 200);
+    } else {
+        btn.textContent = 'Play';
+        btn.style.background = 'var(--accent-orange)';
+        btn.style.color = '#fff';
+        clearInterval(tmPlayInterval);
+    }
+}
+
+function tmUpdateCustomInit() {
+    if (currentProgram !== 'custom') return;
+    let tapeStr = document.getElementById('tm-custom-tape').value || '';
+    let initState = document.getElementById('tm-custom-state').value || 'q0';
+    
+    let newTape = {};
+    for (let i = 0; i < tapeStr.length; i++) {
+        newTape[i] = tapeStr[i];
+    }
+    
+    tmPrograms['custom'].tape = newTape;
+    tmPrograms['custom'].initial = initState;
+    tmReset();
+}
+
+function tmAddCustomRule() {
+    if (currentProgram !== 'custom') return;
+    let s = document.getElementById('tm-rule-s').value || 'q0';
+    let r = document.getElementById('tm-rule-r').value || ' ';
+    let w = document.getElementById('tm-rule-w').value || ' ';
+    let m = document.getElementById('tm-rule-m').value || 'R';
+    let n = document.getElementById('tm-rule-n').value || 'q1';
+    
+    if (r === "") r = " ";
+    if (w === "") w = " ";
+    
+    tmPrograms['custom'].rules.push({s, r, w, m, n});
+    
+    // Clear inputs for ease of use
+    document.getElementById('tm-rule-s').value = n; // Usually next state becomes current
+    document.getElementById('tm-rule-r').value = '';
+    document.getElementById('tm-rule-w').value = '';
+    document.getElementById('tm-rule-m').value = 'R';
+    document.getElementById('tm-rule-n').value = '';
+    
+    tmReset(); // re-render and clear states
+}
+
+function tmRemoveCustomRule(index) {
+    if (currentProgram !== 'custom') return;
+    tmPrograms['custom'].rules.splice(index, 1);
+    tmReset();
+}
+
+setTimeout(tmReset, 100);
+
+// ==========================================
+// GAME OF LIFE LOGIC
+// ==========================================
+let golCanvas, golCtx;
+let golGrid = {}; // Set of live cell coordinates: "x,y"
+let golIsPlaying = false;
+let golPlayInterval = null;
+let golGeneration = 0;
+let golCellSize = 15;
+let golOffsetX = 0, golOffsetY = 0;
+let isDragging = false;
+let isDrawing = false;
+let golLastMousePos = {x: 0, y: 0};
+
+function initGOL() {
+    golCanvas = document.getElementById('gol-canvas');
+    if (!golCanvas) return;
+    
+    golCtx = golCanvas.getContext('2d');
+    
+    // Use ResizeObserver to handle tab switching from display:none to display:flex
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            if (entry.contentRect.width > 0) {
+                golCanvas.width = entry.contentRect.width;
+                golCanvas.height = entry.contentRect.height;
+                renderGOL();
+            }
+        }
+    });
+    resizeObserver.observe(golCanvas.parentElement);
+    
+    golCanvas.addEventListener('mousedown', golMouseDown);
+    golCanvas.addEventListener('mousemove', golMouseMove);
+    window.addEventListener('mouseup', golMouseUp);
+    golCanvas.addEventListener('wheel', golWheel, {passive: false});
+    golCanvas.addEventListener('contextmenu', e => e.preventDefault());
+    
+    golSpawnGlider();
+}
+
+function getGridPos(clientX, clientY) {
+    const rect = golCanvas.getBoundingClientRect();
+    const scaleX = golCanvas.width / rect.width;
+    const scaleY = golCanvas.height / rect.height;
+    
+    const x = (clientX - rect.left) * scaleX;
+    const y = (clientY - rect.top) * scaleY;
+    
+    const worldX = x - golOffsetX - golCanvas.width/2;
+    const worldY = y - golOffsetY - golCanvas.height/2;
+    
+    return {
+        cx: Math.floor(worldX / golCellSize),
+        cy: Math.floor(worldY / golCellSize)
+    };
+}
+
+function golMouseDown(e) {
+    if (e.button === 0) { // left click = draw
+        isDrawing = true;
+        let pos = getGridPos(e.clientX, e.clientY);
+        let key = `${pos.cx},${pos.cy}`;
+        if (golGrid[key]) delete golGrid[key];
+        else golGrid[key] = true;
+        renderGOL();
+    } else if (e.button === 1 || e.button === 2) { // middle/right = pan
+        isDragging = true;
+        golLastMousePos = {x: e.clientX, y: e.clientY};
+    }
+}
+
+function golMouseMove(e) {
+    if (isDragging) {
+        golOffsetX += e.clientX - golLastMousePos.x;
+        golOffsetY += e.clientY - golLastMousePos.y;
+        golLastMousePos = {x: e.clientX, y: e.clientY};
+        renderGOL();
+    } else if (isDrawing) {
+        let pos = getGridPos(e.clientX, e.clientY);
+        let key = `${pos.cx},${pos.cy}`;
+        golGrid[key] = true;
+        renderGOL();
+    }
+}
+
+function golMouseUp() {
+    isDragging = false;
+    isDrawing = false;
+}
+
+function golWheel(e) {
+    e.preventDefault();
+    const zoomFactor = 1.1;
+    if (e.deltaY < 0) {
+        golCellSize *= zoomFactor;
+    } else {
+        golCellSize /= zoomFactor;
+    }
+    golCellSize = Math.max(3, Math.min(golCellSize, 50));
+    renderGOL();
+}
+
+function renderGOL() {
+    if (!golCtx || golCanvas.width === 0) return;
+    golCtx.clearRect(0, 0, golCanvas.width, golCanvas.height);
+    
+    // Draw Grid Lines if cell size is large enough
+    if (golCellSize > 5) {
+        golCtx.strokeStyle = 'rgba(153, 51, 255, 0.1)'; // faint purple
+        golCtx.lineWidth = 1;
+        
+        let startX = (golOffsetX + golCanvas.width/2) % golCellSize;
+        let startY = (golOffsetY + golCanvas.height/2) % golCellSize;
+        
+        // vertical lines
+        for (let x = startX; x < golCanvas.width; x += golCellSize) {
+            golCtx.beginPath();
+            golCtx.moveTo(x, 0);
+            golCtx.lineTo(x, golCanvas.height);
+            golCtx.stroke();
+        }
+        
+        // horizontal lines
+        for (let y = startY; y < golCanvas.height; y += golCellSize) {
+            golCtx.beginPath();
+            golCtx.moveTo(0, y);
+            golCtx.lineTo(golCanvas.width, y);
+            golCtx.stroke();
+        }
+    }
+    
+    golCtx.fillStyle = 'var(--accent-purple)';
+    
+    let pop = 0;
+    for (let key in golGrid) {
+        let [x, y] = key.split(',').map(Number);
+        
+        let screenX = (x * golCellSize) + golOffsetX + golCanvas.width/2;
+        let screenY = (y * golCellSize) + golOffsetY + golCanvas.height/2;
+        
+        if (screenX > -golCellSize && screenX < golCanvas.width && screenY > -golCellSize && screenY < golCanvas.height) {
+            golCtx.fillRect(screenX, screenY, golCellSize - 1, golCellSize - 1);
+        }
+        pop++;
+    }
+    
+    let popEl = document.getElementById('gol-population');
+    if (popEl) {
+        popEl.textContent = pop;
+        document.getElementById('gol-generation').textContent = golGeneration;
+    }
+}
+
+function golStep() {
+    let newGrid = {};
+    let neighborCounts = {};
+    
+    for (let key in golGrid) {
+        let coords = key.split(',');
+        let x = parseInt(coords[0], 10);
+        let y = parseInt(coords[1], 10);
+        
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (dx === 0 && dy === 0) continue;
+                let nx = x + dx;
+                let ny = y + dy;
+                let nKey = `${nx},${ny}`;
+                neighborCounts[nKey] = (neighborCounts[nKey] || 0) + 1;
+            }
+        }
+    }
+    
+    for (let key in neighborCounts) {
+        let count = neighborCounts[key];
+        if (count === 3 || (count === 2 && golGrid[key])) {
+            newGrid[key] = true;
+        }
+    }
+    
+    golGrid = newGrid;
+    golGeneration++;
+    renderGOL();
+}
+
+function golTogglePlay() {
+    golIsPlaying = !golIsPlaying;
+    let btn = document.getElementById('gol-play-btn');
+    if (golIsPlaying) {
+        btn.textContent = 'Pause';
+        btn.style.background = 'var(--soft-purple)';
+        btn.style.color = 'var(--accent-purple)';
+        golPlayInterval = setInterval(golStep, 100);
+    } else {
+        btn.textContent = 'Play';
+        btn.style.background = 'var(--accent-purple)';
+        btn.style.color = '#fff';
+        clearInterval(golPlayInterval);
+    }
+}
+
+function golClear() {
+    golGrid = {};
+    golGeneration = 0;
+    if (golIsPlaying) golTogglePlay();
+    renderGOL();
+}
+
+function golRandomize() {
+    golClear();
+    for (let i = 0; i < 400; i++) {
+        let rx = Math.floor(Math.random() * 60) - 30;
+        let ry = Math.floor(Math.random() * 30) - 15;
+        golGrid[`${rx},${ry}`] = true;
+    }
+    renderGOL();
+}
+
+function golSpawnGlider() {
+    let pattern = [[0,-1], [1,0], [-1,1], [0,1], [1,1]];
+    spawnPattern(pattern);
+}
+
+function golSpawnGosper() {
+    let pattern = [
+        [1,5],[1,6],[2,5],[2,6],[11,5],[11,6],[11,7],[12,4],[12,8],[13,3],[14,3],
+        [13,9],[14,9],[15,6],[16,4],[16,8],[17,5],[17,6],[17,7],[18,6],[21,3],[21,4],
+        [21,5],[22,3],[22,4],[22,5],[23,2],[23,6],[25,1],[25,2],[25,6],[25,7],[35,3],
+        [35,4],[36,3],[36,4]
+    ];
+    pattern = pattern.map(p => [p[0]-18, p[1]-5]);
+    spawnPattern(pattern);
+}
+
+function spawnPattern(pattern) {
+    golClear();
+    for (let p of pattern) {
+        golGrid[`${p[0]},${p[1]}`] = true;
+    }
+    golOffsetX = 0;
+    golOffsetY = 0;
+    golCellSize = 15;
+    renderGOL();
+}
+
+setTimeout(initGOL, 500);
+
+
+
+// ==========================================
+// FORMAL SYSTEMS LOGIC (Chapter 1)
+// ==========================================
+
+let formalString = "MI";
+let isBuilding = true; // Indicates if in string builder phase
+let currentMiuMode = 'building';
+
+function switchMiuMode(mode) {
+    currentMiuMode = mode;
+    
+    // Update tabs
+    document.getElementById('miu-tab-building').classList.remove('active');
+    document.getElementById('miu-tab-ponder').classList.remove('active');
+    document.getElementById('miu-tab-creative').classList.remove('active');
+    document.getElementById('miu-tab-' + mode).classList.add('active');
+    
+    // Update description
+    const desc = document.getElementById('miu-mode-description');
+    if (mode === 'building') {
+        desc.innerHTML = '<strong>Goal:</strong> Start with <strong>MI</strong> and derive <strong>MUIU</strong>. It is completely possible! Use the rules to reach the target string.';
+    } else if (mode === 'ponder') {
+        desc.innerHTML = '<strong>Goal:</strong> Start with <strong>MI</strong> and derive <strong>MU</strong>. Is it actually possible? Reason about the rules to find out.';
+    } else if (mode === 'creative') {
+        desc.innerHTML = '<strong>Goal:</strong> Play around with the rules and the alphabet. Build whatever strings you want.';
+    }
+}
+
+function updateFormalDisplay() {
+    let display = document.getElementById("formal-string-display");
+    if (display) display.textContent = formalString || "\u00A0"; // non-breaking space if empty
+}
+
+function appendFormalChar(char) {
+    if (!isBuilding) {
+        // Switch back to building mode if they were inferencing
+        isBuilding = true;
+        document.getElementById('inference-panel').style.opacity = '0.5';
+        document.getElementById('inference-panel').style.pointerEvents = 'none';
+        formalString = ""; 
+    }
+    formalString += char;
+    updateFormalDisplay();
+}
+
+function clearFormalString() {
+    formalString = "";
+    isBuilding = true;
+    document.getElementById('inference-panel').style.opacity = '0.5';
+    document.getElementById('inference-panel').style.pointerEvents = 'none';
+    updateFormalDisplay();
+}
+
+function startInference() {
+    if (formalString.length === 0) return; // Don't start with empty string
+    isBuilding = false;
+    document.getElementById('inference-panel').style.opacity = '1';
+    document.getElementById('inference-panel').style.pointerEvents = 'auto';
+}
+
+function applyFormalRule(ruleNum) {
+    if (isBuilding) return; // Prevent if not in inference phase
+    
+    let oldStr = formalString;
+    
+    if (ruleNum === 1) {
+        // xI -> xIU
+        if (formalString.endsWith("I")) {
+            formalString += "U";
+        }
+    } else if (ruleNum === 2) {
+        // Mx -> Mxx
+        if (formalString.startsWith("M")) {
+            let x = formalString.substring(1);
+            formalString = "M" + x + x;
+        }
+    } else if (ruleNum === 3) {
+        // Replace III with U (first occurrence)
+        if (formalString.includes("III")) {
+            formalString = formalString.replace("III", "U");
+        }
+    } else if (ruleNum === 4) {
+        // Remove UU (first occurrence)
+        if (formalString.includes("UU")) {
+            formalString = formalString.replace("UU", "");
+        }
+    }
+    
+    if (oldStr === formalString) {
+        // Visual feedback if rule didn't apply
+        let display = document.getElementById("formal-string-display");
+        display.style.color = "var(--accent-red)";
+        setTimeout(() => display.style.color = "var(--text-main)", 300);
+    } else {
+        updateFormalDisplay();
+        
+        // Victory detection for Building Familiarity mode
+        if (currentMiuMode === 'building' && formalString === 'MUIU') {
+            const buildingTab = document.getElementById('miu-tab-building');
+            buildingTab.disabled = true;
+            buildingTab.style.opacity = '0.5';
+            buildingTab.style.textDecoration = 'line-through';
+            buildingTab.style.cursor = 'not-allowed';
+            switchMiuMode('ponder');
+        }
+    }
+}
+
+// ==========================================
+// SYNTAX VS SEMANTICS (Chapter 2)
+// ==========================================
+
+function setInterpretation(type) {
+    let display = document.getElementById("interpretation-display");
+    if (type === 1) {
+        display.innerHTML = "1 plus 2 equals 3<br><span style='font-size: 1rem; color: var(--text-muted);'>(- = 1, p = plus, -- = 2, q = equals, --- = 3)</span>";
+    } else if (type === 2) {
+        display.innerHTML = "1 apple joined with 2 apples gives 3 apples<br><span style='font-size: 1rem; color: var(--text-muted);'>(- = apple, p = joined with, q = gives)</span>";
+    }
+}
+
+// ==========================================
+// PHYSICS AS MODEL SELECTION (Chapter 6)
+// ==========================================
+
+const allAvailableSymbols = ["△", "◻", "◯", "◇", "☆", "∇", "⬟", "⯁", "⯃", "⯂"];
+let activeAlphabet = [];
+let reserveAlphabet = [];
+let secretRule = null;
+let usedRulesSet = []; // Array of rules actually applied by the universe
+
+let physicsSystems = [];
+let paradigmLevel = 1;
+
+let physicsString = "△";
+let stateHistory = ["△"];
+let eliminatedSystems = new Set();
+let observationStepCount = 0;
+let cyclesSinceLastElimination = 0;
+let badEliminationCount = 0;
+let hintCount = 0;
+
+// Helper to check if two systems have the same rules
+function systemsAreIdentical(sysA, sysB) {
+    if (sysA.rules.length !== sysB.rules.length) return false;
+    let setB = new Set(sysB.rules.map(r => r.left + "->" + r.right));
+    for (let rule of sysA.rules) {
+        if (!setB.has(rule.left + "->" + rule.right)) return false;
+    }
+    return true;
+}
+
+function generateRandomRule(currentString = null) {
+    let leftLen = Math.floor(Math.random() * 3) + 1; // 1, 2, or 3
+    let left = "";
+    
+    // 50% chance to derive left side from the current string if possible (ensures applicability)
+    if (currentString && Math.random() < 0.5 && currentString.length >= leftLen) {
+        let start = Math.floor(Math.random() * (currentString.length - leftLen + 1));
+        left = currentString.substring(start, start + leftLen);
+    } else {
+        for (let i = 0; i < leftLen; i++) {
+            left += activeAlphabet[Math.floor(Math.random() * activeAlphabet.length)];
+        }
+    }
+    
+    let rightLen = 1;
+    // 1->1, 1->2, 2->1, 3->1
+    if (leftLen === 1) {
+        rightLen = Math.floor(Math.random() * 2) + 1; // 1 or 2
+    } else {
+        rightLen = 1; // 2 or 3 -> 1
+    }
+    
+    let right = "";
+    for (let i = 0; i < rightLen; i++) {
+        right += activeAlphabet[Math.floor(Math.random() * activeAlphabet.length)];
+    }
+    
+    // Prevent state-to-same-state
+    if (left === right) {
+        right += activeAlphabet[Math.floor(Math.random() * activeAlphabet.length)];
+    }
+    
+    // Prevent boring homogeneous growth loops (e.g. △ -> △△)
+    if (left.length === 1 && right === left + left) {
+        let otherSymbols = activeAlphabet.filter(s => s !== left);
+        if (otherSymbols.length > 0) {
+            let randomOther = otherSymbols[Math.floor(Math.random() * otherSymbols.length)];
+            right = left + randomOther; // changes △△ to △◻
+        }
+    }
+    
+    return { left, right };
+}
+
+function generateRandomSystems(isShift = false) {
+    physicsSystems = [];
+    
+    let baseRules = isShift ? [...usedRulesSet] : [];
+    
+    // Generate pool of 20 unique new rules
+    let rulePool = [];
+    let poolSet = new Set();
+    while (rulePool.length < 20) {
+        let rule = generateRandomRule(physicsString);
+        let key = rule.left + "->" + rule.right;
+        let inBase = baseRules.some(r => r.left === rule.left && r.right === rule.right);
+        if (!poolSet.has(key) && !inBase) {
+            rulePool.push(rule);
+            poolSet.add(key);
+        }
+    }
+    
+    for (let i = 1; i <= 12; i++) {
+        let uniqueFound = false;
+        let attempts = 0;
+        let rulesForSys = [];
+        
+        while (!uniqueFound && attempts < 1000) {
+            rulesForSys = [...baseRules];
+            
+            let sysAdded = 0;
+            let usedLefts = new Set(rulesForSys.map(r => r.left));
+            let shuffledPool = [...rulePool].sort(() => 0.5 - Math.random());
+            
+            // For initialization, force at least one rule to match the starting string
+            if (!isShift && sysAdded === 0) {
+                let firstRule = generateRandomRule(physicsString);
+                rulesForSys.push(firstRule);
+                usedLefts.add(firstRule.left);
+                sysAdded++;
+            }
+            
+            for (let poolRule of shuffledPool) {
+                if (!usedLefts.has(poolRule.left)) {
+                    rulesForSys.push({...poolRule});
+                    usedLefts.add(poolRule.left);
+                    sysAdded++;
+                    if (sysAdded === (isShift ? 3 : 3)) break; // 3 rules added
+                }
+            }
+            
+            let testSys = { id: i, rules: rulesForSys };
+            let isDuplicate = physicsSystems.some(s => systemsAreIdentical(s, testSys));
+            
+            if (!isDuplicate && sysAdded === 3) {
+                uniqueFound = true;
+            }
+            attempts++;
+        }
+        physicsSystems.push({ id: i, rules: rulesForSys });
+    }
+    secretRule = null;
+}
+
+function updateParadigmCounter() {
+    let counter = document.getElementById("paradigm-counter");
+    if (counter) {
+        counter.innerText = "Paradigm Level: " + paradigmLevel;
+        counter.style.transform = "scale(1.2)";
+        setTimeout(() => counter.style.transform = "scale(1)", 300);
+    }
+    
+    let alphaDisplay = document.getElementById("physics-alphabet-display");
+    if (alphaDisplay) {
+        alphaDisplay.innerText = activeAlphabet.join(", ");
+    }
+}
+
+function renderHistory() {
+    let histContainer = document.getElementById("physics-history");
+    if (!histContainer) return;
+    
+    histContainer.innerHTML = "";
+    
+    for (let i = 0; i < stateHistory.length; i++) {
+        let isLast = (i === stateHistory.length - 1);
+        let div = document.createElement("div");
+        div.style.fontFamily = "'JetBrains Mono', monospace";
+        div.style.fontSize = isLast ? "2.5rem" : "1.2rem";
+        div.style.letterSpacing = isLast ? "0.2rem" : "0.1rem";
+        div.style.color = isLast ? "var(--text-main)" : "var(--text-muted)";
+        div.style.wordBreak = "break-all";
+        if (!isLast) div.style.opacity = (0.4 + (i / stateHistory.length) * 0.4).toString();
+        div.innerText = stateHistory[i];
+        histContainer.appendChild(div);
+    }
+}
+
+function renderModelsGrid() {
+    let grid = document.getElementById("physics-models-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+    
+    physicsSystems.forEach(sys => {
+        let div = document.createElement("div");
+        div.className = "physics-model";
+        div.id = "model-" + sys.id;
+        div.onclick = () => attemptElimination(sys.id);
+        div.style.background = "#fff";
+        div.style.padding = "1rem";
+        div.style.borderRadius = "8px";
+        div.style.border = "2px solid var(--accent-yellow)";
+        div.style.transition = "all 0.3s";
+        if (eliminatedSystems.has(sys.id)) {
+            div.style.opacity = "0.2";
+            div.style.borderColor = "var(--soft-blue-border)";
+        }
+        
+        let h4 = document.createElement("h4");
+        h4.style.color = "var(--text-main)";
+        h4.style.fontSize = "1.1rem";
+        h4.innerText = "System " + sys.id;
+        div.appendChild(h4);
+        
+        let p = document.createElement("p");
+        p.style.fontSize = "0.95rem";
+        p.style.fontFamily = "'JetBrains Mono', monospace";
+        p.style.marginTop = "0.5rem";
+        p.style.lineHeight = "1.6";
+        
+        let rulesHtml = sys.rules.map(r => `${r.left} &rarr; ${r.right}`).join("<br>");
+        p.innerHTML = rulesHtml;
+        div.appendChild(p);
+        
+        grid.appendChild(div);
+    });
+}
+
+function initPhysicsSandbox() {
+    activeAlphabet = [allAvailableSymbols[0], allAvailableSymbols[1], allAvailableSymbols[2]];
+    reserveAlphabet = allAvailableSymbols.slice(3);
+    
+    paradigmLevel = 1;
+    secretRule = null;
+    usedRulesSet = [];
+    physicsString = activeAlphabet[0];
+    stateHistory = [physicsString];
+    eliminatedSystems.clear();
+    observationStepCount = 0;
+    cyclesSinceLastElimination = 0;
+    badEliminationCount = 0;
+    hintCount = 0;
+    
+    let badElem = document.getElementById("bad-elim-counter");
+    if (badElem) badElem.innerText = 0;
+    let hintElem = document.getElementById("hint-counter");
+    if (hintElem) hintElem.innerText = 0;
+    
+    generateRandomSystems(false);
+    
+    updateParadigmCounter();
+    renderModelsGrid();
+    renderHistory();
+    
+    let expl = document.getElementById("physics-explanation");
+    if (expl) expl.style.display = "none";
+}
+
+function triggerParadigmShift() {
+    paradigmLevel++;
+    updateParadigmCounter();
+    
+    generateRandomSystems(true);
+    eliminatedSystems.clear();
+    cyclesSinceLastElimination = 0;
+    
+    renderHistory();
+    renderModelsGrid();
+    
+    let expl = document.getElementById("physics-explanation");
+    if (expl) {
+        expl.style.display = "block";
+        expl.style.borderLeftColor = "var(--accent-red)";
+        expl.innerHTML = `<strong><span style="color:var(--accent-red); font-size:1.2rem;">PARADIGM SHIFT!</span></strong><br>Our final model was falsified by the new anomaly! We have discarded it and constructed 12 <strong>new</strong> hypotheses that perfectly explain the past <em>plus</em> this new symbol. The cycle continues!`;
+    }
+}
+
+function observePhysicsStep() {
+    let uneliminated = physicsSystems.filter(s => !eliminatedSystems.has(s.id));
+    let expl = document.getElementById("physics-explanation");
+    
+    // Phase 2: The Anomaly Waiting Phase
+    if ((uneliminated.length === 1 || cyclesSinceLastElimination >= 10) && !secretRule) {
+        if (reserveAlphabet.length === 0) {
+            if (expl) {
+                expl.style.display = "block";
+                expl.style.borderLeftColor = "var(--text-muted)";
+                expl.innerHTML = `<strong>Universe Halted:</strong> The universe has exhausted all 10 fundamental symbols. It is tired and going to sleep now. You have reached the end of physics!`;
+            }
+            return;
+        }
+        
+        // Pop a new symbol
+        let newSymbol = reserveAlphabet.shift();
+        activeAlphabet.push(newSymbol);
+        
+        // Create a secret rule: from a SINGLE used symbol currently in the string -> new symbol
+        let possibleLefts = Array.from(new Set(physicsString.split('')));
+        let secretLeft = possibleLefts[Math.floor(Math.random() * possibleLefts.length)];
+        
+        secretRule = { left: secretLeft, right: newSymbol };
+        
+        if (expl) {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--accent-blue)";
+            if (uneliminated.length === 1) {
+                expl.innerHTML = `<strong>Anomaly Pending...</strong> Only 1 candidate remains. The universe has secretly introduced a new rule involving a new symbol. Keep observing to see if it triggers!`;
+            } else {
+                expl.innerHTML = `<strong>Anomaly Pending...</strong> The universe has been stagnant for too long. A secret anomaly rule has been introduced. Keep observing to see if it triggers!`;
+            }
+        }
+    }
+    
+    let applicableRules = [];
+    
+    // Gather all rules from UNELIMINATED systems
+    uneliminated.forEach(sys => {
+        sys.rules.forEach(rule => {
+            if (physicsString.includes(rule.left)) {
+                applicableRules.push(rule);
+            }
+        });
+    });
+    
+    // ALSO check if the secret rule applies
+    if (secretRule && physicsString.includes(secretRule.left)) {
+        // Add it to the pool multiple times to give it a fair chance against the majority rules
+        for (let i = 0; i < uneliminated.length; i++) {
+            applicableRules.push(secretRule);
+        }
+    }
+    
+    if (applicableRules.length === 0) {
+        // Organic halt (e.g. no rules apply at all)
+        if (expl) {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--text-muted)";
+            expl.innerHTML = `<strong>Universe Halted:</strong> No remaining system (nor the secret rule) can produce a transition from this state.`;
+        }
+        return;
+    }
+    
+    // Pick a random applicable rule
+    let ruleToApply = applicableRules[Math.floor(Math.random() * applicableRules.length)];
+    physicsString = physicsString.replace(ruleToApply.left, ruleToApply.right);
+    
+    // Track the exactly applied rule in usedRulesSet
+    let ruleKey = ruleToApply.left + "->" + ruleToApply.right;
+    let alreadyUsed = usedRulesSet.some(r => (r.left + "->" + r.right) === ruleKey);
+    if (!alreadyUsed) {
+        usedRulesSet.push({...ruleToApply});
+    }
+    
+    stateHistory.push(physicsString);
+    if (stateHistory.length > 5) stateHistory.shift();
+    
+    observationStepCount++;
+    cyclesSinceLastElimination++;
+    renderHistory();
+    
+    if (uneliminated.length > 1 && expl) {
+        if (secretRule && ruleToApply.right === secretRule.right) {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--accent-yellow)";
+            expl.innerHTML = `<strong>Anomaly Triggered!</strong> The universe evolved into an unprecedented state containing the new symbol <strong style="font-family:'JetBrains Mono', monospace;">${secretRule.right}</strong>! Your remaining systems cannot explain this. Eliminate them!`;
+        } else {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--accent-yellow)";
+            expl.innerHTML = `<strong>Observation ${observationStepCount}:</strong> The universe evolved. <br><em>Can you eliminate any candidate models based on this history?</em>`;
+        }
+    } else if (uneliminated.length === 1 && expl) {
+        if (secretRule && ruleToApply.right === secretRule.right) {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--accent-yellow)";
+            expl.innerHTML = `<strong>Anomaly Triggered!</strong> The universe evolved into an unprecedented state containing the new symbol <strong style="font-family:'JetBrains Mono', monospace;">${secretRule.right}</strong>! Your final system cannot explain this. Eliminate it!`;
+        } else {
+            expl.style.display = "block";
+            expl.style.borderLeftColor = "var(--accent-yellow)";
+            expl.innerHTML = `<strong>Observation ${observationStepCount}:</strong> The universe evolved normally. The anomaly hasn't triggered yet. Keep observing.`;
+        }
+    }
+}
+
+function attemptElimination(sysId) {
+    if (eliminatedSystems.has(sysId)) return;
+    if (stateHistory.length < 2) return;
+    
+    let sys = physicsSystems.find(s => s.id === sysId);
+    let canProduceHistory = true;
+    
+    // Verify each step in the visible history
+    for (let i = 0; i < stateHistory.length - 1; i++) {
+        let currentS = stateHistory[i];
+        let nextS = stateHistory[i+1];
+        
+        let canProduceStep = false;
+        sys.rules.forEach(rule => {
+            let idx = currentS.indexOf(rule.left);
+            while (idx !== -1) {
+                let testString = currentS.substring(0, idx) + rule.right + currentS.substring(idx + rule.left.length);
+                if (testString === nextS) {
+                    canProduceStep = true;
+                    break;
+                }
+                idx = currentS.indexOf(rule.left, idx + 1);
+            }
+        });
+        
+        if (!canProduceStep) {
+            canProduceHistory = false;
+            break;
+        }
+    }
+    
+    let m = document.getElementById("model-" + sysId);
+    if (!m) return;
+    
+    if (!canProduceHistory) {
+        eliminatedSystems.add(sysId);
+        m.style.opacity = "0.2";
+        m.style.borderColor = "var(--soft-blue-border)";
+        m.classList.remove("shake");
+        
+        cyclesSinceLastElimination = 0; // Reset stagnant counter!
+        
+        let remaining = physicsSystems.length - eliminatedSystems.size;
+        
+        if (remaining === 0) {
+            // The final system was just eliminated! Trigger paradigm shift!
+            triggerParadigmShift(sys);
+            return;
+        }
+        
+        let expl = document.getElementById("physics-explanation");
+        if (expl) {
+            if (remaining > 1) {
+                expl.innerHTML = `<strong>Correct Elimination!</strong> System ${sysId} cannot produce the observed history. <strong>${remaining}</strong> candidate systems remain.`;
+            } else if (remaining === 1) {
+                expl.innerHTML = `<strong>Correct Elimination!</strong> Only one candidate remains. Is it the truth? Keep observing.`;
+            }
+        }
+    } else {
+        badEliminationCount++;
+        let badElem = document.getElementById("bad-elim-counter");
+        if (badElem) badElem.innerText = badEliminationCount;
+        
+        m.classList.remove("shake");
+        void m.offsetWidth; // trigger reflow
+        m.classList.add("shake");
+        
+        let expl = document.getElementById("physics-explanation");
+        if (expl) {
+            expl.innerHTML = `<strong><span style="color:var(--accent-red)">Warning!</span></strong> System ${sysId} is mathematically capable of perfectly reproducing the observed history. You cannot eliminate it yet!`;
+        }
+    }
+}
+
+function useHint() {
+    let uneliminated = physicsSystems.filter(s => !eliminatedSystems.has(s.id));
+    if (uneliminated.length <= 1) return;
+    
+    hintCount++;
+    let hintElem = document.getElementById("hint-counter");
+    if (hintElem) hintElem.innerText = hintCount;
+    
+    let canEliminateAny = false;
+    
+    for (let sys of uneliminated) {
+        if (stateHistory.length < 2) continue;
+        let canProduceHistory = true;
+        for (let i = 0; i < stateHistory.length - 1; i++) {
+            let currentS = stateHistory[i];
+            let nextS = stateHistory[i+1];
+            let canProduceStep = false;
+            sys.rules.forEach(rule => {
+                let idx = currentS.indexOf(rule.left);
+                while (idx !== -1) {
+                    let testString = currentS.substring(0, idx) + rule.right + currentS.substring(idx + rule.left.length);
+                    if (testString === nextS) { canProduceStep = true; break; }
+                    idx = currentS.indexOf(rule.left, idx + 1);
+                }
+            });
+            if (!canProduceStep) { canProduceHistory = false; break; }
+        }
+        if (!canProduceHistory) { canEliminateAny = true; break; }
+    }
+    
+    let expl = document.getElementById("physics-explanation");
+    if (expl) {
+        expl.style.display = "block";
+        expl.style.borderLeftColor = "var(--accent-blue)";
+        if (canEliminateAny) {
+            expl.innerHTML = `<strong>Hint:</strong> Yes! There is at least one system you can logically eliminate right now based on the history.`;
+        } else {
+            expl.innerHTML = `<strong>Hint:</strong> No. All remaining systems are mathematically capable of producing this history. You must observe more.`;
+        }
+    }
+}
+
+function resetPhysicsSandbox() {
+    initPhysicsSandbox();
+}
+
+// Call init once file loads
+initPhysicsSandbox();
+
+// Initialize floating nav on load
+document.addEventListener('DOMContentLoaded', () => {
+    updateFloatingNav('home');
+});
+
