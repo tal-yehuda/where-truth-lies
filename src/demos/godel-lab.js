@@ -57,26 +57,30 @@ function initSub() {
 const DIAG = {
   eq: {
     phi: 'x = x',
-    diag: '⌜φ⌝ = ⌜φ⌝',
+    result: '⌜φ⌝ = ⌜φ⌝',
+    reduce: null,
     says: 'True — the formula’s own code equals itself. A self-reference, but a harmless one.',
     tag: null,
   },
   prov: {
     phi: 'Prov(x)',
-    diag: 'Prov(⌜φ⌝)',
+    result: 'Prov(⌜φ⌝)',
+    reduce: null,
     says: '“The formula φ is provable.” φ now asserts its own provability — a real self-referential sentence (the Henkin sentence, which turns out to be provable).',
     tag: null,
   },
   nprov: {
     phi: '¬Prov(x)',
-    diag: '¬Prov(⌜φ⌝)',
-    says: 'Roughly “this formula has no proof” — the whole intuition behind Gödel. Making the word “this” airtight is exactly what Sub(x,x) is for. →',
+    result: '¬Prov(⌜φ⌝)',
+    reduce: null,
+    says: 'Roughly “this formula has no proof” — the whole intuition behind Gödel. Making the word “this” airtight is exactly what the inner Sub(x,x) is for. →',
     tag: 'almost there',
   },
   psi: {
     phi: '¬Prov(Sub(x,x))',
-    diag: '¬Prov(Sub(⌜φ⌝, ⌜φ⌝))  =  ¬Prov(⌜G⌝)',
-    says: '“I have no proof.” Sub(x,x) builds the self-reference cleanly: the diagonal comes out to G itself — the sentence the rest of this chapter is about.',
+    result: '¬Prov(Sub(⌜φ⌝, ⌜φ⌝))',
+    reduce: '¬Prov(⌜G⌝)',
+    says: 'Now the self-reference is airtight. The number Sub(⌜φ⌝, ⌜φ⌝) is the code of this very sentence, so it reads ¬Prov(⌜G⌝): “I have no proof.” That diagonal is G — the sentence the rest of this chapter is about.',
     tag: 'this is G',
   },
 };
@@ -87,10 +91,16 @@ function renderDiag(key) {
   const d = DIAG[key];
   document.querySelectorAll('.diag-opt').forEach((b) => b.classList.toggle('active', b.dataset.d === key));
   const tag = d.tag ? `<span class="diag-tag">${d.tag}</span>` : '';
+  const reduceLine = d.reduce
+    ? `<div class="diag-line"><span class="diag-lbl">which is</span><span class="mono">${d.reduce}</span></div>`
+    : '';
   out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
+  // "φ(⌜φ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
+  // result that is itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
   out.innerHTML = `
     <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
-    <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;) = Sub(&ulcorner;&varphi;&urcorner;, &ulcorner;&varphi;&urcorner;) = ${d.diag}</span>${tag}</div>
+    <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
+    ${reduceLine}
     <div class="diag-says">${d.says}</div>`;
 }
 
