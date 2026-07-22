@@ -751,6 +751,30 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .legend-meaning { color: var(--text-main); font-size: var(--fs-sm); line-height: 1.5; }
 .legend-meaning code { background: var(--surface-2); padding: 0.05rem 0.3rem; border-radius: 3px; }
 
+/* Gödel warm-up labs: Sub(a,b) explorer + diagonalization explorer */
+.lab-box { background: var(--surface-2); border: 1px solid var(--soft-green-border); border-left: 4px solid var(--accent-green); border-radius: var(--radius-md); padding: 1.25rem; margin: 1rem 0; }
+.lab-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.lab-key { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.05rem; color: var(--text-muted); min-width: 6.5rem; }
+.lab-select { padding: 0.35rem 0.5rem; border: 1px solid var(--soft-green-border); border-radius: var(--radius-sm); font-family: var(--mono); background: var(--surface); color: var(--text-main); }
+.lab-step { width: auto; margin: 0; padding: 0.1rem 0.6rem; font-size: 1.1rem; line-height: 1; }
+.lab-num { color: var(--accent-green); }
+.lab-muted { color: var(--text-muted); font-size: var(--fs-sm); }
+.lab-out { margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px dashed var(--soft-green-border); display: flex; flex-direction: column; gap: 0.4rem; }
+.lab-out .mono b { color: var(--text-main); }
+.lab-note { margin-top: 0.75rem; font-size: var(--fs-sm); color: var(--text-muted); }
+
+.diag-lab { margin: 1rem 0; }
+.diag-menu { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.diag-opt { width: auto; margin: 0; font-family: var(--mono); }
+.diag-opt.active { border-color: var(--accent-blue); background: var(--soft-blue); color: var(--accent-blue); }
+.diag-out { background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; opacity: 0; transition: opacity var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease); }
+.diag-out.show { opacity: 1; }
+.diag-out.is-g { border-left-color: var(--accent-green); background: var(--soft-green); }
+.diag-line { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.diag-lbl { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.05rem; color: var(--text-muted); min-width: 4.5rem; }
+.diag-tag { font-size: var(--fs-xs); font-weight: bold; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--accent-green); border: 1px solid var(--accent-green); border-radius: 999px; padding: 0.1rem 0.5rem; }
+.diag-says { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); color: var(--text-main); font-size: var(--fs-sm); line-height: 1.55; }
+
 /* Gödel encoding challenges */
 .godel-challenges { margin-top: 1.25rem; padding: 0.9rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); }
 .godel-goal-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }

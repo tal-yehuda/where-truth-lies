@@ -177,7 +177,7 @@
                         <h3>Two Ways to Read the Same Proof</h3>
                         <p style="margin-bottom: 1rem;">The Platonist reads Gödel as pointing at a completed mathematical world, where every statement already has a fixed status with or without us. It is a serious position, and it earns its keep: it explains why doing mathematics feels like discovery, and why people working from different directions keep landing on the same results. What it adds is a commitment the proof never delivers on its own — that a fully determinate mathematical universe is really out there. That step is a choice, not a theorem.</p>
                         <p style="margin-bottom: 1rem;">For the formalist, that missing truth was never promised. A formal system is a machine for deriving consequences from axioms — not a window onto some pre-existing world of facts. So an undecidable sentence isn't a truth the system <em>failed</em> to reach; it's simply a sentence the axioms don't settle, one you can add either way. "Incompleteness" only stings if you expected the system to capture an outside truth in the first place. The formalist never did — so for them it isn't a wound at all, just an accurate map of what these particular axioms do and don't fix.</p>
-                        <p>Neither reading is forced on you by the mathematics. Build the sentence yourself below, then decide which reading you find you're already using.</p>
+                        <p>Neither reading is forced on you by the mathematics — both start from the exact same proof. As you build the sentence below, try holding up each lens in turn: first read the gap as a real truth the system can't reach, then read it as bare structure with nothing hidden behind it. See how far each one carries you. Maybe you'll lean toward a camp by the end; the point isn't to land there, but to feel why a careful person could stand in either.</p>
                     </div>
                     
                     <div class="section-block">
@@ -291,13 +291,88 @@
                         </div>
                     </div>
 
-                    <div class="section-block final-section">
-                        <h3>2. Build the Gödel Sentence</h3>
-                        <p class="prose">Section 1 showed that every formula is a number. Now put that to work. We assemble one special formula, <strong>G</strong>, out of a few reusable parts &mdash; and because a formula can be handed its own Gödel number, G ends up talking about <em>itself</em>. The claim to test is this:</p>
+                    <div class="section-block">
+                        <h3>2. Building G &mdash; Substitution, Diagonalization, and the Proof</h3>
+                        <p class="prose">Section 1 showed that every formula is a number. Now put that to work: we assemble one special sentence, <strong>G</strong>, that says of itself that it has no proof.</p>
                         <div class="math-box highlight-green">
                             G &harr; &not;Prov(&ulcorner;G&urcorner;)
                         </div>
-                        <p class="prose">Both sides are built from the same handful of parts. Click each highlighted <strong>part of the formula</strong> to replace it with its definition, stepping <em>backwards</em> until both sides collapse to the identical string. The legend underneath spells out every part on screen and updates as you go &mdash; no meaning is smuggled in, only substitution.</p>
+                        <p class="prose">Building it needs two moves that trip people up: a function <span class="mono">Sub</span> that plugs numbers into formulas, and <em>diagonalization</em>, the trick that makes a formula mention itself. Get a feel for each one, then read the proof, then drive it yourself.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h4>Meet Sub &mdash; substituting a number into a formula</h4>
+                        <p class="prose"><span class="mono">Sub(a, b)</span> takes two <em>numbers</em> and returns a <em>number</em>. It reads <span class="mono">a</span> as the code of a formula, replaces that formula&rsquo;s free variable <span class="mono">x</span> with the numeral for <span class="mono">b</span>, and hands back the code of the new formula. Try it:</p>
+                        <div class="lab-box">
+                            <div class="lab-row">
+                                <label for="sub-formula">Formula &varphi;(x):</label>
+                                <select id="sub-formula" class="lab-select">
+                                    <option value="x=0">x = 0</option>
+                                    <option value="¬(x=0)">&not;(x = 0)</option>
+                                    <option value="x=S0">x = S0</option>
+                                </select>
+                            </div>
+                            <div class="lab-row"><span class="lab-key">its code</span> <span class="mono">a = &ulcorner;&varphi;&urcorner; = <b id="sub-a" class="lab-num"></b></span></div>
+                            <div class="lab-row">
+                                <span class="lab-key">substitute</span>
+                                <button class="btn btn-icon lab-step" id="sub-b-dec" aria-label="decrease b">&minus;</button>
+                                <span class="mono">b = <b id="sub-b">2</b></span>
+                                <button class="btn btn-icon lab-step" id="sub-b-inc" aria-label="increase b">+</button>
+                                <span class="lab-muted">as a numeral: <span class="mono" id="sub-b-numeral">SS0</span></span>
+                            </div>
+                            <div class="lab-out">
+                                <div><span class="lab-key">result formula</span> <span class="mono">&varphi;(b) = <b id="sub-subformula"></b></span></div>
+                                <div><span class="lab-key">its code</span> <span class="mono">Sub(a, b) = &ulcorner;&varphi;(b)&urcorner; = <b id="sub-out" class="lab-num"></b></span></div>
+                            </div>
+                        </div>
+                        <p class="lab-note">Every arrow in and out of <span class="mono">Sub</span> is a plain number. Sub never &ldquo;sees&rdquo; a formula &mdash; it just does arithmetic on codes. That is the hinge of the whole proof: it lets arithmetic talk <em>about</em> formulas.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h4>Diagonalization &mdash; feeding a formula its own code</h4>
+                        <p class="prose">Now the move people find slippery. To <em>diagonalize</em> a formula is to compute <span class="mono">Sub(a, a)</span> &mdash; feed the formula its <strong>own</strong> code for the value of <span class="mono">x</span>. The result is a sentence that talks about the very formula you started from. Pick one and watch what its diagonal says:</p>
+                        <div class="diag-lab">
+                            <div class="diag-menu" id="diag-menu">
+                                <button class="btn btn-icon diag-opt" data-d="eq">x = x</button>
+                                <button class="btn btn-icon diag-opt" data-d="prov">Prov(x)</button>
+                                <button class="btn btn-icon diag-opt" data-d="nprov">&not;Prov(x)</button>
+                                <button class="btn btn-icon diag-opt" data-d="psi">&not;Prov(Sub(x,x))</button>
+                            </div>
+                            <div class="diag-out" id="diag-out"></div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h4>The definitions</h4>
+                        <p>We work over a base theory <em>T</em> (Peano Arithmetic). One thing to keep in mind: <strong>every function here takes Gödel numbers as input.</strong> Both <span class="mono">Prov</span> and <span class="mono">Sub</span> operate on the <em>codes</em> of formulas &mdash; numbers &mdash; never on the formulas directly.</p>
+                        <ol class="derivation-list">
+                            <li id="def-1"><code>Prov(f) := &exist;p Proof(p,f)</code> <span class="justification">"the formula whose code is f is provable" &mdash; f is a Gödel number</span></li>
+                            <li id="def-2"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">"the formula whose code is x is unprovable"</span></li>
+                            <li id="def-3"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">diagonalize first (Sub(x,x)), then apply &varphi;</span></li>
+                            <li id="def-4"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">n is the Gödel number of the formula &psi;</span></li>
+                            <li id="def-5"><code>G := &psi;(n)</code> <span class="justification">feed &psi; its own code n &mdash; the diagonal of &psi;</span></li>
+                        </ol>
+                    </div>
+
+                    <div class="section-block">
+                        <h4>Pure derivation (line by line)</h4>
+                        <p class="prose">Here is the whole proof as pure symbol-pushing &mdash; no meaning required, every step just a definition swapped in. Hover a line to light up the definition it uses. Read it once here; then the interaction below lets you drive the same unfolding yourself.</p>
+                        <ol class="derivation-list derivation-steps">
+                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">(Define property &varphi; as "is unprovable")</span></li>
+                            <li onmouseover="highlightRef(['def-3'])" onmouseout="clearRef()"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">(Define &psi; as applying &varphi; to the diagonal Sub(x,x))</span></li>
+                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">(Let n be the Gödel number of formula &psi;)</span></li>
+                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()"><code>G := &psi;(n)</code> <span class="justification">(Construct G by feeding &psi; its own number n)</span></li>
+                            <li onmouseover="highlightRef(['def-3', 'def-5'])" onmouseout="clearRef()" id="step-5"><code>G = &varphi;(Sub(n,n))</code> <span class="justification">(Expand &psi; using its definition)</span></li>
+                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()" id="step-6"><code>G = &not;Prov(Sub(n,n))</code> <span class="justification">(Expand &varphi; using its definition)</span></li>
+                            <li id="step-7"><code>Sub(n,n) = &ulcorner;&psi;(n)&urcorner;</code> <span class="justification">(By the definition of Sub: substitute n into formula #n, which is &psi;)</span></li>
+                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()" id="step-8"><code>Sub(n,n) = &ulcorner;G&urcorner;</code> <span class="justification">(Since G is exactly &psi;(n), their codes are identical)</span></li>
+                            <li class="final-step" id="step-9">Therefore: <br><code>G = &not;Prov(&ulcorner;G&urcorner;)</code> <span class="justification">(Substitute &ulcorner;G&urcorner; for Sub(n,n))</span></li>
+                        </ol>
+                    </div>
+
+                    <div class="section-block final-section">
+                        <h4>Now unfold it yourself</h4>
+                        <p class="prose">Same derivation, in your hands. Click each highlighted <strong>part of the formula</strong> to replace it with its definition, stepping <em>backwards</em> until both sides collapse to the identical string. The legend updates as you go &mdash; no meaning is smuggled in, only substitution.</p>
 
                         <div class="unroller-sub-panel">
                             <div class="stats-bar" style="align-items: center;">

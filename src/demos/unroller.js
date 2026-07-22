@@ -31,33 +31,35 @@ const RHS_DEF_REFS = [null, 'part-Sub', 'part-n', 'part-phi', 'part-Prov'];
 // The live legend: which named parts each side's current state contains, plus a
 // plain-language gloss for every part. The list under the canvas re-renders on
 // each step so the meaning of whatever is on screen is always spelled out.
-const PART_ORDER = ['G', 'psi', 'phi', 'n', 'Sub', 'Prov', 'x'];
-const PART_LABEL = { G: 'G', psi: '&psi;', phi: '&varphi;', n: 'n', Sub: 'Sub', Prov: 'Prov', x: 'x' };
+const PART_ORDER = ['G', 'psi', 'phi', 'n', 'Sub', 'quote', 'Prov', 'not', 'x'];
+const PART_LABEL = { G: 'G', psi: '&psi;', phi: '&varphi;', n: 'n', Sub: 'Sub', quote: '&ulcorner;&nbsp;&urcorner;', Prov: 'Prov', not: '&not;', x: 'x' };
 const PART_META = {
   G: 'the sentence we are building &mdash; it will turn out to say &ldquo;I have no proof.&rdquo;',
   psi: '<code>&psi;(x) := &varphi;(Sub(x,x))</code> &mdash; apply &varphi; to x fed its own Gödel number.',
   phi: '<code>&varphi;(x) := &not;Prov(x)</code> &mdash; &ldquo;the formula numbered x is not provable.&rdquo;',
   n: '<code>n := &ulcorner;&psi;&urcorner;</code> &mdash; the Gödel number of the formula &psi;.',
   Sub: '<code>Sub(a,b)</code> &mdash; the Gödel number of the formula you get by substituting b into the formula numbered a.',
+  quote: 'the Gödel quotes. <code>&ulcorner;&varphi;&urcorner;</code> is the single <em>number</em> that codes the formula &varphi; &mdash; the corners turn a formula into its code.',
   Prov: '<code>Prov(f) := &exist;p Proof(p,f)</code> &mdash; &ldquo;f is provable&rdquo; (some proof p exists).',
+  not: 'logical negation. <code>&not;P</code> means &ldquo;not P&rdquo; &mdash; here, &ldquo;there is no proof.&rdquo;',
   x: 'a free variable &mdash; a placeholder standing for any number.',
 };
 
 const LHS_PARTS = [
   ['G'],
   ['psi', 'n'],
-  ['psi'],
-  ['phi', 'Sub', 'psi'],
-  ['Prov', 'Sub', 'psi'],
-  ['Prov', 'Sub', 'phi', 'x'],
-  ['Prov', 'Sub', 'x'],
+  ['psi', 'quote'],
+  ['phi', 'Sub', 'psi', 'quote'],
+  ['Prov', 'not', 'Sub', 'psi', 'quote'],
+  ['Prov', 'not', 'Sub', 'phi', 'x', 'quote'],
+  ['Prov', 'not', 'Sub', 'x', 'quote'],
 ];
 const RHS_PARTS = [
-  ['Prov', 'G'],
-  ['Prov', 'Sub', 'n'],
-  ['Prov', 'Sub', 'psi'],
-  ['Prov', 'Sub', 'phi', 'x'],
-  ['Prov', 'Sub', 'x'],
+  ['Prov', 'not', 'G', 'quote'],
+  ['Prov', 'not', 'Sub', 'n'],
+  ['Prov', 'not', 'Sub', 'psi', 'quote'],
+  ['Prov', 'not', 'Sub', 'phi', 'x', 'quote'],
+  ['Prov', 'not', 'Sub', 'x', 'quote'],
 ];
 
 let lhs = 0;

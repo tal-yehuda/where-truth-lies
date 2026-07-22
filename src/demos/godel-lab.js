@@ -1,0 +1,109 @@
+// Chapter 2 — two warm-up labs that precede the Gödel construction, built to make
+// the two hardest ideas concrete:
+//   1. Sub(a,b): substitution as a function from NUMBERS to a NUMBER.
+//   2. Diagonalization: feeding a formula its own code, Sub(a,a).
+import { calculateEncoding } from '../lib/godel.js';
+import { formatScientific } from '../lib/dom.js';
+
+// ---------- 1. Sub(a,b) explorer ----------
+// Templates carry one free variable x. Substituting the numeral for b means
+// replacing x with S…S0 (b copies of S), then re-encoding to a Gödel number.
+const SUB_TEMPLATES = {
+  'x=0': { pretty: 'x = 0', gloss: '“x is zero”' },
+  '¬(x=0)': { pretty: '¬(x = 0)', gloss: '“x is not zero”' },
+  'x=S0': { pretty: 'x = S0', gloss: '“x is 1”' },
+};
+
+const numeral = (b) => 'S'.repeat(b) + '0';
+const prettyNumeral = (b) => (b === 0 ? '0' : 'S'.repeat(b) + '0');
+const encode = (s) => calculateEncoding(s, {}).godelNumber;
+const prettify = (s) => s.replace(/=/g, ' = ');
+
+let subB = 2;
+
+function renderSub() {
+  const sel = document.getElementById('sub-formula');
+  if (!sel) return;
+  const tmpl = sel.value;
+  const a = encode(tmpl);
+  const num = numeral(subB);
+  const subf = tmpl.replaceAll('x', num);
+  const out = encode(subf);
+
+  document.getElementById('sub-a').innerHTML = formatScientific(a);
+  document.getElementById('sub-b').textContent = subB;
+  document.getElementById('sub-b-numeral').textContent = prettyNumeral(subB);
+  document.getElementById('sub-subformula').innerHTML = prettify(subf);
+  document.getElementById('sub-out').innerHTML = formatScientific(out);
+}
+
+function initSub() {
+  const sel = document.getElementById('sub-formula');
+  if (!sel) return;
+  sel.addEventListener('change', renderSub);
+  document.getElementById('sub-b-inc').addEventListener('click', () => {
+    subB = Math.min(6, subB + 1);
+    renderSub();
+  });
+  document.getElementById('sub-b-dec').addEventListener('click', () => {
+    subB = Math.max(0, subB - 1);
+    renderSub();
+  });
+  renderSub();
+}
+
+// ---------- 2. Diagonalization explorer ----------
+// Diagonalizing φ = computing Sub(⌜φ⌝, ⌜φ⌝): plug the formula's own code in for x.
+const DIAG = {
+  eq: {
+    phi: 'x = x',
+    diag: '⌜φ⌝ = ⌜φ⌝',
+    says: 'True — the formula’s own code equals itself. A self-reference, but a harmless one.',
+    tag: null,
+  },
+  prov: {
+    phi: 'Prov(x)',
+    diag: 'Prov(⌜φ⌝)',
+    says: '“The formula φ is provable.” φ now asserts its own provability — a real self-referential sentence (the Henkin sentence, which turns out to be provable).',
+    tag: null,
+  },
+  nprov: {
+    phi: '¬Prov(x)',
+    diag: '¬Prov(⌜φ⌝)',
+    says: 'Roughly “this formula has no proof” — the whole intuition behind Gödel. Making the word “this” airtight is exactly what Sub(x,x) is for. →',
+    tag: 'almost there',
+  },
+  psi: {
+    phi: '¬Prov(Sub(x,x))',
+    diag: '¬Prov(Sub(⌜φ⌝, ⌜φ⌝))  =  ¬Prov(⌜G⌝)',
+    says: '“I have no proof.” Sub(x,x) builds the self-reference cleanly: the diagonal comes out to G itself — the sentence the rest of this chapter is about.',
+    tag: 'this is G',
+  },
+};
+
+function renderDiag(key) {
+  const out = document.getElementById('diag-out');
+  if (!out) return;
+  const d = DIAG[key];
+  document.querySelectorAll('.diag-opt').forEach((b) => b.classList.toggle('active', b.dataset.d === key));
+  const tag = d.tag ? `<span class="diag-tag">${d.tag}</span>` : '';
+  out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
+  out.innerHTML = `
+    <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
+    <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;) = Sub(&ulcorner;&varphi;&urcorner;, &ulcorner;&varphi;&urcorner;) = ${d.diag}</span>${tag}</div>
+    <div class="diag-says">${d.says}</div>`;
+}
+
+function initDiag() {
+  const menu = document.getElementById('diag-menu');
+  if (!menu) return;
+  menu.querySelectorAll('.diag-opt').forEach((b) => b.addEventListener('click', () => renderDiag(b.dataset.d)));
+  renderDiag('eq');
+}
+
+export function init() {
+  initSub();
+  initDiag();
+}
+
+export const handlers = {};
