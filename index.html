@@ -406,16 +406,16 @@
 
                     <div class="section-block ladder-block" style="margin-top: 2.5rem;">
                         <h3>Incompleteness as a Staircase</h3>
-                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">A blind spot need not be a dead end &mdash; it can be a step up. Gödel's proof is carried out in <strong>Peano Arithmetic</strong> (PA), the standard axioms for the whole numbers, so PA is our base level. PA can't prove its own consistency — the statement <span class="mono">Con(PA)</span>, a blind spot just like <em>G</em> — so add that as a new axiom. Each level is simply <strong>the level below plus one new axiom</strong>: PA, then PA + <span class="mono">Con(PA)</span>, then that system plus <em>its</em> consistency, and on up. Every level is stronger, and every level has a fresh blind spot of its own.</p>
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">A blind spot need not be a dead end &mdash; it can be a step up. Gödel's proof runs inside <strong>Peano Arithmetic</strong> (PA), the standard axioms for the whole numbers, so PA is our base level. The <em>G</em> you just built is PA's blind spot: a truth it can't prove. But the same trick works on <em>any</em> system &mdash; every one has its own unprovable Gödel sentence. Call a system's sentence its <strong>H</strong> (PA's H is that very G). Add PA's H as a new axiom and you land on a stronger system, which has a fresh H of its own. Add that, and climb again. Each level is just <strong>the level below plus one new axiom</strong>, and each still can't reach its own H.</p>
                         <div class="ladder-game">
                             <div class="ladder-stack" id="ladder-stack"></div>
                             <div class="controls-row" style="justify-content: center;">
-                                <button class="btn btn-primary" id="ladder-climb">Add Con(current) &amp; climb &uarr;</button>
+                                <button class="btn btn-primary" id="ladder-climb">Add this level's H &amp; climb &uarr;</button>
                                 <button class="btn btn-icon" id="ladder-reset">Back to the base</button>
                             </div>
                             <div id="ladder-status" class="ladder-status"></div>
                         </div>
-                        <p style="font-size: 1.05rem; margin-top: 1.5rem;">Every level is a genuinely stronger theory: it proves everything below it, and its own consistency besides. The blind spot never closes — but it never traps you either. This is the formalist's reply to "truth beyond proof": not a single fixed realm hovering above the system, but an endless, ordered tower of systems, each one seeing a little further than the last.</p>
+                        <p style="font-size: 1.05rem; margin-top: 1.5rem;">Every level is a genuinely stronger theory: it proves every H beneath it, the ones earlier levels couldn't reach. The blind spot never closes — but it never traps you either. This is the formalist's reply to "truth beyond proof": not a single fixed realm hovering above the system, but an endless, ordered tower of systems, each one seeing a little further than the last.</p>
 
                         <div style="font-size: 1.1rem; color: var(--accent-blue); font-weight: bold; margin-top: 2rem; padding-left: 1rem; border-left: 4px solid var(--accent-blue);">
                             Gödel doesn't just prise truth apart from proof. He pins down the shape of the gap: no system rich enough to describe itself can also fully contain its own truth. It can reflect on itself — that is what let you build <em>G</em> in the first place — but it can't close the loop.
