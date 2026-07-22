@@ -27,10 +27,13 @@ const tmPrograms = {
   },
   infinite_loop: {
     initial: 'q0',
+    // q0 sees the 1 and steps right into a blank; q1 steps back left onto the 1.
+    // Neither rule ever removes the 1 or reads an undefined symbol, so the head
+    // ping-pongs between the two cells forever — a machine that never halts.
     tape: { 0: '1' },
     rules: [
       { s: 'q0', r: '1', w: '1', m: 'R', n: 'q1' },
-      { s: 'q1', r: ' ', w: '1', m: 'L', n: 'q0' },
+      { s: 'q1', r: ' ', w: ' ', m: 'L', n: 'q0' },
     ],
   },
   flip_bits: {
@@ -108,6 +111,90 @@ function renderTMRules() {
   rulesEl.innerHTML = rulesHtml;
 }
 
+// A live finite-state diagram of the current program: states as nodes, rules as
+// labelled arrows (read→write,move). The active state is highlighted each step.
+function tmEdgeLabel(x, y, text) {
+  const w = text.length * 5.3 + 8;
+  return `<g><rect x="${(x - w / 2).toFixed(1)}" y="${(y - 8).toFixed(1)}" width="${w.toFixed(1)}" height="16" rx="3" fill="var(--surface)" opacity="0.92"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="9" fill="var(--text-muted)">${text}</text></g>`;
+}
+
+function renderTMDiagram() {
+  const el = document.getElementById('tm-diagram');
+  if (!el) return;
+  const prog = tmPrograms[currentProgram];
+
+  // States: initial first, then in first-seen order across the rules.
+  const states = [];
+  const seen = new Set();
+  const add = (s) => { if (s && !seen.has(s)) { seen.add(s); states.push(s); } };
+  add(prog.initial);
+  prog.rules.forEach((r) => { add(r.s); add(r.n); });
+  if (states.length === 0) {
+    el.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; margin: 0.5rem 0;">Add a rule to see the state diagram.</p>';
+    return;
+  }
+
+  const W = 380, H = 260, cx = W / 2, cy = H / 2, nodeR = 20;
+  const layoutR = states.length === 1 ? 0 : 50;
+  const pos = {};
+  states.forEach((s, i) => {
+    const ang = -Math.PI / 2 + (i * 2 * Math.PI) / states.length;
+    pos[s] = { x: cx + layoutR * Math.cos(ang), y: cy + layoutR * Math.sin(ang) };
+  });
+
+  const blank = (c) => (c === ' ' ? '␣' : c);
+  const lbl = (r) => `${blank(r.r)}→${blank(r.w)},${r.m}`;
+
+  // Group rules by directed (s → n) pair so parallel transitions share one arrow.
+  const edges = {};
+  prog.rules.forEach((r) => {
+    const k = r.s + '' + r.n;
+    (edges[k] = edges[k] || { s: r.s, n: r.n, labels: [] }).labels.push(lbl(r));
+  });
+
+  let svg = `<defs><marker id="tm-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs>`;
+
+  Object.values(edges).forEach((e) => {
+    const text = e.labels.join('  ');
+    const p = pos[e.s];
+    if (e.s === e.n) {
+      // Self-loop, opening outward from the layout centre (or up for a lone node).
+      let ox = p.x - cx, oy = p.y - cy;
+      const ol = Math.hypot(ox, oy) || 1;
+      if (states.length === 1) { ox = 0; oy = -1; } else { ox /= ol; oy /= ol; }
+      const dir = Math.atan2(oy, ox), spread = 0.5, out = 40;
+      const a1 = dir - spread, a2 = dir + spread;
+      const s1x = p.x + nodeR * Math.cos(a1), s1y = p.y + nodeR * Math.sin(a1);
+      const s2x = p.x + nodeR * Math.cos(a2), s2y = p.y + nodeR * Math.sin(a2);
+      const c1x = p.x + (nodeR + out) * Math.cos(a1), c1y = p.y + (nodeR + out) * Math.sin(a1);
+      const c2x = p.x + (nodeR + out) * Math.cos(a2), c2y = p.y + (nodeR + out) * Math.sin(a2);
+      svg += `<path d="M ${s1x.toFixed(1)} ${s1y.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${s2x.toFixed(1)} ${s2y.toFixed(1)}" fill="none" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#tm-arrow)"/>`;
+      svg += tmEdgeLabel(p.x + (nodeR + out + 8) * Math.cos(dir), p.y + (nodeR + out + 8) * Math.sin(dir), text);
+    } else {
+      const a = pos[e.s], b = pos[e.n];
+      const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1;
+      const ux = dx / len, uy = dy / len, px = uy, py = -ux, curve = 24;
+      const sx = a.x + ux * nodeR + px * 4, sy = a.y + uy * nodeR + py * 4;
+      const ex = b.x - ux * nodeR + px * 4, ey = b.y - uy * nodeR + py * 4;
+      const mx = (a.x + b.x) / 2 + px * curve, my = (a.y + b.y) / 2 + py * curve;
+      svg += `<path d="M ${sx.toFixed(1)} ${sy.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#tm-arrow)"/>`;
+      svg += tmEdgeLabel(mx, my, text);
+    }
+  });
+
+  // "start" arrow into the initial state, coming in from the left.
+  const ip = pos[prog.initial];
+  svg += `<path d="M ${(ip.x - nodeR - 22).toFixed(1)} ${ip.y.toFixed(1)} L ${(ip.x - nodeR - 3).toFixed(1)} ${ip.y.toFixed(1)}" fill="none" stroke="var(--accent-orange)" stroke-width="1.6" marker-end="url(#tm-arrow)"/>`;
+
+  states.forEach((s) => {
+    const p = pos[s], cur = s === tmState;
+    svg += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${nodeR}" fill="${cur ? 'var(--soft-orange)' : 'var(--surface-3)'}" stroke="${cur ? 'var(--accent-orange)' : 'var(--border)'}" stroke-width="${cur ? 2.5 : 1.5}"/>`;
+    svg += `<text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="${cur ? 'var(--accent-orange)' : 'var(--text-main)'}">${s}</text>`;
+  });
+
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width: 440px; height: auto; display: block; margin: 0 auto;" role="img" aria-label="State diagram of the current Turing machine">${svg}</svg>`;
+}
+
 function renderTMTape() {
   const tapeEl = document.getElementById('tm-tape');
   if (!tapeEl) return;
@@ -140,6 +227,7 @@ function updateTMUI() {
     stEl.textContent = tmState;
     document.getElementById('tm-step-count').textContent = tmStepCount;
     renderTMRules();
+    renderTMDiagram();
   }
 }
 
@@ -315,6 +403,7 @@ export function init() {
 export function onShow() {
   renderTMTape();
   renderTMRules();
+  renderTMDiagram();
 }
 
 export const handlers = {

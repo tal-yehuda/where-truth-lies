@@ -428,6 +428,11 @@
                                 </div>
                             </div>
                             
+                            <div id="tm-diagram-wrap" style="background: var(--surface); padding: 1rem 1rem 0.5rem; border-radius: 8px; border: 1px solid var(--soft-orange-border); margin-bottom: 1rem;">
+                                <h5 style="margin: 0 0 0.25rem; color: var(--text-main);">State Diagram <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal; font-size: 0.85rem;">&mdash; the active state glows as the machine runs</span></h5>
+                                <div id="tm-diagram" style="width: 100%; overflow-x: auto;"></div>
+                            </div>
+
                             <div style="background: var(--surface); padding: 1rem; border-radius: 8px; border: 1px solid var(--soft-orange-border);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <h5 style="margin: 0; color: var(--text-main);">Transition Rules</h5>
@@ -446,7 +451,7 @@
                                     <div>Move</div>
                                     <div>Next State</div>
                                 </div>
-                                <div id="tm-rules" style="max-height: 200px; overflow-y: auto;">
+                                <div id="tm-rules">
                                     <!-- JS populated rules -->
                                 </div>
                                 <div id="tm-custom-editor" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--soft-blue-border);">
