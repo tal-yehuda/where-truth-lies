@@ -73,7 +73,7 @@ const DIAG = {
     phi: 'Sub(x, x)',
     result: 'Sub(⌜ϕ⌝, ⌜ϕ⌝)',
     reduce: null,
-    says: 'Sub(x, x) isn’t a true-or-false claim — it’s the diagonal move itself: give it a formula’s code and it returns the code of that formula fed its own code, a number that points at itself. That raw self-reference is the engine of the proof. Wrap ¬Prov(…) around it — the last option — and the self-referential number becomes a self-referential sentence: G.',
+    says: 'Read Sub(⌜ϕ⌝, ⌜ϕ⌝) one slot at a time. The first ⌜ϕ⌝ names the formula to work on: ϕ itself. The second ⌜ϕ⌝ is the number substituted into that formula’s free variable x — again ϕ’s own code. So the result is the code of “ϕ with its own code plugged in”: a formula handed itself. That is all it means to diagonalize a formula.',
     tag: 'the diagonal move',
   },
   nprov: {
@@ -102,8 +102,8 @@ function renderDiag(key) {
     ? `<div class="diag-line"><span class="diag-lbl">which is</span><span class="mono">${d.reduce}</span></div>`
     : '';
   out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
-  // "φ(⌜φ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
-  // result that is itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
+  // "ϕ(⌜ϕ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
+  // result that is itself an equation (like ⌜ϕ⌝ = ⌜ϕ⌝) can't be misread as a chain.
   out.innerHTML = `
     <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
     <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
