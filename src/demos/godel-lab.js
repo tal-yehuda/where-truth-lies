@@ -66,7 +66,7 @@ const DIAG = {
     phi: 'Prov(x)',
     result: 'Prov(⌜φ⌝)',
     reduce: null,
-    says: '“The formula φ is provable.” φ now asserts its own provability — a real self-referential sentence (the Henkin sentence, which turns out to be provable).',
+    says: '“The formula φ is provable.” φ now asserts its own provability — a real self-referential sentence, and this one turns out to be provable.',
     tag: null,
   },
   nprov: {
