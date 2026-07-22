@@ -66,14 +66,14 @@ const DIAG = {
     phi: 'Prov(x)',
     result: 'Prov(⌜φ⌝)',
     reduce: null,
-    says: '“The formula φ is provable.” φ now asserts its own provability — a real self-referential sentence, and this one turns out to be provable.',
+    says: 'Plugging φ’s own code ⌜φ⌝ in for x gives “the formula Prov(x) is provable.” It mentions φ’s code — but it is a statement about the formula φ, not yet about itself.',
     tag: null,
   },
   nprov: {
     phi: '¬Prov(x)',
     result: '¬Prov(⌜φ⌝)',
     reduce: null,
-    says: 'Roughly “this formula has no proof” — the whole intuition behind Gödel. Making the word “this” airtight is exactly what the inner Sub(x,x) is for. →',
+    says: 'The ⌜φ⌝ is φ’s own code, plugged in for x. So this reads “the formula ¬Prov(x) has no proof” — tantalisingly close to “this sentence is unprovable.” But look closely: it speaks about the formula ¬Prov(x), not about itself. Closing that gap is exactly what the inner Sub(x,x) does. →',
     tag: 'almost there',
   },
   psi: {
