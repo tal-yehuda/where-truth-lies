@@ -95,11 +95,13 @@ function renderDiag(key) {
     ? `<div class="diag-line"><span class="diag-lbl">which is</span><span class="mono">${d.reduce}</span></div>`
     : '';
   out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
-  // "ϕ(⌜ϕ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
-  // result that is itself an equation (like ⌜ϕ⌝ = ⌜ϕ⌝) can't be misread as a chain.
+  // Show the diagonal operator Sub(x,x) instantiated at ⌜φ⌝ as its own step, then
+  // the resulting formula. "φ(⌜φ⌝):" uses a colon (not "="), so a result that is
+  // itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
   out.innerHTML = `
     <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
-    <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
+    <div class="diag-line"><span class="diag-lbl">Diagonalize</span><span class="mono">Sub(x, x) &nbsp;&rarr;&nbsp; Sub(&ulcorner;&varphi;&urcorner;, &ulcorner;&varphi;&urcorner;)</span><span class="diag-hint">feed &varphi; its own code &ulcorner;&varphi;&urcorner; for x</span></div>
+    <div class="diag-line"><span class="diag-lbl">Result</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
     ${reduceLine}
     <div class="diag-says">${d.says}</div>`;
 }

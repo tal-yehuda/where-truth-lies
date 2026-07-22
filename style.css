@@ -773,6 +773,7 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .diag-line { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; margin-bottom: 0.5rem; }
 .diag-lbl { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.05rem; color: var(--text-muted); min-width: 4.5rem; }
 .diag-tag { font-size: var(--fs-xs); font-weight: bold; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--accent-green); border: 1px solid var(--accent-green); border-radius: 999px; padding: 0.1rem 0.5rem; }
+.diag-hint { color: var(--text-muted); font-size: var(--fs-sm); font-style: italic; }
 .diag-says { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); color: var(--text-main); font-size: var(--fs-sm); line-height: 1.55; }
 
 /* Gödel encoding challenges */
