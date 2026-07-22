@@ -344,29 +344,17 @@
                     </div>
 
                     <div class="section-block">
-                        <h4>The definitions</h4>
-                        <p>We work over a base theory <em>T</em> (Peano Arithmetic). One thing to keep in mind: <strong>every function here takes Gödel numbers as input.</strong> Both <span class="mono">Prov</span> and <span class="mono">Sub</span> operate on the <em>codes</em> of formulas &mdash; numbers &mdash; never on the formulas directly.</p>
-                        <ol class="derivation-list">
-                            <li id="def-1"><code>Prov(f) := &exist;p Proof(p,f)</code> <span class="justification">"the formula whose code is f is provable" &mdash; f is a Gödel number</span></li>
-                            <li id="def-2"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">"the formula whose code is x is unprovable"</span></li>
-                            <li id="def-3"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">diagonalize first (Sub(x,x)), then apply &varphi;</span></li>
-                            <li id="def-4"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">n is the Gödel number of the formula &psi;</span></li>
-                            <li id="def-5"><code>G := &psi;(n)</code> <span class="justification">feed &psi; its own code n &mdash; the diagonal of &psi;</span></li>
-                        </ol>
-                    </div>
-
-                    <div class="section-block">
                         <h4>Pure derivation (line by line)</h4>
-                        <p class="prose">Here is the whole proof as pure symbol-pushing &mdash; no meaning required, every step just a definition swapped in. Hover a line to light up the definition it uses. Read it once here; then the interaction below lets you drive the same unfolding yourself.</p>
+                        <p class="prose">Here is the whole proof as pure symbol-pushing &mdash; no meaning required, every step just a definition swapped in. The first four lines restate the pieces you just explored (recall that <span class="mono">Prov</span> and <span class="mono">Sub</span> both take Gödel <em>numbers</em>); the rest is substitution. Read it once here, then the interaction below lets you drive the same unfolding yourself.</p>
                         <ol class="derivation-list derivation-steps">
-                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()"><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">(Define property &varphi; as "is unprovable")</span></li>
-                            <li onmouseover="highlightRef(['def-3'])" onmouseout="clearRef()"><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">(Define &psi; as applying &varphi; to the diagonal Sub(x,x))</span></li>
-                            <li onmouseover="highlightRef(['def-4'])" onmouseout="clearRef()"><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">(Let n be the Gödel number of formula &psi;)</span></li>
-                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()"><code>G := &psi;(n)</code> <span class="justification">(Construct G by feeding &psi; its own number n)</span></li>
-                            <li onmouseover="highlightRef(['def-3', 'def-5'])" onmouseout="clearRef()" id="step-5"><code>G = &varphi;(Sub(n,n))</code> <span class="justification">(Expand &psi; using its definition)</span></li>
-                            <li onmouseover="highlightRef(['def-2'])" onmouseout="clearRef()" id="step-6"><code>G = &not;Prov(Sub(n,n))</code> <span class="justification">(Expand &varphi; using its definition)</span></li>
+                            <li><code>&varphi;(x) := &not;Prov(x)</code> <span class="justification">(Define property &varphi; as "is unprovable")</span></li>
+                            <li><code>&psi;(x) := &varphi;(Sub(x,x))</code> <span class="justification">(Define &psi; as applying &varphi; to the diagonal Sub(x,x))</span></li>
+                            <li><code>n := &ulcorner;&psi;&urcorner;</code> <span class="justification">(Let n be the Gödel number of formula &psi;)</span></li>
+                            <li><code>G := &psi;(n)</code> <span class="justification">(Construct G by feeding &psi; its own number n)</span></li>
+                            <li id="step-5"><code>G = &varphi;(Sub(n,n))</code> <span class="justification">(Expand &psi; using its definition)</span></li>
+                            <li id="step-6"><code>G = &not;Prov(Sub(n,n))</code> <span class="justification">(Expand &varphi; using its definition)</span></li>
                             <li id="step-7"><code>Sub(n,n) = &ulcorner;&psi;(n)&urcorner;</code> <span class="justification">(By the definition of Sub: substitute n into formula #n, which is &psi;)</span></li>
-                            <li onmouseover="highlightRef(['def-5'])" onmouseout="clearRef()" id="step-8"><code>Sub(n,n) = &ulcorner;G&urcorner;</code> <span class="justification">(Since G is exactly &psi;(n), their codes are identical)</span></li>
+                            <li id="step-8"><code>Sub(n,n) = &ulcorner;G&urcorner;</code> <span class="justification">(Since G is exactly &psi;(n), their codes are identical)</span></li>
                             <li class="final-step" id="step-9">Therefore: <br><code>G = &not;Prov(&ulcorner;G&urcorner;)</code> <span class="justification">(Substitute &ulcorner;G&urcorner; for Sub(n,n))</span></li>
                         </ol>
                     </div>
