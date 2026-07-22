@@ -69,6 +69,13 @@ const DIAG = {
     says: 'Plugging ϕ’s own code ⌜ϕ⌝ in for x gives “the formula Prov(x) is provable.” It mentions ϕ’s code — but it is a statement about the formula ϕ, not yet about itself.',
     tag: null,
   },
+  subxx: {
+    phi: 'Sub(x, x)',
+    result: 'Sub(⌜ϕ⌝, ⌜ϕ⌝)',
+    reduce: null,
+    says: 'Sub(x, x) isn’t a true-or-false claim — it’s the diagonal move itself: give it a formula’s code and it returns the code of that formula fed its own code, a number that points at itself. That raw self-reference is the engine of the proof. Wrap ¬Prov(…) around it — the last option — and the self-referential number becomes a self-referential sentence: G.',
+    tag: 'the diagonal move',
+  },
   nprov: {
     phi: '¬Prov(x)',
     result: '¬Prov(⌜ϕ⌝)',
@@ -95,13 +102,11 @@ function renderDiag(key) {
     ? `<div class="diag-line"><span class="diag-lbl">which is</span><span class="mono">${d.reduce}</span></div>`
     : '';
   out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
-  // Show the diagonal operator Sub(x,x) instantiated at ⌜φ⌝ as its own step, then
-  // the resulting formula. "φ(⌜φ⌝):" uses a colon (not "="), so a result that is
-  // itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
+  // "φ(⌜φ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
+  // result that is itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
   out.innerHTML = `
     <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
-    <div class="diag-line"><span class="diag-lbl">Diagonalize</span><span class="mono">Sub(x, x) &nbsp;&rarr;&nbsp; Sub(&ulcorner;&varphi;&urcorner;, &ulcorner;&varphi;&urcorner;)</span><span class="diag-hint">feed &varphi; its own code &ulcorner;&varphi;&urcorner; for x</span></div>
-    <div class="diag-line"><span class="diag-lbl">Result</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
+    <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
     ${reduceLine}
     <div class="diag-says">${d.says}</div>`;
 }
