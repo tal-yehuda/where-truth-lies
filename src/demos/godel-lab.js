@@ -80,7 +80,7 @@ const DIAG = {
     phi: '¬Prov(x)',
     result: '¬Prov(⌜ϕ⌝)',
     reduce: null,
-    says: 'The ⌜ϕ⌝ is ϕ’s own code, plugged in for x. So this reads “the formula ¬Prov(x) has no proof” — tantalisingly close to “this sentence is unprovable.” But look closely: it speaks about the formula ¬Prov(x), not about itself. Closing that gap is exactly what the inner Sub(x,x) does. →',
+    says: 'The ⌜ϕ⌝ is ϕ’s own code, plugged in for x. So this reads “the formula ¬Prov(x) has no proof” — very close to “this sentence is unprovable.” But look closely: it speaks about the formula ¬Prov(x), not about itself. Closing that gap is exactly what the inner Sub(x,x) does. →',
     tag: 'almost there',
   },
   psi: {
