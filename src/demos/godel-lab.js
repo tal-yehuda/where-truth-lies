@@ -53,34 +53,34 @@ function initSub() {
 }
 
 // ---------- 2. Diagonalization explorer ----------
-// Diagonalizing φ = computing Sub(⌜φ⌝, ⌜φ⌝): plug the formula's own code in for x.
+// Diagonalizing ϕ = computing Sub(⌜ϕ⌝, ⌜ϕ⌝): plug the formula's own code in for x.
 const DIAG = {
   eq: {
     phi: 'x = x',
-    result: '⌜φ⌝ = ⌜φ⌝',
+    result: '⌜ϕ⌝ = ⌜ϕ⌝',
     reduce: null,
     says: 'True — the formula’s own code equals itself. A self-reference, but a harmless one.',
     tag: null,
   },
   prov: {
     phi: 'Prov(x)',
-    result: 'Prov(⌜φ⌝)',
+    result: 'Prov(⌜ϕ⌝)',
     reduce: null,
-    says: 'Plugging φ’s own code ⌜φ⌝ in for x gives “the formula Prov(x) is provable.” It mentions φ’s code — but it is a statement about the formula φ, not yet about itself.',
+    says: 'Plugging ϕ’s own code ⌜ϕ⌝ in for x gives “the formula Prov(x) is provable.” It mentions ϕ’s code — but it is a statement about the formula ϕ, not yet about itself.',
     tag: null,
   },
   nprov: {
     phi: '¬Prov(x)',
-    result: '¬Prov(⌜φ⌝)',
+    result: '¬Prov(⌜ϕ⌝)',
     reduce: null,
-    says: 'The ⌜φ⌝ is φ’s own code, plugged in for x. So this reads “the formula ¬Prov(x) has no proof” — tantalisingly close to “this sentence is unprovable.” But look closely: it speaks about the formula ¬Prov(x), not about itself. Closing that gap is exactly what the inner Sub(x,x) does. →',
+    says: 'The ⌜ϕ⌝ is ϕ’s own code, plugged in for x. So this reads “the formula ¬Prov(x) has no proof” — tantalisingly close to “this sentence is unprovable.” But look closely: it speaks about the formula ¬Prov(x), not about itself. Closing that gap is exactly what the inner Sub(x,x) does. →',
     tag: 'almost there',
   },
   psi: {
     phi: '¬Prov(Sub(x,x))',
-    result: '¬Prov(Sub(⌜φ⌝, ⌜φ⌝))',
+    result: '¬Prov(Sub(⌜ϕ⌝, ⌜ϕ⌝))',
     reduce: '¬Prov(⌜G⌝)',
-    says: 'Now the self-reference is airtight. The number Sub(⌜φ⌝, ⌜φ⌝) is the code of this very sentence, so it reads ¬Prov(⌜G⌝): “I have no proof.” That diagonal is G — the sentence the rest of this chapter is about.',
+    says: 'Now the self-reference is airtight. The number Sub(⌜ϕ⌝, ⌜ϕ⌝) is the code of this very sentence, so it reads ¬Prov(⌜G⌝): “I have no proof.” That diagonal is G — the sentence the rest of this chapter is about.',
     tag: 'this is G',
   },
 };
@@ -95,8 +95,8 @@ function renderDiag(key) {
     ? `<div class="diag-line"><span class="diag-lbl">which is</span><span class="mono">${d.reduce}</span></div>`
     : '';
   out.className = 'diag-out show' + (key === 'psi' ? ' is-g' : '');
-  // "φ(⌜φ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
-  // result that is itself an equation (like ⌜φ⌝ = ⌜φ⌝) can't be misread as a chain.
+  // "ϕ(⌜ϕ⌝):" reads "the diagonal is the formula …" — a colon, not an equals, so a
+  // result that is itself an equation (like ⌜ϕ⌝ = ⌜ϕ⌝) can't be misread as a chain.
   out.innerHTML = `
     <div class="diag-line"><span class="diag-lbl">Formula</span><span class="mono">&varphi;(x) := ${d.phi}</span></div>
     <div class="diag-line"><span class="diag-lbl">Diagonal</span><span class="mono">&varphi;(&ulcorner;&varphi;&urcorner;): &nbsp;${d.result}</span>${tag}</div>
