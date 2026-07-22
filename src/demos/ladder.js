@@ -1,8 +1,8 @@
 // Chapter 2 — the incompleteness ladder. A consistent system can't prove its own
 // consistency (Con), so that sentence is a blind spot exactly like G. Add it as an
 // axiom and you climb to a strictly stronger system — which has a fresh blind spot
-// of its own. Where the independence game moves sideways (G / not-G), this moves up,
-// making incompleteness read as a generative staircase rather than a dead end.
+// of its own. This makes incompleteness read as a generative staircase rather than
+// a dead end: each blind spot becomes the next level up.
 const MAX_RUNG = 6; // enough to feel endless; the note makes the "forever" explicit.
 
 let level = 0;

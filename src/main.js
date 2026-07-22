@@ -14,7 +14,6 @@ import * as miu from './demos/miu.js';
 import * as interpretationToggle from './demos/interpretation-toggle.js';
 import * as physics from './demos/physics.js';
 import * as halting from './demos/halting.js';
-import * as independence from './demos/independence.js';
 import * as ladder from './demos/ladder.js';
 import * as godelLab from './demos/godel-lab.js';
 
@@ -46,7 +45,6 @@ miu.init();
 interpretationToggle.init();
 physics.init();
 halting.init();
-independence.init();
 ladder.init();
 godelLab.init();
 

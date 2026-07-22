@@ -359,12 +359,10 @@
                         </ol>
 
                         <div style="background: var(--surface-2); border: 1px solid var(--soft-green-border); border-left: 4px solid var(--accent-green); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
-                            <h5 style="color: var(--accent-green); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05rem;">Why neither G nor &not;G can be proved</h5>
-                            <p style="margin-bottom: 1rem;">Line 9 is the whole sentence: <span class="mono">G &harr; &not;Prov(&ulcorner;G&urcorner;)</span>. Assume only that the system is <strong>sound</strong> &mdash; it proves nothing false. Three short steps pin it down.</p>
-                            <p style="margin-bottom: 1rem;"><strong>1. <em>G</em> has no proof.</strong> Suppose it did. By soundness <em>G</em> would then be true; but <em>G</em> reads <span class="mono">&not;Prov(&ulcorner;G&urcorner;)</span>, so its being true <em>means</em> &ldquo;<em>G</em> has no proof&rdquo; &mdash; contradicting the proof we just assumed. So <em>G</em> is unprovable. And because <em>G</em> asserts exactly that, and it holds, <em>G</em> is <strong>true</strong>.</p>
-                            <p style="margin-bottom: 1rem;"><strong>2. <em>&not;G</em> has no proof either.</strong> Negate the sentence: <span class="mono">&not;G &harr; Prov(&ulcorner;G&urcorner;)</span> &mdash; &ldquo;<em>G</em> does have a proof.&rdquo; Suppose the system proved <em>&not;G</em>. By soundness <em>&not;G</em> would be true, i.e. <span class="mono">Prov(&ulcorner;G&urcorner;)</span> holds, so <em>G</em> would have a proof. But step 1 just showed it has none. Contradiction. So <em>&not;G</em> is unprovable too.</p>
-                            <p style="margin-bottom: 1rem;"><strong>3. &hellip;and <em>&not;G</em> can&rsquo;t be <em>disproven</em> either.</strong> To disprove <em>&not;G</em> is to prove its negation &mdash; which is just <em>G</em>. But step 1 already showed <em>G</em> has no proof. So <em>&not;G</em> can be neither proved nor refuted: it is <strong>undecidable</strong>. And this is exactly why you can bolt <em>&not;G</em> on as a new axiom and stay consistent &mdash; a contradiction from <em>&not;G</em> would hand you a proof of <em>G</em>, and there is none.</p>
-                            <p style="margin: 0;">So <em>G</em> is <strong>independent</strong>: neither it nor its negation can be derived, yet it is true in the standard numbers. That is the gap the rest of this chapter turns on.</p>
+                            <h5 style="color: var(--accent-green); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05rem;">Why G can&rsquo;t be proved &mdash; yet is true</h5>
+                            <p style="margin-bottom: 1rem;">Line 9 is the whole sentence: <span class="mono">G &harr; &not;Prov(&ulcorner;G&urcorner;)</span>. Assume only that the system is <strong>sound</strong> &mdash; it proves nothing false.</p>
+                            <p style="margin-bottom: 1rem;">Suppose the system <em>could</em> prove <em>G</em>. By soundness <em>G</em> would then be true; but <em>G</em> reads <span class="mono">&not;Prov(&ulcorner;G&urcorner;)</span>, so its being true <em>means</em> &ldquo;<em>G</em> has no proof&rdquo; &mdash; contradicting the proof we just assumed. So no such proof exists: <em>G</em> is unprovable.</p>
+                            <p style="margin: 0;">And because <em>G</em> asserts exactly that &mdash; &ldquo;I have no proof&rdquo; &mdash; and it holds, <em>G</em> is <strong>true</strong>. A sentence the system can never derive, yet true in the standard numbers. That is the gap the rest of this chapter turns on.</p>
                         </div>
                     </div>
 
@@ -402,27 +400,13 @@
                         <p style="font-size: 1.05rem; margin-bottom: 1rem;">The formalist leans on one word in that sentence. The Gödel numbering you just ran is bookkeeping — it never handed the system a notion of truth. So the real question is: <strong style="color: var(--accent-blue);">does the system contain a truth predicate at all, or only a predicate for provability?</strong></p>
                         
                         <div style="background: var(--surface-2); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border-left: 4px solid var(--accent-blue);">
-                            <h4 style="color: var(--accent-blue); margin-bottom: 1rem;">Analyzing G From the Outside</h4>
-                            <p style="font-size: 0.95rem; margin-bottom: 1rem;">Take it structurally. If system <em>A</em> is consistent, <em>G</em> can't be proved. And &not;<em>G</em> can't be proved either — a proof of it would make <em>A</em> inconsistent.</p>
-                            <p style="font-size: 0.95rem; margin-bottom: 1rem;">So <em>G</em> doesn't follow from the axioms at all. It is strictly <strong>independent</strong>. Add <em>G</em> as a new axiom and you get a consistent universe; add &not;<em>G</em> instead and you get an equally consistent one.</p>
-                            <p style="font-size: 0.95rem; font-weight: bold;">That doesn't make truth arbitrary. It means the axioms simply don't fix a truth-value for every sentence. Inside the bare syntax there is only derivability; truth appears the moment you pick a model to read the symbols in.</p>
+                            <p style="font-size: 0.95rem; margin: 0;">Inside the bare syntax there is only what can and can&rsquo;t be <em>derived</em> &mdash; nothing there marks a string as &ldquo;true.&rdquo; The system carries a predicate for <em>provability</em>, never one for truth. Truth enters only when you read the symbols in a model, like the standard whole numbers. So the two readings aren&rsquo;t really at war: the Platonist is talking about truth-in-that-model, the formalist about what the rules can derive. <em>G</em> is simply the place those two come apart &mdash; true when you read it in the standard numbers, unreachable when you stay inside the rules.</p>
                         </div>
-
-                        <div class="independence-game">
-                            <p class="independence-prompt"><strong>G is independent</strong> — neither it nor &not;G can be derived. So <em>you</em> get to extend the system. Which axiom do you add?</p>
-                            <div class="controls-row" style="justify-content: center;">
-                                <button class="btn independence-btn" id="indep-g">Add G &nbsp;(G is &ldquo;true&rdquo;)</button>
-                                <button class="btn independence-btn" id="indep-ng">Add &not;G &nbsp;(G is &ldquo;false&rdquo;)</button>
-                            </div>
-                            <div id="independence-result" class="independence-result"></div>
-                        </div>
-
-                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">To a Platonist this can feel impossible: if <em>G</em> <em>must</em> be true, how can adding <em>&not;G</em> stay consistent? Write both out. Since <span class="mono">G &harr; &not;Prov(&ulcorner;G&urcorner;)</span>, its negation is <span class="mono">&not;G &harr; Prov(&ulcorner;G&urcorner;)</span> &mdash; &ldquo;<em>G</em> does have a proof.&rdquo; Asserting that never lets you derive a contradiction, so it is consistent; it just describes a stranger universe, one that holds a proof of <em>G</em> the ordinary whole numbers never contain. <strong>Consistent</strong> and <strong>true in the standard numbers</strong> are not the same thing.</p>
                     </div>
 
                     <div class="section-block ladder-block" style="margin-top: 2.5rem;">
                         <h3>Incompleteness as a Staircase</h3>
-                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">The branch you took runs sideways — <em>G</em> or &not;<em>G</em>. There is also a way <strong>up</strong>. Gödel's proof is carried out in <strong>Peano Arithmetic</strong> (PA), the standard axioms for the whole numbers, so PA is our base level. PA can't prove its own consistency — the statement <span class="mono">Con(PA)</span>, a blind spot just like <em>G</em> — so add that as a new axiom. Each level is simply <strong>the level below plus one new axiom</strong>: PA, then PA + <span class="mono">Con(PA)</span>, then that system plus <em>its</em> consistency, and on up. Every level is stronger, and every level has a fresh blind spot of its own.</p>
+                        <p style="font-size: 1.05rem; margin-bottom: 1rem;">A blind spot need not be a dead end &mdash; it can be a step up. Gödel's proof is carried out in <strong>Peano Arithmetic</strong> (PA), the standard axioms for the whole numbers, so PA is our base level. PA can't prove its own consistency — the statement <span class="mono">Con(PA)</span>, a blind spot just like <em>G</em> — so add that as a new axiom. Each level is simply <strong>the level below plus one new axiom</strong>: PA, then PA + <span class="mono">Con(PA)</span>, then that system plus <em>its</em> consistency, and on up. Every level is stronger, and every level has a fresh blind spot of its own.</p>
                         <div class="ladder-game">
                             <div class="ladder-stack" id="ladder-stack"></div>
                             <div class="controls-row" style="justify-content: center;">
@@ -436,7 +420,7 @@
                         <div style="font-size: 1.1rem; color: var(--accent-blue); font-weight: bold; margin-top: 2rem; padding-left: 1rem; border-left: 4px solid var(--accent-blue);">
                             Gödel doesn't just prise truth apart from proof. He pins down the shape of the gap: no system rich enough to describe itself can also fully contain its own truth. It can reflect on itself — that is what let you build <em>G</em> in the first place — but it can't close the loop.
                             <br><br>
-                            So the theorem proves neither side. It hands Platonist and formalist the same fact and lets each furnish it. And you've now handled it both ways: you chose a branch, and you climbed a level. For the formalist, that is the whole point — a blind spot is not where the mathematics ends. It's where the systems multiply.
+                            So the theorem proves neither side. It hands Platonist and formalist the same fact and lets each furnish it. And you've just watched what the formalist does with it: each blind spot became the next level up, never a wall. A blind spot is not where the mathematics ends — it's where the systems multiply.
                         </div>
                     </div>
 
