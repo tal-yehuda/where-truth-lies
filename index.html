@@ -916,17 +916,17 @@
                     <div class="section-block physics-sandbox">
                         <div class="physics-topbar">
                             <h3>Recovering the Rules</h3>
-                            <span id="paradigm-counter" class="pill physics-epoch">Epoch 1 / 3</span>
+                            <span id="paradigm-counter" class="pill physics-epoch">Paradigm 1</span>
                         </div>
-                        <p class="prose">You're handed a running source and <strong id="physics-candidate-count">5</strong> candidate rule-sets &mdash; each a bundle of rewrite rules over the alphabet {<strong id="physics-alphabet-display" class="mono">△, ◻, ◯</strong>}. Exactly one generates the record you see. Run inference backwards: watch the record unfold and <em>rule out</em> every rule-set that can't reproduce it. (Read the source as a universe, or don't — the reasoning is identical.)</p>
+                        <p class="prose">A source is running, leaving a record over the alphabet {<strong id="physics-alphabet-display" class="mono">△, ◻, ◯</strong>}. In front of you sit <strong id="physics-candidate-count">10</strong> candidate rule-sets. Watch the record grow and <em>rule out</em> any rule-set that can no longer reproduce it &mdash; a fresh candidate slides into its place. Sooner or later the source does something none of the rules foresaw; the <strong>paradigm shifts</strong>, every rule-set gains a rule to cover it, and the record rolls on. There is no last state, and no final theory &mdash; only the next anomaly.</p>
 
                         <div class="physics-stage">
                             <div class="physics-obs-panel">
-                                <p class="physics-label">Observed history</p>
+                                <p class="physics-label">Observed record</p>
                                 <div id="physics-history" class="physics-history"></div>
                             </div>
                             <div class="physics-status">
-                                <div class="physics-stat"><span class="physics-stat-num" id="physics-remaining">5</span><span class="physics-stat-label">rule-sets left</span></div>
+                                <div class="physics-stat"><span class="physics-stat-num" id="physics-remaining">1</span><span class="physics-stat-label">paradigm shifts</span></div>
                                 <div class="physics-stat"><span class="physics-stat-num" id="physics-obs-count">0</span><span class="physics-stat-label">observations</span></div>
                                 <div class="physics-stat-mini">Misfires <span id="bad-elim-counter">0</span> &middot; Hints <span id="hint-counter">0</span></div>
                             </div>
@@ -940,7 +940,7 @@
                             <button id="phys-reset" class="btn btn-icon">Reset</button>
                         </div>
 
-                        <p class="physics-hint-text">Click a rule-set you believe is impossible to rule it out.</p>
+                        <p class="physics-hint-text">Click any rule-set that can't reproduce the record &mdash; it's replaced by a fresh one.</p>
 
                         <div id="physics-models-grid" class="physics-grid"></div>
                     </div>

@@ -33,13 +33,15 @@ the ☾/☀ button in the header.
 4. **Interpretation — Game of Life pattern challenges.** Build a still life, an
    oscillator, or a spaceship; the engine auto-detects each phenomenon as it
    emerges from purely local rules.
-5. **Reverse Mathematics — inference game.** A source runs under one hidden
-   rule-set, leaving a single continuous record. Watch it grow and eliminate every
-   candidate rule-set that couldn't have produced it; when the surviving theory hits
-   a state it can't make — a new symbol (a *shape*) or a new *pattern* over symbols
-   already seen — a paradigm shift swaps in richer candidates and the record rolls
-   on (it never resets). Three scripted, precisely-paced epochs. Physics is one
-   reading of the game — the symbols could mean anything, or nothing. Keys `O`
+5. **Reverse Mathematics — endless inference game.** A hidden source leaves one
+   continuous, growing record. Ten candidate rule-sets sit in front of you; rule out
+   any that can no longer reproduce the record and a fresh candidate slides into its
+   place (the grid always holds ten). Every so often the source does something no
+   rule foresaw — a new symbol (a *shape*) or a new *pattern* over symbols already
+   seen — and the **paradigm shifts**: every rule-set gains a rule (one of the
+   several that could explain the novelty, inserted at random), and the record rolls
+   on. There is no last state and no final theory — only the next anomaly. Physics is
+   one reading of the game — the symbols could mean anything, or nothing. Keys `O`
    observe, `H` hint.
 
 A cross-chapter **progress tracker** marks each chapter explored (✓ on the tab,
@@ -67,12 +69,13 @@ legacy/               original pre-refactor script.js (backup)
 Puzzle content is proven correct before shipping, and every game is driven
 end-to-end in a real browser:
 
-- `scratchpad/validate-levels.mjs` — proves each physics epoch is solvable with a
-  clean staggered pruning curve and an unproducible anomaly.
 - `scratchpad/validate-miu.mjs` — BFS-checks every MIU puzzle is solvable, computes
   par, and confirms MU is unreachable.
-- `scratchpad/drive-*.mjs` — Playwright scripts that play each chapter to
-  completion (physics, MIU, Game of Life, Turing, Gödel, progress, full smoke),
-  asserting behavior and checking for console errors.
+- `scratchpad/drive-*.mjs` — Playwright scripts that drive each chapter in a real
+  browser (reverse-mathematics endless run, MIU, Game of Life, Turing, Gödel,
+  progress, full smoke), asserting behavior and checking for console errors. The
+  reverse-mathematics driver runs many observe/prune cycles and paradigm shifts and
+  asserts the grid always holds ten cards, the record stays windowed, and the game
+  never ends.
 
-Run one with `node scratchpad/drive-physics.mjs` (needs `npm run dev` running).
+Run one with `node scratchpad/drive-physics-endless.mjs` (needs `npm run dev` running).
