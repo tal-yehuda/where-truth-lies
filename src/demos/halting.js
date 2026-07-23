@@ -30,23 +30,23 @@ const SCENES = [
         <div class="halt-arrow">&rarr;</div>
         <div class="halt-box big halt-d">
           <div class="halt-box-name">D</div>
-          <div class="halt-inner-flow">
-            <div class="halt-inputs">
-              <div class="halt-chip tiny">machine: M</div>
-              <div class="halt-chip tiny">input: M</div>
+          <div class="halt-d-sub">asks H: does M halt when run on <b>itself</b>? &mdash; then does the <b>opposite</b>:</div>
+          <div class="halt-branches">
+            <div class="halt-branch">
+              <span class="halt-tag ok">H: M halts &check;</span>
+              <span class="halt-branch-arrow">&rarr; so D</span>
+              <span class="halt-tag bad">loops forever &infin;</span>
             </div>
-            <div class="halt-arrow">&rarr;</div>
-            <div class="halt-box inner">H</div>
-            <div class="halt-arrow">&rarr;</div>
-            <div class="halt-chip tiny">halts? / loops?</div>
+            <div class="halt-branch">
+              <span class="halt-tag bad">H: M loops &infin;</span>
+              <span class="halt-branch-arrow">&rarr; so D</span>
+              <span class="halt-tag ok">halts &check;</span>
+            </div>
           </div>
-          <div class="halt-d-note">then output the <b>opposite</b></div>
         </div>
-        <div class="halt-arrow">&rarr;</div>
-        <div class="halt-chip out">opposite of H</div>
       </div>`,
     caption:
-      'Using H as a part, we build a new machine <b>D</b>. Give D a machine M and it feeds M into H <em>as both inputs</em> — the machine, and its input — asking &ldquo;does M halt when run on itself?&rdquo; Then D outputs the <b>opposite</b> of H&rsquo;s answer.',
+      'Using H as a part, we build a new machine <b>D</b>. Whatever H predicts, D does the <b>opposite</b>. Note the one question D asks: does M halt when run on <em>its own code</em> — machine and input both M. That self-feeding is the trap: in the next step we hand D <em>itself</em>, so its question turns back on D. A fixed input I wouldn&rsquo;t loop back on the machine being tested, and the contradiction would never close.',
   },
   {
     title: 'Step 3 — feed D its own code',
@@ -59,7 +59,7 @@ const SCENES = [
           <div class="halt-think" id="halt-think"></div>
         </div>
         <div class="halt-arrow">&rarr;</div>
-        <div class="halt-chip out bad" id="halt-flip"></div>
+        <div class="halt-chip out" id="halt-flip"></div>
       </div>`,
     caption:
       'Now run D on <b>itself</b>. It asks H &ldquo;does D halt on D?&rdquo; and flips the answer &mdash; so H is wrong <em>whichever</em> way it answers. No consistent answer exists, so a perfect <b>H cannot exist</b>.',
@@ -67,8 +67,8 @@ const SCENES = [
 ];
 
 const FLIP = [
-  { think: 'H says: “D halts on D”', out: 'so D LOOPS &infin;' },
-  { think: 'H says: “D loops on D”', out: 'so D HALTS &check;' },
+  { think: 'H says: “D halts on D”', out: 'so D LOOPS &infin;', cls: 'bad' },
+  { think: 'H says: “D loops on D”', out: 'so D HALTS &check;', cls: 'ok' },
 ];
 
 let scene = 0;
@@ -89,7 +89,7 @@ function paintFlip() {
   const f = FLIP[flipState % 2];
   think.innerHTML = f.think;
   out.innerHTML = f.out;
-  out.classList.remove('halt-pulse');
+  out.className = `halt-chip out ${f.cls}`;
   void out.offsetWidth; // restart the pulse animation
   out.classList.add('halt-pulse');
 }

@@ -14,7 +14,7 @@
 
     /* Soft accent tints + borders */
     --soft-blue: #e7f1ff;   --soft-blue-border: #b9d8ff;
-    --soft-green: #e4f7ea;  --soft-green-border: #a9e6bd;
+    --soft-green: #e4f7ea;  --soft-green-border: #a9e6bd;  --soft-red: #fdeaea;
     --soft-yellow: #fbf3d3; --soft-yellow-border: #ecd98a;
     --soft-orange: #ffeede; --soft-orange-border: #ffd0a8;
     --soft-purple: #f1e6ff; --soft-purple-border: #d8b8ff;
@@ -73,7 +73,7 @@
         --accent-purple: #b98bff;
 
         --soft-blue: rgba(91, 155, 255, 0.15);   --soft-blue-border: rgba(91, 155, 255, 0.38);
-        --soft-green: rgba(62, 207, 122, 0.15);  --soft-green-border: rgba(62, 207, 122, 0.38);
+        --soft-green: rgba(62, 207, 122, 0.15);  --soft-green-border: rgba(62, 207, 122, 0.38);  --soft-red: rgba(255, 107, 111, 0.15);
         --soft-yellow: rgba(232, 194, 74, 0.15); --soft-yellow-border: rgba(232, 194, 74, 0.4);
         --soft-orange: rgba(255, 157, 71, 0.15); --soft-orange-border: rgba(255, 157, 71, 0.4);
         --soft-purple: rgba(185, 139, 255, 0.17);--soft-purple-border: rgba(185, 139, 255, 0.42);
@@ -107,7 +107,7 @@
     --accent-purple: #b98bff;
 
     --soft-blue: rgba(91, 155, 255, 0.15);   --soft-blue-border: rgba(91, 155, 255, 0.38);
-    --soft-green: rgba(62, 207, 122, 0.15);  --soft-green-border: rgba(62, 207, 122, 0.38);
+    --soft-green: rgba(62, 207, 122, 0.15);  --soft-green-border: rgba(62, 207, 122, 0.38);  --soft-red: rgba(255, 107, 111, 0.15);
     --soft-yellow: rgba(232, 194, 74, 0.15); --soft-yellow-border: rgba(232, 194, 74, 0.4);
     --soft-orange: rgba(255, 157, 71, 0.15); --soft-orange-border: rgba(255, 157, 71, 0.4);
     --soft-purple: rgba(185, 139, 255, 0.17);--soft-purple-border: rgba(185, 139, 255, 0.42);
@@ -843,12 +843,14 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .halt-arrow { color: var(--text-muted); font-size: 1.3rem; }
 .halt-box { font-family: var(--mono); font-weight: bold; font-size: 1.3rem; color: var(--accent-orange); border: 2px solid var(--accent-orange); background: var(--soft-orange); border-radius: 8px; padding: 0.7rem 1.05rem; text-align: center; }
 .halt-box.big { display: flex; flex-direction: column; gap: 0.25rem; align-items: flex-start; padding: 0.7rem 0.9rem; min-width: 210px; }
-.halt-box.big.halt-d { align-items: center; gap: 0.5rem; }
-.halt-box.inner { font-size: 1rem; padding: 0.35rem 0.65rem; background: var(--surface); }
-.halt-inner-flow { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
-.halt-inner-flow .halt-arrow { font-size: 1rem; }
-.halt-chip.tiny { font-size: 0.76rem; padding: 0.22rem 0.5rem; }
-.halt-d-note { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-muted); }
+.halt-box.big.halt-d { align-items: center; gap: 0.5rem; max-width: 100%; }
+.halt-d-sub { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.82rem; color: var(--text-main); max-width: 34ch; }
+.halt-branches { display: flex; flex-direction: column; gap: 0.4rem; align-items: stretch; }
+.halt-branch { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+.halt-branch-arrow { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-muted); }
+.halt-tag { font-family: var(--mono); font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 6px; border: 1px solid; white-space: nowrap; }
+.halt-tag.ok { color: var(--accent-green); border-color: var(--soft-green-border); background: var(--soft-green); }
+.halt-tag.bad { color: var(--accent-red); border-color: var(--accent-red); background: var(--soft-red); }
 .halt-box-name { font-size: 1.15rem; }
 .halt-steps { margin: 0; padding-left: 1.05rem; font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-main); text-align: left; }
 .halt-steps li { margin: 0.1rem 0; }
