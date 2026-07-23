@@ -28,18 +28,25 @@ const SCENES = [
       <div class="halt-flow">
         <div class="halt-chip in">machine M</div>
         <div class="halt-arrow">&rarr;</div>
-        <div class="halt-box big">
+        <div class="halt-box big halt-d">
           <div class="halt-box-name">D</div>
-          <ol class="halt-steps">
-            <li>ask H: does M halt when run on itself?</li>
-            <li>then do the <b>opposite</b></li>
-          </ol>
+          <div class="halt-inner-flow">
+            <div class="halt-inputs">
+              <div class="halt-chip tiny">machine: M</div>
+              <div class="halt-chip tiny">input: M</div>
+            </div>
+            <div class="halt-arrow">&rarr;</div>
+            <div class="halt-box inner">H</div>
+            <div class="halt-arrow">&rarr;</div>
+            <div class="halt-chip tiny">halts? / loops?</div>
+          </div>
+          <div class="halt-d-note">then output the <b>opposite</b></div>
         </div>
         <div class="halt-arrow">&rarr;</div>
-        <div class="halt-chip out">the opposite of H</div>
+        <div class="halt-chip out">opposite of H</div>
       </div>`,
     caption:
-      'Using H as a part, we build a new machine <b>D</b>. Give D any machine M: it asks H what M does on itself, then deliberately does the <b>opposite</b>.',
+      'Using H as a part, we build a new machine <b>D</b>. Give D a machine M and it feeds M into H <em>as both inputs</em> — the machine, and its input — asking &ldquo;does M halt when run on itself?&rdquo; Then D outputs the <b>opposite</b> of H&rsquo;s answer.',
   },
   {
     title: 'Step 3 — feed D its own code',
