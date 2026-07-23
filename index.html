@@ -448,7 +448,7 @@
                 <div class="panel-body">
                     <div class="section-block">
                         <h3>From Formal Systems to Machines</h3>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">In the previous sections, we treated mathematics as a formal system: a collection of symbols together with rules that determine which strings may be transformed into which others. Proofs were viewed not as discoveries of meaning, but as legal sequences of symbolic manipulations.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">In the previous sections, we treated mathematics as a formal system: a collection of symbols together with rules that determine which strings may be transformed into which others. Proofs can be viewed not as discoveries of meaning, but as legal sequences of symbolic manipulations.</p>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">Computability extends the idea. Instead of asking which strings a system can derive, it asks which tasks a purely mechanical procedure can carry out. To pin that down, Turing built a device stripped to the bone: the Turing machine.</p>
 
                         <h3 style="margin-top: 2rem;">The Turing Machine</h3>
@@ -458,7 +458,6 @@
                             Nothing in this description involves intelligence, understanding, creativity, or meaning. A Turing Machine simply follows rules.
                         </div>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">From a formalist angle, that's the point. A Turing machine is the same kind of object as the formal systems you've already met. A proof system rewrites formulas; a Turing machine rewrites tape. Different alphabet, same move.</p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Read this way, computation is derivation under another name — and the payoff isn't a shrug, it's a bridge. The limit that stops proof turns out to be the same limit that stops computation (both come from self-reference, as the next section shows), and the machine running your software is the same kind of engine that grinds out theorems. Meaning enters only when someone reads the output as numbers, images, predictions, or answers.</p>
                     </div>
 
                     <div class="section-block">
@@ -565,21 +564,21 @@
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">If a problem is clearly stated and precise enough, shouldn't there exist some sufficiently clever method for solving it? Computability theory revealed that this intuition is false. Some questions are not merely difficult. They are undecidable. No algorithm can answer them in all cases.</p>
 
                         <h3 style="margin-top: 2rem;">The Halting Problem</h3>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Suppose we are given a program (P) and an input (I). We ask: <em>Will program (P) eventually stop when run on input (I), or will it continue forever?</em></p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">At first glance it appears reasonable. Yet Alan Turing proved that no universal algorithm can correctly answer it for every possible program and input. No matter how sophisticated the algorithm becomes, there will always exist programs for which its prediction fails.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Suppose we are given a machine (M) and an input (I). We ask: <em>Will machine M eventually halt when run on input I, or will it run forever?</em></p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">At first glance it appears reasonable. Yet Alan Turing proved that no single machine can correctly answer this for every possible machine and input. No matter how clever it is, there will always be machines for which its prediction fails.</p>
 
                         <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); border-radius: 8px; padding: 2rem; margin: 2rem 0; display: flex; flex-direction: column;">
                             <h4 style="color: var(--accent-orange); margin: 0 0 1rem 0;">Why The Halting Problem Appears</h4>
                             <p style="font-size: 0.95rem; text-align: left; margin-bottom: 1.5rem;">The proof resembles Gödel's incompleteness theorem. Both constructions exploit self-reference.</p>
-                            <div style="font-family: 'JetBrains Mono', monospace; background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1rem; width: 100%; box-sizing: border-box;">
-                                <h4 style="color: var(--text-main); margin: 0 0 1rem 0;">Machine D (Input: Itself)</h4>
-                                <div style="text-align: left; background: var(--surface); padding: 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                                    Imagine a machine <strong>H</strong> that perfectly solves the Halting Problem.<br>
-                                    Now construct a new program <strong>D</strong>:<br><br>
-                                    1. Run <strong>H</strong> on Machine D.<br>
-                                    2. If <strong>H</strong> says "D will Halt" &rarr; Enter infinite loop!<br>
-                                    3. If <strong>H</strong> says "D runs forever" &rarr; Halt immediately!
+                            <div class="halt-anim" style="background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1rem 1rem 1.25rem; width: 100%; box-sizing: border-box;">
+                                <h4 id="halt-anim-title" style="color: var(--text-main); margin: 0 0 0.75rem;"></h4>
+                                <div class="halt-anim-stage" id="halt-anim-stage"></div>
+                                <div class="halt-anim-caption" id="halt-anim-caption"></div>
+                                <div class="controls-row" style="justify-content: center; gap: 0.5rem;">
+                                    <button class="btn btn-icon" id="halt-anim-prev">&lsaquo; Back</button>
+                                    <button class="btn btn-icon" id="halt-anim-next">Next &rsaquo;</button>
                                 </div>
+                                <div class="halt-anim-dots" id="halt-anim-dots"></div>
                             </div>
                             <div class="halting-game">
                                 <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself — make your prediction:</p>
@@ -598,13 +597,13 @@
                     <div class="section-block" style="margin-top: 2.5rem;">
                         <h3>The Missing Philosophical Tension</h3>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">A visitor will naturally think: <em>"Fine. No Turing machine can solve the Halting Problem. But I can still imagine such a machine."</em></p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">But notice what has actually been ruled out. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a program and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">But notice what has actually been ruled out. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a machine and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem; font-weight: bold; color: var(--accent-orange);">The description is perfectly meaningful. Yet no Turing machine can instantiate it. So what is the ontological status of this thing?</p>
 
                         <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem;">
                             <div style="border-left: 4px solid var(--accent-blue); padding-left: 1rem;">
                                 <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">The Platonist Response</h4>
-                                <p style="font-size: 0.95rem;">A Platonist is often comfortable saying: The machine is impossible as a Turing machine, but the function it computes still exists. The halting relation itself is perfectly well-defined. For every program P and input I, there is a fact of the matter. The inability of a Turing machine to determine all such facts does not eliminate the facts themselves. From this perspective, computability theory is not discovering the limits of truth. It is discovering the limits of a particular method of accessing truth. The Platonic realm contains more than algorithms can reach.</p>
+                                <p style="font-size: 0.95rem;">A Platonist is often comfortable saying: The machine is impossible as a Turing machine, but the function it computes still exists. The halting relation itself is perfectly well-defined. For every machine M and input I, there is a fact of the matter. The inability of a Turing machine to determine all such facts does not eliminate the facts themselves. From this perspective, computability theory is not discovering the limits of truth. It is discovering the limits of a particular method of accessing truth. The Platonic realm contains more than algorithms can reach.</p>
                             </div>
                             
                             <div style="border-left: 4px solid var(--accent-yellow); padding-left: 1rem;">

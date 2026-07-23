@@ -88,27 +88,70 @@ function tmReset() {
   updateTMUI();
 }
 
+// HTML-escape a value going into an attribute.
+function escAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+// The blank tape symbol shows as an empty editable cell (an empty cell means blank).
+function cellVal(sym) {
+  return sym === ' ' ? '' : sym;
+}
+
 function renderTMRules() {
   const rulesEl = document.getElementById('tm-rules');
   if (!rulesEl) return;
 
-  let rulesHtml = '';
   const prog = tmPrograms[currentProgram];
+  const editable = currentProgram === 'custom';
+  let rulesHtml = '';
+
   for (let i = 0; i < prog.rules.length; i++) {
     const r = prog.rules[i];
     const isCurrent = r.s === tmState && r.r === (tmTape[tmHead] || ' ');
-    rulesHtml += `
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0.5rem; text-align: center; padding: 0.4rem 0; border-bottom: 1px solid var(--border); position: relative; ${isCurrent ? 'background: var(--soft-orange); font-weight: bold; color: var(--accent-orange);' : ''}">
+    if (editable) {
+      // Each cell is an inline input, edited in place — no need to delete & retype.
+      rulesHtml += `
+            <div class="tm-rule-row${isCurrent ? ' current' : ''}">
+                <input class="tm-rule-cell" value="${escAttr(r.s)}" oninput="tmEditCustomRule(${i},'s',this.value)" aria-label="state">
+                <input class="tm-rule-cell" value="${escAttr(cellVal(r.r))}" placeholder="␣" oninput="tmEditCustomRule(${i},'r',this.value)" aria-label="read symbol">
+                <input class="tm-rule-cell" value="${escAttr(cellVal(r.w))}" placeholder="␣" oninput="tmEditCustomRule(${i},'w',this.value)" aria-label="write symbol">
+                <select class="tm-rule-cell" onchange="tmEditCustomRule(${i},'m',this.value)" aria-label="move">
+                    <option value="R"${r.m === 'R' ? ' selected' : ''}>R</option>
+                    <option value="L"${r.m === 'L' ? ' selected' : ''}>L</option>
+                </select>
+                <input class="tm-rule-cell" value="${escAttr(r.n)}" oninput="tmEditCustomRule(${i},'n',this.value)" aria-label="next state">
+                <button class="tm-rule-remove" onclick="tmRemoveCustomRule(${i})" title="Remove rule">&times;</button>
+            </div>`;
+    } else {
+      rulesHtml += `
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0.5rem; text-align: center; padding: 0.4rem 0; border-bottom: 1px solid var(--border); ${isCurrent ? 'background: var(--soft-orange); font-weight: bold; color: var(--accent-orange); border-radius: 4px;' : ''}">
                 <div>${r.s}</div>
                 <div>'${r.r}'</div>
                 <div>'${r.w}'</div>
                 <div>${r.m}</div>
                 <div>${r.n}</div>
-                ${currentProgram === 'custom' ? `<button onclick="tmRemoveCustomRule(${i})" style="position: absolute; right: -15px; top: 0; bottom: 0; background: none; border: none; color: var(--accent-red); cursor: pointer; font-weight: bold; font-size: 1rem; padding: 0 5px;" title="Remove Rule">&times;</button>` : ''}
-            </div>
-        `;
+            </div>`;
+    }
+  }
+
+  if (editable && prog.rules.length === 0) {
+    rulesHtml =
+      '<div style="text-align:center; color: var(--text-muted); font-size: 0.9rem; padding: 0.6rem 0;">No rules yet — add one below, then edit any cell directly.</div>';
   }
   rulesEl.innerHTML = rulesHtml;
+}
+
+// Edit one field of an existing custom rule in place. We deliberately do NOT
+// re-render the rules grid here (that would drop the focus mid-typing); the
+// running machine reads prog.rules live, and the diagram is refreshed.
+function tmEditCustomRule(index, field, value) {
+  if (currentProgram !== 'custom') return;
+  const rule = tmPrograms.custom.rules[index];
+  if (!rule) return;
+  let v = value;
+  if ((field === 'r' || field === 'w') && v === '') v = ' ';
+  rule[field] = v;
+  renderTMDiagram();
 }
 
 // A live finite-state diagram of the current program: states as nodes, rules as
@@ -408,5 +451,5 @@ export function onShow() {
 
 export const handlers = {
   tmLoadProgram, tmReset, tmStep, tmTogglePlay,
-  tmUpdateCustomInit, tmAddCustomRule, tmRemoveCustomRule,
+  tmUpdateCustomInit, tmAddCustomRule, tmRemoveCustomRule, tmEditCustomRule,
 };
