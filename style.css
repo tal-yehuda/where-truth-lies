@@ -833,36 +833,34 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .tm-rule-cell:focus { outline: none; border-color: var(--accent-orange); box-shadow: 0 0 0 2px var(--soft-orange); }
 .tm-rule-remove { position: absolute; right: -14px; top: 0; bottom: 0; background: none; border: none; color: var(--accent-red); cursor: pointer; font-weight: bold; font-size: 1rem; padding: 0 4px; line-height: 1; }
 
-/* Halting-problem animation: input → machine → output, and the D-on-D flip */
-.halt-anim-stage { min-height: 132px; display: flex; align-items: center; justify-content: center; padding: 0.5rem 0.25rem; }
-.halt-flow { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
-.halt-inputs { display: flex; flex-direction: column; gap: 0.4rem; }
-.halt-chip { font-family: var(--mono); font-size: 0.9rem; padding: 0.4rem 0.7rem; border-radius: 6px; border: 1px solid var(--soft-blue-border); background: var(--surface); color: var(--text-main); white-space: nowrap; }
-.halt-chip.out.ok { border-color: var(--accent-green); color: var(--accent-green); font-weight: bold; }
-.halt-chip.out.bad { border-color: var(--accent-red); color: var(--accent-red); font-weight: bold; }
+/* Halting-problem diagram: D built from P → H → N, shown flat, all at once */
+.halt-lead { font-size: 0.95rem; color: var(--text-main); text-align: left; margin: 0 0 1rem; }
+.halt-drow { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+.halt-chip { font-family: var(--mono); font-size: 0.9rem; padding: 0.4rem 0.7rem; border-radius: 6px; border: 1px solid var(--soft-blue-border); background: var(--surface); color: var(--text-main); text-align: center; }
+.halt-chip.out { border-color: var(--accent-orange); color: var(--accent-orange); font-weight: bold; }
 .halt-arrow { color: var(--text-muted); font-size: 1.3rem; }
-.halt-box { font-family: var(--mono); font-weight: bold; font-size: 1.3rem; color: var(--accent-orange); border: 2px solid var(--accent-orange); background: var(--soft-orange); border-radius: 8px; padding: 0.7rem 1.05rem; text-align: center; }
-.halt-box.big { display: flex; flex-direction: column; gap: 0.25rem; align-items: flex-start; padding: 0.7rem 0.9rem; min-width: 210px; }
-.halt-box.big.halt-d { align-items: center; gap: 0.5rem; max-width: 100%; }
-.halt-d-sub { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.82rem; color: var(--text-main); max-width: 34ch; }
-.halt-branches { display: flex; flex-direction: column; gap: 0.4rem; align-items: stretch; }
+.halt-box { font-family: var(--mono); font-weight: bold; color: var(--accent-orange); border: 2px solid var(--accent-orange); background: var(--soft-orange); border-radius: 8px; }
+.halt-box.big { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; padding: 0.7rem 0.9rem; }
+.halt-box-name { font-size: 1.15rem; }
+
+/* The three sub-machines inside D */
+.halt-pipeline { display: flex; align-items: stretch; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+.halt-pipeline .halt-arrow { display: flex; align-items: center; font-size: 1rem; }
+.halt-unit { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 6px; padding: 0.45rem 0.6rem; min-width: 118px; text-align: center; }
+.halt-unit.hot { border-color: var(--accent-orange); box-shadow: 0 0 0 2px var(--soft-orange); }
+.halt-unit-name { font-family: var(--mono); font-weight: bold; font-size: 1.05rem; color: var(--text-main); }
+.halt-unit.hot .halt-unit-name { color: var(--accent-orange); }
+.halt-unit-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: normal; color: var(--text-muted); line-height: 1.35; margin-top: 0.15rem; }
+
+/* The two self-feeding branches (color-coded: halts = green, loops = red) */
+.halt-branches { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+.halt-selffeed { margin: 0.25rem 0 0; }
 .halt-branch { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
 .halt-branch-arrow { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-muted); }
 .halt-tag { font-family: var(--mono); font-size: 0.8rem; padding: 0.25rem 0.55rem; border-radius: 6px; border: 1px solid; white-space: nowrap; }
 .halt-tag.ok { color: var(--accent-green); border-color: var(--soft-green-border); background: var(--soft-green); }
 .halt-tag.bad { color: var(--accent-red); border-color: var(--accent-red); background: var(--soft-red); }
-.halt-box-name { font-size: 1.15rem; }
-.halt-steps { margin: 0; padding-left: 1.05rem; font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-main); text-align: left; }
-.halt-steps li { margin: 0.1rem 0; }
-.halt-think { font-family: 'Outfit', sans-serif; font-weight: normal; font-size: 0.8rem; color: var(--text-muted); min-height: 1.1rem; }
-.halt-anim-caption { font-size: 0.95rem; color: var(--text-main); text-align: center; margin: 0.5rem auto 0.9rem; max-width: 46ch; min-height: 3.2rem; }
-.halt-anim-dots { display: flex; gap: 0.4rem; justify-content: center; margin-top: 0.85rem; }
-.halt-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
-.halt-dot.active { background: var(--accent-orange); }
-.halt-scene-enter { animation: halt-fade 0.4s var(--ease); }
-@keyframes halt-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.halt-pulse { animation: halt-pulse 0.45s var(--ease); }
-@keyframes halt-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.09); } 100% { transform: scale(1); } }
+.halt-close { font-size: 0.95rem; color: var(--text-main); text-align: left; margin: 1.25rem 0 0; padding-top: 1rem; border-top: 1px dashed var(--border); font-weight: bold; }
 
 /* Game of Life pattern challenges */
 .gol-challenges { margin-top: 1rem; padding: 0.9rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); }

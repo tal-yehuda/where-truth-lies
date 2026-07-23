@@ -570,15 +570,47 @@
                         <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); border-radius: 8px; padding: 2rem; margin: 2rem 0; display: flex; flex-direction: column;">
                             <h4 style="color: var(--accent-orange); margin: 0 0 1rem 0;">Why The Halting Problem Appears</h4>
                             <p style="font-size: 0.95rem; text-align: left; margin-bottom: 1.5rem;">The proof resembles Gödel's incompleteness theorem. Both constructions exploit self-reference.</p>
-                            <div class="halt-anim" style="background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1rem 1rem 1.25rem; width: 100%; box-sizing: border-box;">
-                                <h4 id="halt-anim-title" style="color: var(--text-main); margin: 0 0 0.75rem;"></h4>
-                                <div class="halt-anim-stage" id="halt-anim-stage"></div>
-                                <div class="halt-anim-caption" id="halt-anim-caption"></div>
-                                <div class="controls-row" style="justify-content: center; gap: 0.5rem;">
-                                    <button class="btn btn-icon" id="halt-anim-prev">&lsaquo; Back</button>
-                                    <button class="btn btn-icon" id="halt-anim-next">Next &rsaquo;</button>
+                            <div class="halt-anim" style="background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1.25rem 1rem; width: 100%; box-sizing: border-box;">
+                                <p class="halt-lead">Suppose a perfect decider <b>H</b> exists: given a machine and an input, it always says correctly whether that machine <b>halts</b> or <b>runs forever</b>. Now wire three machines together into a machine called <b>D</b>:</p>
+                                <div class="halt-drow">
+                                    <div class="halt-chip in">a machine <b>w</b></div>
+                                    <div class="halt-arrow">&rarr;</div>
+                                    <div class="halt-box big halt-d">
+                                        <div class="halt-box-name">D</div>
+                                        <div class="halt-pipeline">
+                                            <div class="halt-unit">
+                                                <div class="halt-unit-name">P</div>
+                                                <div class="halt-unit-desc">copy the input<br><span class="mono">w &rarr; (w, w)</span></div>
+                                            </div>
+                                            <div class="halt-arrow">&rarr;</div>
+                                            <div class="halt-unit hot">
+                                                <div class="halt-unit-name">H</div>
+                                                <div class="halt-unit-desc">does <span class="mono">w</span> halt on <span class="mono">w</span>?<br>&rarr; halts / loops</div>
+                                            </div>
+                                            <div class="halt-arrow">&rarr;</div>
+                                            <div class="halt-unit">
+                                                <div class="halt-unit-name">N</div>
+                                                <div class="halt-unit-desc">flip H&rsquo;s answer:<br>halts &harr; loops</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="halt-arrow">&rarr;</div>
+                                    <div class="halt-chip out">D does the <b>opposite</b> of H</div>
                                 </div>
-                                <div class="halt-anim-dots" id="halt-anim-dots"></div>
+                                <p class="halt-lead" style="margin-top: 1.25rem;">P duplicates the input so H is always asked whether a machine halts <b>on its own code</b>. That self-feeding is the trap. Now hand D <b>its own code</b> (set <span class="mono">w = D</span>) and read the two possibilities:</p>
+                                <div class="halt-branches halt-selffeed">
+                                    <div class="halt-branch">
+                                        <span class="halt-tag ok">inner H says: D halts &check;</span>
+                                        <span class="halt-branch-arrow">&rarr; N flips &rarr; so D actually</span>
+                                        <span class="halt-tag bad">loops forever &infin;</span>
+                                    </div>
+                                    <div class="halt-branch">
+                                        <span class="halt-tag bad">inner H says: D loops &infin;</span>
+                                        <span class="halt-branch-arrow">&rarr; N flips &rarr; so D actually</span>
+                                        <span class="halt-tag ok">halts &check;</span>
+                                    </div>
+                                </div>
+                                <p class="halt-close">Either way, D ends in the <b>opposite</b> state to what its inner H just predicted &mdash; so H is wrong about the very machine built from it. A perfect H cannot exist.</p>
                             </div>
                             <div class="halting-game">
                                 <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself — make your prediction:</p>
