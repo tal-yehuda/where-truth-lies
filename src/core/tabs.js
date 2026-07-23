@@ -3,7 +3,7 @@
 import { fireTabShow } from './registry.js';
 
 export const tabOrder = [
-  'proposal', 'about', 'home', 'foundations', 'truth', 'applied', 'interpretation', 'conclusion',
+  'proposal', 'about', 'home', 'foundations', 'truth', 'applied', 'interpretation', 'conclusion', 'reflection',
 ];
 
 export const tabNames = {
@@ -15,6 +15,7 @@ export const tabNames = {
   applied: '3. Computability',
   interpretation: '4. Interpretation',
   conclusion: '5. Reverse Mathematics',
+  reflection: '6. Where Truth Lies',
 };
 
 export function switchTab(tabId) {

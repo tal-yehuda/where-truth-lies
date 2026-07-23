@@ -35,6 +35,7 @@
             <button class="tab-button" onclick="switchTab('applied')" id="tab-btn-applied">3. Computability</button>
             <button class="tab-button" onclick="switchTab('interpretation')" id="tab-btn-interpretation">4. Interpretation</button>
             <button class="tab-button" onclick="switchTab('conclusion')" id="tab-btn-conclusion">5. Reverse Mathematics</button>
+            <button class="tab-button" onclick="switchTab('reflection')" id="tab-btn-reflection">6. Where Truth Lies</button>
         </div>
         <div id="progress-indicator" class="progress-indicator">0/5 chapters explored</div>
 
@@ -106,6 +107,14 @@
                                     <p>Run the derivation machine backwards: infer the hidden rules of a system from the record it leaves. Physics is one reading of the game &mdash; the symbols could mean anything, or nothing at all.</p>
                                 </div>
                                 <button class="btn btn-primary" onclick="switchTab('conclusion')">Go to Chapter 5</button>
+                            </div>
+
+                            <div class="nav-card accent-blue">
+                                <div>
+                                    <h4>6. Where Truth Lies</h4>
+                                    <p>Looking back on the whole journey &mdash; the walls, the self-referential sentences, the impossible machines, the emergent shapes, the hidden rules &mdash; and where formalist and realist leave you.</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="switchTab('reflection')">Go to Chapter 6</button>
                             </div>
 
                         </div>
@@ -958,6 +967,41 @@
                         <p style="margin-bottom: 1rem; font-weight: bold; color: var(--accent-yellow);">These questions do not reject meaning or depth. They relocate them.</p>
                         <div style="background: var(--soft-yellow); padding: 1rem; border-radius: 8px; margin: 1.5rem 0 0; font-weight: bold; text-align: center;">
                             If all we ever have are observations, and all our explanations take the form of formal models, then "truth" may never be something we discover outside those models.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main class="single-view tab-content" id="tab-reflection" style="display: none;">
+            <section class="panel derivation-panel">
+                <div class="panel-header">
+                    <h2>Where Truth Lies</h2>
+                    <span class="badge" style="background: var(--accent-blue); color: #fff; border: none;">Looking Back</span>
+                </div>
+                <div class="panel-body">
+                    <div class="section-block">
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">You began by moving three letters around a screen. <strong class="mono">MI</strong>, and four rules that cared nothing for what M, I, or U were supposed to <em>mean</em>. You tried to reach <strong class="mono">MU</strong> and couldn't — not for lack of cleverness, but because the system itself, from the inside, quietly forbade it. That was the first thing you <em>felt</em> rather than were told: a set of rules drawing its own boundary, with no appeal to meaning at all. Everything since has been that same feeling, brought into sharper and sharper focus.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>What you actually did</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">You assembled a sentence out of prime-coded symbols and unfolded it, by hand, until it said of <em>itself</em> that it had no proof — and then you watched a realist and a formalist pick up the very same <em>G</em> and read it two honest, incompatible ways. You climbed a staircase of ever-stronger systems, each one seeing a little further and each one blind to its own consistency. You added <em>&not;G</em> as an axiom expecting nonsense, and found instead a different, coherent world — the way loosening one of Euclid's assumptions once opened geometries no one had pictured.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">You played the perfect halting machine <em>H</em>, and the machine built to spite you won every single time — so the impossibility of <em>H</em> arrived as something you <em>ran into</em>, not something you took on faith. You drew a handful of live cells, pressed play, and a glider slid across a grid whose four rules never mention motion or objects — and you were left holding the question of whether you'd <em>discovered</em> a thing or <em>named</em> a convenient shorthand. And finally you ran the whole machine backwards: handed a record with its rules hidden, you inferred the system behind it, watched your best theory shatter on an anomaly, and rebuilt — one continuous record, a paradigm quietly replaced, meaning living in the fit between what you saw and the rule you could still defend.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>The two readings that walked with you</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Two ways of seeing have been at your shoulder the entire way. The <strong>realist</strong> kept pointing at something out beyond the rules: the truth of <em>G</em> that outruns every proof, the patterns independent minds keep rediscovering, the stubborn sense that mathematics is <em>found</em>. The <strong>formalist</strong> kept pointing back at the machinery: the symbols, the derivations, the limits, and the surprising worlds a merely-consistent system turns out to describe. Neither of them was defeated. Neither was meant to be.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">What may have crept up on you is quieter than a winner: plant your flag too firmly in either camp and you stop asking half the questions worth asking. The realist who is <em>only</em> a realist never wonders what emergence <em>is</em>, or how to measure it. The formalist who is <em>only</em> a formalist waves away the eerie convergence of independent minds. Held together — held in tension — the two see more than either sees alone. That tension was never a problem the site was trying to resolve. It was the instrument.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3>So &mdash; where does truth lie?</h3>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The whole thing is named for that question, and it has, deliberately, refused to answer it for you. What it could do instead was hand you the exact objects the argument turns on and let you turn them over in your own hands: a wall you couldn't cross, a sentence that speaks about itself, a machine that cannot exist, a shape that isn't in the rules, a record whose laws you had to reverse-engineer. You've now stood <em>inside</em> each one, not beside it.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The question is no smaller than when you started. If anything it is larger — but it is also, now, genuinely yours, weighed against things you did rather than things you were told. Whether truth lies beyond the system or only in the moves you can make within it, you are no longer taking anyone's word for it.</p>
+                        <div style="background: var(--soft-yellow); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 1.5rem 0 0; font-weight: bold; text-align: center; font-size: 1.1rem; color: var(--text-main);">
+                            That was the whole point.
                         </div>
                     </div>
                 </div>
