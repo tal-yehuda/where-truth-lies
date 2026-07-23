@@ -34,10 +34,13 @@ the ☾/☀ button in the header.
    oscillator, or a spaceship; the engine auto-detects each phenomenon as it
    emerges from purely local rules.
 5. **Reverse Mathematics — inference game.** A source runs under one hidden
-   rule-set. Watch its record evolve and eliminate every candidate rule-set that
-   couldn't have produced it, through three scripted, precisely-paced epochs and
-   paradigm shifts. Physics is one reading of the game — the symbols could mean
-   anything, or nothing. Keys `O` observe, `H` hint.
+   rule-set, leaving a single continuous record. Watch it grow and eliminate every
+   candidate rule-set that couldn't have produced it; when the surviving theory hits
+   a state it can't make — a new symbol (a *shape*) or a new *pattern* over symbols
+   already seen — a paradigm shift swaps in richer candidates and the record rolls
+   on (it never resets). Three scripted, precisely-paced epochs. Physics is one
+   reading of the game — the symbols could mean anything, or nothing. Keys `O`
+   observe, `H` hint.
 
 A cross-chapter **progress tracker** marks each chapter explored (✓ on the tab,
 persisted in `localStorage`).

@@ -865,16 +865,8 @@
                 <div class="panel-body">
                     <div class="section-block">
                         <h3>Running the Machine Backwards</h3>
-                        <p class="prose">Every chapter so far ran mathematics <strong>forwards</strong>: fix the axioms, turn the crank of the rules, read off the theorems. The MIU strings, the Gödel unrolling, the Turing tape — all of it moved in that one direction, from rules to consequences.</p>
-                        <p class="prose">This chapter runs the same machine <strong>backwards</strong>. You're not handed the rules. You're handed a <em>record</em> — a run of states, the output, the way things actually went — and your job is to infer a rule-system that could have produced it. Not deriving consequences from given rules, but recovering the rules from their consequences, and keeping whichever system reproduces the record with the fewest, simplest rules.</p>
-                        <p class="prose">In the formalist spirit, this is pure syntax. The record is a sequence of strings, nothing more. What those strings <em>mean</em> is a separate layer you can bolt on or leave off — read them as a physical universe, as a language, as a stream of data, or as nothing at all. The backward move runs the same either way. That's the point: it isn't a fact about matter, it's a move you can make on any generated record.</p>
-                        <div style="font-size: 1.1rem; font-weight: bold; text-align: center; margin: 1.5rem 0; color: var(--accent-yellow);">
-                            Given the output, which rules could have written it?
-                        </div>
-                        <p class="prose">Physics happens to be the loudest reading of this. Science is never handed the laws; it only ever gets the data, and it looks for rules that <strong>compress</strong> the data — one compact <em>F = ma</em> standing in for where every apple that ever fell landed. A theory earns its keep when it packs a huge record into a few rules without losing predictive grip. That's a real job, and a hard one: the formalist isn't giving up on truth, just trading it for something you can actually check. But strip the physics away and the same game is still there: a record, and the search for what could have generated it.</p>
-                        <div class="callout accent-yellow" style="font-weight: bold;">
-                            The sandbox below makes the move literal. A source is already running under one hidden rule-set. Watch its record unfold and rule out every candidate that couldn't have produced it — recovering the rules from the record, one state at a time. Call the source a universe if you like; it doesn't have to be one.
-                        </div>
+                        <p class="prose">Every chapter so far ran the machine <strong>forwards</strong>: axioms in, theorems out. This one runs it <strong>backwards</strong>. You're handed a <em>record</em> — a run of states, the way things went — and must infer rules that could have produced it. Not consequences from rules, but rules from consequences, keeping whichever system reproduces the record with the fewest, simplest rules.</p>
+                        <p class="prose">In the formalist spirit it's pure syntax: the record is just strings, and what they <em>mean</em> — a universe, a language, raw data, or nothing — is a layer you add or skip. Physics is only the loudest reading: science never gets the laws, only the data, and hunts for rules that <strong>compress</strong> it — one <em>F = ma</em> for every apple that ever fell. Strip the physics away and the same game remains: <strong style="color: var(--accent-yellow);">given the output, which rules could have written it?</strong></p>
                         <p style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: var(--fs-sm); color: var(--text-muted);"><strong>A note on the name.</strong> In logic, "reverse mathematics" is also a specific research program (Friedman, Simpson) that asks which axioms are strictly <em>necessary</em> to prove a given theorem — reasoning from a result back to what it requires. The spirit is the same, but here we use the phrase in its looser sense: running the derivation machine backwards, from a record of output to the rules that could have generated it.</p>
                     </div>
                     <div class="section-block">
@@ -964,21 +956,9 @@
                             <li>Are the boundaries we encounter properties of reality, or properties of our methods of description?</li>
                         </ul>
                         <p style="margin-bottom: 1rem; font-weight: bold; color: var(--accent-yellow);">These questions do not reject meaning or depth. They relocate them.</p>
-
-                        <h3 style="margin-top: 2.5rem;">Where Does Meaning Live?</h3>
-                        <p style="margin-bottom: 1rem;">The Platonic view often places meaning in an external mathematical reality. Formal systems are valuable because they approximate that reality.</p>
-                        <p style="margin-bottom: 1rem;">The formalist perspective asks us to consider another possibility:</p>
-                        <div style="font-size: 1.1rem; font-style: italic; border-left: 3px solid var(--accent-yellow); padding-left: 1rem; margin: 1.5rem 0;">
-                            Perhaps meaning does not reside beyond the formal system, but in the relationship between observations, models, and the limits of those models.
-                        </div>
-                        <p style="margin-bottom: 1rem;">This doesn't make mathematics or physics smaller. It makes them more open.</p>
-                        <p style="margin-bottom: 1rem;">Instead of asking what ultimate truths exist beyond our theories, we can investigate why certain descriptions succeed, why others fail, how complexity emerges from simple rules, and whether the idea of a final complete description is itself meaningful.</p>
-                        <p style="margin-bottom: 1rem;">The strongest form of the view:</p>
-                        <div style="background: var(--soft-yellow); padding: 1rem; border-radius: 8px; margin: 1.5rem 0; font-weight: bold; text-align: center;">
+                        <div style="background: var(--soft-yellow); padding: 1rem; border-radius: 8px; margin: 1.5rem 0 0; font-weight: bold; text-align: center;">
                             If all we ever have are observations, and all our explanations take the form of formal models, then "truth" may never be something we discover outside those models.
                         </div>
-                        <p style="margin-bottom: 1rem;">What we can discuss are observations, consistencies, derivations, predictions, failures, and refinements. The moment we speak about truths beyond every possible model, we have stepped into philosophy rather than physics.</p>
-                        <p>That doesn't make those discussions invalid — they're among the ones most worth having. The formalist's contribution is just to mark where the mathematics ends and the philosophical assumptions begin. And it points out that the limits Gödel found need not only gesture at a higher realm. They can just as well open onto a richer understanding of models, meaning, and explanation themselves.</p>
                     </div>
                 </div>
             </section>

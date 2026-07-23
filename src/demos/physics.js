@@ -2,62 +2,73 @@
 // must infer which rule-set generated it; physics is only the loudest reading of
 // that move, so the framing stays domain-neutral (a "source", not a universe).
 //
-// The old sandbox generated random systems and evolved the source
-// probabilistically, which made pacing and solvability a matter of luck. This
-// version is fully AUTHORED: each epoch has a hand-designed true rule-set, a fixed
-// observation history, and a set of "distractor" rule-sets that each become
-// impossible to sustain at exactly one designed observation — so the pruning
-// curve is precise and always solvable, yet feels like genuine detective work.
-// (Solvability is proven by scratchpad/validate-levels.mjs.)
+// The record is ONE continuous, growing timeline (RECORD). It never resets: a
+// paradigm shift just swaps in a richer set of candidate rule-sets and keeps
+// observing. Each phase has a true rule-set and distractors; the true one survives
+// its whole window, then the source produces one more state the true rules can't
+// make — the anomaly — forcing the shift. Anomalies come in two flavors: a brand-
+// new symbol (a new "shape"), or a new pattern over symbols already seen. The
+// design (staggered pruning, unique survivor, unproducible anomaly) is proven in
+// scratchpad/validate-levels.mjs.
 import { triggerReflow } from '../lib/dom.js';
 import { markProgress } from '../core/progress.js';
 
-const T = '△', S = '◻', O = '◯', St = '☆', N = '∇', F = '✦';
+const T = '△', S = '◻', O = '◯', St = '☆', N = '∇';
 
-// order: display sequence of candidates; 'truth' marks the real law, 'dK' a
-// distractor by index. This keeps the true law out of a predictable slot.
-const LEVELS = [
+// One growing record (append-only, last-char expansion). Indices called out are
+// the paradigm-breaking states (anomalies).
+const RECORD = [
+  T,
+  T + S,
+  T + S + O,
+  T + S + O + T,
+  T + S + O + T + St,                                  // 4  anomaly: new symbol ☆ (shape)
+  T + S + O + T + St + O,
+  T + S + O + T + St + O + T,
+  T + S + O + T + St + O + T + S,
+  T + S + O + T + St + O + T + S + T,                  // 8  anomaly: new PATTERN ◻→◻△ (pattern)
+  T + S + O + T + St + O + T + S + T + S,
+  T + S + O + T + St + O + T + S + T + S + O,
+  T + S + O + T + St + O + T + S + T + S + O + N,       // 11 final anomaly: new symbol ∇ (shape)
+];
+
+const R1 = [[T, T + S], [S, S + O], [O, O + T]];
+const R2 = [...R1, [T, T + St], [St, St + O]];
+const R3 = [...R2, [S, S + T]];
+
+// Each phase is judged on the states firstJudge..breakIdx-1 (so it must also
+// explain the seam transition its new rule was added for); breakIdx is the anomaly
+// it cannot produce. anomaly: 'shape' (new symbol) or 'pattern' (new transition
+// over symbols already seen). Distractors are paced so the last one falls exactly
+// at the window's end — pruning to a lone survivor lines up with the anomaly.
+const PHASES = [
   {
-    alphabet: [T, S, O],
-    truth: [[T, T + S], [S, S + O], [O, O + S]],
-    history: [T, T + S, T + S + O, T + S + O + S, T + S + O + S + O],
-    anomaly: T + S + O + S + O + St,
+    firstJudge: 0, breakIdx: 4, alphabet: [T, S, O], anomaly: 'shape', truth: R1,
     distractors: [
-      [[T, S + O], [S, S + O], [O, O + S]],
-      [[T, T + S], [S, O + O], [O, O + S]],
-      [[T, T + S], [S, S + O], [O, S]],
-      [[T, T + S], [T + S, T + S + O], [O, O + S]],
+      [[T, T + O], [S, S + O], [O, O + T]],
+      [[T, T + S], [S, S + T], [O, O + T]],
+      [[T, T + S], [S, S + O], [O, O + S]],
     ],
-    order: ['d0', 'd1', 'truth', 'd2', 'd3'],
+    order: ['d0', 'd1', 'truth', 'd2'],
   },
   {
-    alphabet: [T, S, O, St],
-    truth: [[T, T + S], [S, S + O], [O, O + St], [St, St + O]],
-    history: [T, T + S, T + S + O, T + S + O + St, T + S + O + St + O, T + S + O + St + O + St],
-    anomaly: T + S + O + St + O + St + N,
+    firstJudge: 3, breakIdx: 8, alphabet: [T, S, O, St], anomaly: 'pattern', truth: R2,
     distractors: [
-      [[T, S + O], [S, S + O], [O, O + St], [St, St + O]],
-      [[T, T + S], [S, O + O], [O, O + St], [St, St + O]],
-      [[T, T + S], [S, S + O], [O, O + S], [St, St + O]],
-      [[T, T + S], [S, S + O], [O, O + St], [St, St + S]],
-      [[T, T + S], [S, S + O], [S + O, S + O + St], [St, St + O]],
+      [[T, T + S], [S, S + O], [O, O + T], [St, St + O]],
+      [[T, T + S], [S, S + O], [O, O + T], [T, T + St], [St, St + T]],
+      [[T, T + S], [S, S + O], [O, O + S], [T, T + St], [St, St + O]],
+      [[T, T + O], [S, S + O], [O, O + T], [T, T + St], [St, St + O]],
     ],
-    order: ['d0', 'truth', 'd1', 'd4', 'd2', 'd3'],
+    order: ['d0', 'truth', 'd2', 'd1', 'd3'],
   },
   {
-    alphabet: [T, S, O, St, N],
-    truth: [[T, T + S], [S, S + O], [O, O + St], [St, St + N], [N, N + S]],
-    history: [T, T + S, T + S + O, T + S + O + St, T + S + O + St + N, T + S + O + St + N + S, T + S + O + St + N + S + O],
-    anomaly: T + S + O + St + N + S + O + F,
+    firstJudge: 7, breakIdx: 11, alphabet: [T, S, O, St], anomaly: 'shape', truth: R3,
     distractors: [
-      [[T, S + O], [S, S + O], [O, O + St], [St, St + N], [N, N + S]],
-      [[T, T + S], [S, O + O], [O, O + St], [St, St + N], [N, N + S]],
-      [[T, T + S], [S, S + O], [O, O + S], [St, St + N], [N, N + S]],
-      [[T, T + S], [S, S + O], [O, O + St], [St, St + S], [N, N + S]],
-      [[T, T + S], [S, S + O], [O, O + St], [St, St + N], [N, N + St]],
-      [[T, T + S], [T + S, T + S + O], [O, O + St], [St, St + N], [N, N + S]],
+      [[T, T + S], [S, S + O], [O, O + T], [T, T + St], [St, St + O]],
+      [[T, T + O], [S, S + O], [O, O + T], [T, T + St], [St, St + O], [S, S + T]],
+      [[T, T + S], [S, S + S], [O, O + T], [T, T + St], [St, St + O], [S, S + T]],
     ],
-    order: ['d1', 'd3', 'truth', 'd0', 'd4', 'd2', 'd5'],
+    order: ['d1', 'truth', 'd0', 'd2'],
   },
 ];
 
@@ -72,25 +83,37 @@ function canProduce(rules, cur, next) {
   }
   return false;
 }
-function canReproduce(rules, history) {
-  for (let i = 0; i < history.length - 1; i++) {
-    if (!canProduce(rules, history[i], history[i + 1])) return false;
+function canReproduce(rules, seg) {
+  for (let i = 0; i < seg.length - 1; i++) {
+    if (!canProduce(rules, seg[i], seg[i + 1])) return false;
   }
   return true;
 }
-function firstFail(rules, history) {
-  for (let i = 0; i < history.length - 1; i++) {
-    if (!canProduce(rules, history[i], history[i + 1])) return i;
+function firstFail(rules, seg) {
+  for (let i = 0; i < seg.length - 1; i++) {
+    if (!canProduce(rules, seg[i], seg[i + 1])) return i;
   }
   return -1;
 }
 
+// Fisher–Yates: shuffle a copy (used to randomize the *display* order of a card's
+// rules — the logic always reads the original rule list, so nothing else changes).
+function shuffled(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 // ----- state -----
-let li = 0;
-let observed = 0; // states revealed beyond s0
+let phase = 0;
+let cursor = 0; // index in RECORD of the latest revealed state
 let eliminated = new Set();
 let candidates = [];
 let anomalyRevealed = false;
+const anomalyIdxs = new Set(); // record indices of already-revealed paradigm-breaking states
 let misfires = 0;
 let hints = 0;
 let ended = false;
@@ -98,21 +121,21 @@ let ended = false;
 // ----- elements -----
 let elHistory, elGrid, elExplain, elEpoch, elAlphabet, elCount, elRemaining, elObs, elMisfire, elHint, elObserveBtn;
 
-function L() { return LEVELS[li]; }
+function P() { return PHASES[phase]; }
 
-function visibleHistory() {
-  const h = L().history.slice(0, observed + 1);
-  return anomalyRevealed ? [...h, L().anomaly] : h;
+// The transitions the current phase's candidates are judged on: from the seam that
+// its new rules explain, up to whatever has been revealed so far.
+function judgedSegment() {
+  return RECORD.slice(P().firstJudge, cursor + 1);
 }
 function remaining() { return candidates.filter((c) => !eliminated.has(c.id)); }
 
 function buildCandidates() {
-  const lvl = L();
-  candidates = lvl.order.map((tok, i) => {
+  const p = P();
+  candidates = p.order.map((tok, i) => {
     const label = String.fromCharCode(65 + i); // A, B, C…
-    if (tok === 'truth') return { id: label, label, rules: lvl.truth, isTruth: true };
-    const d = parseInt(tok.slice(1), 10);
-    return { id: label, label, rules: lvl.distractors[d], isTruth: false };
+    const rules = tok === 'truth' ? p.truth : p.distractors[parseInt(tok.slice(1), 10)];
+    return { id: label, label, rules, displayRules: shuffled(rules), isTruth: tok === 'truth' };
   });
 }
 
@@ -125,19 +148,21 @@ function setExplain(html, accent = 'accent-yellow') {
 function mono(s) { return `<span class="mono phys-mono">${s}</span>`; }
 
 function renderHistory(opts = {}) {
-  const hist = visibleHistory();
   elHistory.innerHTML = '';
-  hist.forEach((state, i) => {
+  for (let i = 0; i <= cursor; i++) {
     const div = document.createElement('div');
     div.className = 'phys-state';
-    const isAnomaly = anomalyRevealed && i === hist.length - 1;
-    const isCurrent = !isAnomaly && i === hist.length - 1;
-    if (isCurrent) div.classList.add('current');
+    const isAnomaly = anomalyIdxs.has(i) || (anomalyRevealed && i === cursor);
+    if (i === cursor && !isAnomaly) div.classList.add('current');
     if (isAnomaly) div.classList.add('anomaly');
-    if (opts.failIdx !== undefined && (i === opts.failIdx || i === opts.failIdx + 1)) div.classList.add('fail');
-    div.innerHTML = `<span class="phys-t">t${i}</span><span class="phys-state-str">${state}</span>`;
+    if (opts.failIdx !== undefined) {
+      const g = P().firstJudge;
+      if (i === g + opts.failIdx || i === g + opts.failIdx + 1) div.classList.add('fail');
+    }
+    div.innerHTML = `<span class="phys-t">t${i}</span><span class="phys-state-str">${RECORD[i]}</span>`;
     elHistory.appendChild(div);
-  });
+  }
+  elHistory.scrollLeft = elHistory.scrollWidth;
 }
 
 function renderGrid() {
@@ -148,25 +173,26 @@ function renderGrid() {
     div.id = 'law-' + c.id;
     if (eliminated.has(c.id)) div.classList.add('eliminated');
     div.addEventListener('click', () => attemptEliminate(c.id));
-    const rules = c.rules.map(([l, r]) => `<span class="phys-rule">${l} <span class="phys-arrow">&rarr;</span> ${r}</span>`).join('');
+    const rules = c.displayRules
+      .map(([l, r]) => `<span class="phys-rule">${l} <span class="phys-arrow">&rarr;</span> ${r}</span>`)
+      .join('');
     div.innerHTML = `<h4>Rule-set ${c.label}</h4><div class="phys-rules">${rules}</div>`;
     elGrid.appendChild(div);
   });
 }
 
 function updateStatus() {
-  elEpoch.textContent = `Epoch ${li + 1} / ${LEVELS.length}`;
-  elAlphabet.textContent = L().alphabet.join(', ');
+  elEpoch.textContent = `Epoch ${phase + 1} / ${PHASES.length}`;
+  elAlphabet.textContent = P().alphabet.join(', ');
   elCount.textContent = candidates.length;
   elRemaining.textContent = remaining().length;
-  elObs.textContent = observed;
+  elObs.textContent = cursor;
   elMisfire.textContent = misfires;
   elHint.textContent = hints;
 }
 
-function loadLevel(idx) {
-  li = idx;
-  observed = 0;
+function loadPhase(idx) {
+  phase = idx;
   anomalyRevealed = false;
   eliminated = new Set();
   buildCandidates();
@@ -177,50 +203,55 @@ function loadLevel(idx) {
 
 function observeNext() {
   if (ended) return;
-  const lvl = L();
+  const p = P();
+  const windowEnd = p.breakIdx - 1;
 
   if (anomalyRevealed) {
     setExplain(`Your surviving rule-set can't explain the anomaly. Click it to rule it out and force a paradigm shift.`, 'accent-red');
     return;
   }
 
-  if (observed < lvl.history.length - 1) {
-    observed++;
+  if (cursor < windowEnd) {
+    cursor++;
     renderHistory();
     updateStatus();
-    if (observed === lvl.history.length - 1) {
-      setExplain(`<strong>Full record observed.</strong> You've now seen every state of this epoch. Rule out every rule-set that can't reproduce it — exactly one should survive.`, 'accent-yellow');
+    if (cursor === windowEnd) {
+      setExplain(`<strong>Record caught up.</strong> Every state so far is on the table. Rule out every rule-set that can't reproduce it — exactly one should survive.`, 'accent-yellow');
     } else {
-      setExplain(`<strong>Observation ${observed}.</strong> The source advanced to ${mono(visibleHistory()[observed])}. Which surviving rule-sets can no longer produce the record?`, 'accent-yellow');
+      setExplain(`<strong>Observation ${cursor}.</strong> The source advanced to ${mono(RECORD[cursor])}. Which surviving rule-sets can no longer produce the record?`, 'accent-yellow');
     }
     return;
   }
 
-  // Full history already shown.
+  // Window fully shown.
   if (remaining().length > 1) {
-    setExplain(`You've seen the whole record. The source won't reveal anything new until you've ruled out the rule-sets that can't reproduce it.`, 'accent-blue');
+    setExplain(`You've seen the whole record so far. The source won't reveal anything new until you've ruled out the rule-sets that can't reproduce it.`, 'accent-blue');
     return;
   }
 
-  // Only the true law remains → reveal the anomaly it cannot explain.
+  // Only the true rule-set remains → reveal the anomaly it cannot explain.
+  cursor = p.breakIdx;
   anomalyRevealed = true;
   renderHistory();
   updateStatus();
-  setExplain(`<strong style="color:var(--accent-red)">Anomaly.</strong> The source produced ${mono(lvl.anomaly)} — a state even your surviving rule-set can't generate. Your best theory is falsified. Rule it out.`, 'accent-red');
+  const kind = p.anomaly === 'pattern'
+    ? 'a new <em>pattern</em> — no new symbol, but a transition your surviving rule-set has no rule for'
+    : 'a new <em>shape</em> — a symbol your surviving rule-set has never produced';
+  setExplain(`<strong style="color:var(--accent-red)">Anomaly.</strong> The source produced ${mono(RECORD[cursor])} — ${kind}. Your best theory is falsified. Rule it out.`, 'accent-red');
 }
 
 function attemptEliminate(id) {
   if (ended || eliminated.has(id)) return;
   const cand = candidates.find((c) => c.id === id);
-  const hist = visibleHistory();
+  const seg = judgedSegment();
   const card = document.getElementById('law-' + id);
 
-  if (hist.length < 2) {
+  if (seg.length < 2) {
     setExplain(`Observe at least one state before ruling out a rule-set.`, 'accent-blue');
     return;
   }
 
-  if (canReproduce(cand.rules, hist)) {
+  if (canReproduce(cand.rules, seg)) {
     misfires++;
     updateStatus();
     triggerReflow(card, 'shake');
@@ -230,11 +261,11 @@ function attemptEliminate(id) {
 
   eliminated.add(id);
   card.classList.add('eliminated');
-  const failIdx = firstFail(cand.rules, hist);
+  const failIdx = firstFail(cand.rules, seg);
   renderHistory({ failIdx });
   updateStatus();
-  const a = hist[failIdx];
-  const b = hist[failIdx + 1];
+  const a = seg[failIdx];
+  const b = seg[failIdx + 1];
 
   if (cand.isTruth) {
     setExplain(`Rule-set ${cand.label} — your best theory — can't produce ${mono(a)} &rarr; ${mono(b)}. Even it has fallen.`, 'accent-red');
@@ -252,27 +283,28 @@ function attemptEliminate(id) {
 
 function advanceEpoch() {
   markProgress('conclusion');
-  if (li < LEVELS.length - 1) {
-    loadLevel(li + 1);
+  anomalyIdxs.add(P().breakIdx); // keep the broken-theory state marked in the timeline
+  if (phase < PHASES.length - 1) {
+    loadPhase(phase + 1); // cursor is untouched — the record continues from where it was
     triggerReflow(elEpoch, 'pulse-anim');
-    setExplain(`<strong style="color:var(--accent-purple)">Paradigm shift.</strong> A new epoch opens with ${candidates.length} fresh rule-sets — each explains the entire past <em>and</em> the anomaly that broke the last theory. One symbol richer, begin the inference again.`, 'accent-purple');
+    setExplain(`<strong style="color:var(--accent-purple)">Paradigm shift.</strong> The record rolls on — same timeline, ${candidates.length} fresh rule-sets. Each explains the whole record so far <em>and</em> the anomaly that broke the last theory. Keep inferring.`, 'accent-purple');
   } else {
     ended = true;
     elObserveBtn.disabled = true;
-    setExplain(`<strong>The end of physics?</strong> Physics was only the loudest way to read this game. Each epoch you inferred the one rule-set consistent with the record — then the source produced something it couldn't contain, and you started again one symbol richer. Run backwards, the search never reaches a final axiom: there is only the next anomaly. And the record never had to be a universe — read it as a language, a dataset, or nothing at all. Meaning doesn't sit beyond the models; it lives in the fit between what you observe and the rule-set you can still defend.`, 'accent-yellow');
+    setExplain(`<strong>The end of physics?</strong> Physics was only the loudest way to read this game. Each epoch you inferred the one rule-set consistent with the record — then the source produced something it couldn't contain, and you carried on with a richer theory. Run backwards, the search never reaches a final axiom: there is only the next anomaly. And the record never had to be a universe — read it as a language, a dataset, or nothing at all. Meaning doesn't sit beyond the models; it lives in the fit between what you observe and the rule-set you can still defend.`, 'accent-yellow');
   }
 }
 
 function useHint() {
   if (ended) return;
-  const hist = visibleHistory();
-  if (hist.length < 2) {
+  const seg = judgedSegment();
+  if (seg.length < 2) {
     setExplain(`Observe a state first, then I can point to an impossible rule-set.`, 'accent-blue');
     return;
   }
   hints++;
   updateStatus();
-  const target = remaining().find((c) => !canReproduce(c.rules, hist));
+  const target = remaining().find((c) => !canReproduce(c.rules, seg));
   if (target) {
     const card = document.getElementById('law-' + target.id);
     triggerReflow(card, 'hintable');
@@ -286,8 +318,10 @@ function resetGame() {
   ended = false;
   misfires = 0;
   hints = 0;
+  cursor = 0;
+  anomalyIdxs.clear();
   elObserveBtn.disabled = false;
-  loadLevel(0);
+  loadPhase(0);
   elExplain.style.display = 'none';
 }
 
@@ -319,7 +353,7 @@ export function init() {
     else if (e.key === 'h' || e.key === 'H') { useHint(); e.preventDefault(); }
   });
 
-  loadLevel(0);
+  loadPhase(0);
 }
 
 // No inline handlers left in the physics markup — nothing to expose on window.
