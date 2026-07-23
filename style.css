@@ -652,8 +652,16 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .phys-rule { white-space: nowrap; }
 .phys-arrow { color: var(--accent-yellow); }
 .physics-model.hintable { animation: pulse 0.6s ease 2; border-top-color: var(--accent-blue); box-shadow: 0 0 0 3px var(--soft-blue); }
-.physics-model.spawn { animation: phys-spawn 0.35s var(--ease); }
-@keyframes phys-spawn { from { opacity: 0; transform: translateY(6px) scale(0.97); } to { opacity: 1; transform: none; } }
+/* Card being ruled out slides/fades away before its replacement drops in. */
+.physics-model.leaving { animation: phys-leave 0.24s var(--ease) forwards; pointer-events: none; }
+@keyframes phys-leave { to { opacity: 0; transform: translateY(-14px) scale(0.9); } }
+/* A fresh card drops in with a clear pop + a brief yellow flash. */
+.physics-model.spawn { animation: phys-spawn 0.5s var(--ease); }
+@keyframes phys-spawn {
+  0% { opacity: 0; transform: translateY(-16px) scale(0.85); box-shadow: 0 0 0 4px var(--soft-yellow); border-top-color: var(--accent-yellow); }
+  60% { opacity: 1; transform: translateY(2px) scale(1.03); box-shadow: 0 0 0 4px var(--soft-yellow); }
+  100% { opacity: 1; transform: none; box-shadow: var(--shadow-1); }
+}
 
 /* Reverse-mathematics physics game */
 .mono { font-family: var(--mono); }
