@@ -15,7 +15,7 @@ export const tabNames = {
   applied: '3. Computability',
   interpretation: '4. Interpretation',
   conclusion: '5. Reverse Mathematics',
-  reflection: '6. Where Truth Lies',
+  reflection: 'Where Truth Lies',
 };
 
 export function switchTab(tabId) {
