@@ -571,111 +571,35 @@
                             <h4 style="color: var(--accent-orange); margin: 0 0 1rem 0;">Why The Halting Problem Appears</h4>
                             <p style="font-size: 0.95rem; text-align: left; margin-bottom: 1.5rem;">The proof resembles Gödel's incompleteness theorem. Both constructions exploit self-reference.</p>
                             <div class="halt-anim" style="background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1.25rem 1rem; width: 100%; box-sizing: border-box;">
-                                <p class="halt-lead">Meet three machines. Two are trivial; the third is the one in question. We'll snap them together in a moment.</p>
-
-                                <div class="halt-parts">
-                                    <div class="halt-part">
-                                        <div class="halt-partline">
-                                            <div class="halt-chip in"><span class="mono">w</span></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-unit"><div class="halt-unit-name">P</div><div class="halt-unit-desc">the copier</div></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-chip"><span class="mono">(w, w)</span></div>
-                                        </div>
-                                        <div class="halt-part-note"><b>P</b> takes one input and hands back <b>two copies</b> of it.</div>
-                                    </div>
-
-                                    <div class="halt-part">
-                                        <div class="halt-partline">
-                                            <div class="halt-chip in">halts / loops</div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-unit"><div class="halt-unit-name">N</div><div class="halt-unit-desc">the negater</div></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-chip">the other one</div>
-                                        </div>
-                                        <div class="halt-part-note"><b>N</b> flips a halt/loop answer to its <b>opposite</b>.</div>
-                                    </div>
-
-                                    <div class="halt-part">
-                                        <div class="halt-partline">
-                                            <div class="halt-inputs">
-                                                <div class="halt-chip tiny">a machine</div>
-                                                <div class="halt-chip tiny">an input</div>
-                                            </div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-unit hot"><div class="halt-unit-name">H</div><div class="halt-unit-desc">the hoped-for decider</div></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-chip">halts / loops</div>
-                                        </div>
-                                        <div class="halt-part-note"><b>H</b> is the machine we <em>wish</em> we had: read a machine and an input, and always say correctly whether that run <b>halts</b> or <b>runs forever</b> &mdash; without having to run it. For example:</div>
-                                        <div class="halt-example">
-                                            <div class="halt-branch">
-                                                <span class="halt-tag">calculator + &ldquo;write 7 &divide; 3 as an exact decimal&rdquo;</span>
-                                                <span class="halt-branch-arrow">&rarr; H says</span>
-                                                <span class="halt-tag bad">runs forever &infin;</span>
-                                            </div>
-                                            <div class="halt-branch">
-                                                <span class="halt-tag">calculator + &ldquo;&radic;2 to 3 places&rdquo;</span>
-                                                <span class="halt-branch-arrow">&rarr; H says</span>
-                                                <span class="halt-tag ok">halts &check;</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <p class="halt-lead halt-q">All fine so far. The trouble starts with one question: <b>what happens when a machine is handed its own code as the input?</b> To find out, snap the three parts together into a machine <b>D</b>:</p>
+                                <p class="halt-lead">Suppose a perfect decider <b>H</b> exists: given a machine and an input, it always says correctly whether that run <b>halts</b> or <b>runs forever</b> &mdash; without having to run it. Using H as a part, build a machine <b>D</b> that does the <b>opposite</b> of whatever H predicts:</p>
 
                                 <div class="halt-drow">
                                     <div class="halt-chip in">a machine <span class="mono">w</span></div>
                                     <div class="halt-arrow">&rarr;</div>
                                     <div class="halt-box big halt-d">
                                         <div class="halt-box-name">D</div>
-                                        <div class="halt-pipeline">
-                                            <div class="halt-unit"><div class="halt-unit-name">P</div><div class="halt-unit-desc"><span class="mono">w &rarr; (w, w)</span></div></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-unit hot"><div class="halt-unit-name">H</div><div class="halt-unit-desc">does <span class="mono">w</span> halt on <span class="mono">w</span>?</div></div>
-                                            <div class="halt-arrow">&rarr;</div>
-                                            <div class="halt-unit"><div class="halt-unit-name">N</div><div class="halt-unit-desc">flip it</div></div>
-                                        </div>
+                                        <div class="halt-d-sub">ask H: does <span class="mono">w</span> halt when run on <span class="mono">w</span> (its own code)? &mdash; then output the <b>opposite</b></div>
                                     </div>
                                     <div class="halt-arrow">&rarr;</div>
                                     <div class="halt-chip out">opposite of H</div>
                                 </div>
-                                <p class="halt-lead">P makes H judge every machine <b>against its own code</b>. So now feed D <b>itself</b>. H must guess &mdash; and the two guesses are near-identical stories that each backfire:</p>
 
-                                <div class="halt-two">
-                                    <div class="halt-guess">
-                                        <div class="halt-guess-head">Guess 1: H says <span class="halt-tag ok">D halts &check;</span></div>
-                                        <div class="halt-guess-flow"><span class="mono">D</span> &rarr; P copies &rarr; H: &ldquo;D halts on D&rdquo; &rarr; N flips &rarr; <span class="halt-tag bad">D loops &infin;</span></div>
-                                        <div class="halt-guess-verdict">So D does <b>not</b> halt &mdash; the opposite of the guess. H was <b>wrong</b>.</div>
+                                <p class="halt-lead">Now feed D <b>its own code</b> (set <span class="mono">w = D</span>). H has to guess, and each guess backfires:</p>
+                                <div class="halt-branches">
+                                    <div class="halt-branch">
+                                        <span class="halt-tag ok">H says: D halts &check;</span>
+                                        <span class="halt-branch-arrow">&rarr; D does the opposite &rarr;</span>
+                                        <span class="halt-tag bad">D loops forever &infin;</span>
                                     </div>
-                                    <div class="halt-guess">
-                                        <div class="halt-guess-head">Guess 2: H says <span class="halt-tag bad">D loops &infin;</span></div>
-                                        <div class="halt-guess-flow"><span class="mono">D</span> &rarr; P copies &rarr; H: &ldquo;D loops on D&rdquo; &rarr; N flips &rarr; <span class="halt-tag ok">D halts &check;</span></div>
-                                        <div class="halt-guess-verdict">So D <b>halts</b> &mdash; again the opposite. H was <b>wrong</b>.</div>
+                                    <div class="halt-branch">
+                                        <span class="halt-tag bad">H says: D loops &infin;</span>
+                                        <span class="halt-branch-arrow">&rarr; D does the opposite &rarr;</span>
+                                        <span class="halt-tag ok">D halts &check;</span>
                                     </div>
                                 </div>
-                                <p class="halt-close">Both guesses make H wrong about the very machine built from it. A perfect H cannot exist.</p>
+                                <p class="halt-close">Either way D ends in the opposite state to what H predicted &mdash; so H is wrong about the very machine built from it. A perfect H cannot exist.</p>
 
-                                <div class="halt-variant">
-                                    <div class="halt-variant-title">What if we drop P?</div>
-                                    <p class="halt-lead">P looks like plumbing &mdash; could we skip it? Build <b>G</b>: no copier, just a <b>fixed</b> input <span class="mono">I</span> baked in. G runs <span class="mono">H(w, I)</span>, then N flips it.</p>
-                                    <div class="halt-drow">
-                                        <div class="halt-chip in">a machine <span class="mono">w</span></div>
-                                        <div class="halt-arrow">&rarr;</div>
-                                        <div class="halt-box big halt-d">
-                                            <div class="halt-box-name">G</div>
-                                            <div class="halt-pipeline">
-                                                <div class="halt-unit hot"><div class="halt-unit-name">H</div><div class="halt-unit-desc">does <span class="mono">w</span> halt on <span class="mono">I</span>?</div></div>
-                                                <div class="halt-arrow">&rarr;</div>
-                                                <div class="halt-unit"><div class="halt-unit-name">N</div><div class="halt-unit-desc">flip it</div></div>
-                                            </div>
-                                        </div>
-                                        <div class="halt-arrow">&rarr;</div>
-                                        <div class="halt-chip out">opposite of H</div>
-                                    </div>
-                                    <p class="halt-lead"><b>Does G disprove H too?</b> No &mdash; not for an ordinary fixed <span class="mono">I</span>. Feed G its own code and H is asked &ldquo;does G halt on <span class="mono">I</span>?&rdquo;, but the run actually happening is <b>G on G</b> &mdash; a different input. H answers about one computation while G performs another, so nothing is forced to contradict. That is exactly the job P was doing: it makes the input <b>equal the machine</b>, so H's question lands on the very run we set in motion. Remove it, and the self-reference no longer closes. <span class="halt-variant-foot">(You could instead bake G's own code in as <span class="mono">I</span> &mdash; but that is just P's trick done by hand.)</span></p>
-                                </div>
+                                <p class="halt-lead" style="margin-top: 1.25rem;"><b>Why must D be its own input?</b> The contradiction only springs when the machine H is asked about is the very same machine we then run. That is why D asks about <span class="mono">w</span> on <span class="mono">w</span> and we hand it its own code. If D instead used some <b>fixed</b> input <span class="mono">I</span> &mdash; asking &ldquo;does <span class="mono">w</span> halt on <span class="mono">I</span>?&rdquo; &mdash; then feeding D itself would have H judge &ldquo;D on <span class="mono">I</span>&rdquo; while the run actually happening is &ldquo;D on D,&rdquo; a different input. H's answer and D's behavior would be about two different computations, so nothing forces them to clash. No fixed <span class="mono">I</span> can guarantee the contradiction; only feeding the machine <b>itself</b> turns D's question back onto D.</p>
                             </div>
                             <div class="halting-game">
                                 <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself — make your prediction:</p>
