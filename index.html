@@ -458,7 +458,7 @@
                     <div class="section-block">
                         <h3>From Formal Systems to Machines</h3>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">In the previous sections, we treated mathematics as a formal system: a collection of symbols together with rules that determine which strings may be transformed into which others. Proofs can be viewed not as discoveries of meaning, but as legal sequences of symbolic manipulations.</p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Computability extends the idea. Instead of asking which strings a system can derive, it asks which tasks a purely mechanical procedure can carry out. To pin that down, Turing built a device stripped to the bone: the Turing machine.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">Computability extends the idea. Instead of asking which strings a system can derive, it asks which tasks a purely mechanical procedure can carry out. To make that precise, Turing built a device stripped to the bone: the Turing machine.</p>
 
                         <h3 style="margin-top: 2rem;">The Turing Machine</h3>
                         <p style="margin-bottom: 1rem; font-size: 1.05rem;">A Turing Machine is an idealized computational device consisting of an infinite tape divided into cells, a read/write head, a finite set of internal states, and a collection of rules.</p>
@@ -501,7 +501,7 @@
                             </div>
                             
                             <div id="tm-diagram-wrap" style="background: var(--surface); padding: 1rem 1rem 0.5rem; border-radius: 8px; border: 1px solid var(--soft-orange-border); margin-bottom: 1rem;">
-                                <h5 style="margin: 0 0 0.25rem; color: var(--text-main);">State Diagram <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal; font-size: 0.85rem;">&mdash; the active state glows as the machine runs</span></h5>
+                                <h5 style="margin: 0 0 0.25rem; color: var(--text-main);">State Diagram <span style="text-transform: none; letter-spacing: 0; color: var(--text-muted); font-weight: normal; font-size: 0.85rem;">(the active state glows as the machine runs)</span></h5>
                                 <div id="tm-diagram" style="width: 100%; overflow-x: auto;"></div>
                             </div>
 
@@ -555,7 +555,7 @@
 
                     <div class="section-block">
                         <h3>Build a Machine</h3>
-                        <p class="prose">Reading a machine run is one thing; <em>designing</em> one is where computation stops feeling abstract. Pick a task below, then write transition rules in the Custom editor above until your machine transforms the input into the target. There is no trick &mdash; only rules, a head, and a tape.</p>
+                        <p class="prose">Reading a machine run is one thing; <em>designing</em> one is where computation stops feeling abstract. Pick a task below, then write transition rules in the Custom editor above until your machine transforms the input into the target. There is no trick, only rules, a head, and a tape.</p>
                         <div class="tm-challenges">
                             <div class="tm-challenge-btns">
                                 <button class="btn btn-icon tm-challenge-btn" data-tmc="flip">Flip every bit</button>
@@ -580,14 +580,14 @@
                             <h4 style="color: var(--accent-orange); margin: 0 0 1rem 0;">Why The Halting Problem Appears</h4>
                             <p style="font-size: 0.95rem; text-align: left; margin-bottom: 1.5rem;">The proof resembles Gödel's incompleteness theorem. Both constructions exploit self-reference.</p>
                             <div class="halt-anim" style="background: var(--surface); border: 1px solid var(--soft-orange-border); border-radius: 8px; padding: 1.25rem 1rem; width: 100%; box-sizing: border-box;">
-                                <p class="halt-lead">Suppose a perfect decider <b>H</b> exists: given a machine and an input, it always says correctly whether that run <b>halts</b> or <b>runs forever</b> &mdash; without having to run it. Using H as a part, build a machine <b>D</b> that does the <b>opposite</b> of whatever H predicts:</p>
+                                <p class="halt-lead">Suppose a perfect decider <b>H</b> exists: given a machine and an input, it always says correctly whether that run <b>halts</b> or <b>runs forever</b>, without having to run it. Using H as a part, build a machine <b>D</b> that does the <b>opposite</b> of whatever H predicts:</p>
 
                                 <div class="halt-drow">
                                     <div class="halt-chip in">a machine <span class="mono">w</span></div>
                                     <div class="halt-arrow">&rarr;</div>
                                     <div class="halt-box big halt-d">
                                         <div class="halt-box-name">D</div>
-                                        <div class="halt-d-sub">ask H: does <span class="mono">w</span> halt when run on <span class="mono">w</span> (its own code)? &mdash; then output the <b>opposite</b></div>
+                                        <div class="halt-d-sub">ask H whether <span class="mono">w</span> halts when run on <span class="mono">w</span> (its own code), then output the <b>opposite</b></div>
                                     </div>
                                     <div class="halt-arrow">&rarr;</div>
                                     <div class="halt-chip out">opposite of H</div>
@@ -606,12 +606,12 @@
                                         <span class="halt-tag ok">D halts &check;</span>
                                     </div>
                                 </div>
-                                <p class="halt-close">Either way D ends in the opposite state to what H predicted &mdash; so H is wrong about the very machine built from it. A perfect H cannot exist.</p>
+                                <p class="halt-close">Either way D ends in the opposite state to what H predicted, so H is wrong about the very machine built from it. A perfect H cannot exist.</p>
 
-                                <p class="halt-lead" style="margin-top: 1.25rem;"><b>Why must D be its own input?</b> The contradiction only springs when the machine H is asked about is the very same machine we then run. That is why D asks about <span class="mono">w</span> on <span class="mono">w</span> and we hand it its own code. If D instead used some <b>fixed</b> input <span class="mono">I</span> &mdash; asking &ldquo;does <span class="mono">w</span> halt on <span class="mono">I</span>?&rdquo; &mdash; then feeding D itself would have H judge &ldquo;D on <span class="mono">I</span>&rdquo; while the run actually happening is &ldquo;D on D,&rdquo; a different input. H's answer and D's behavior would be about two different computations, so nothing forces them to clash. No fixed <span class="mono">I</span> can guarantee the contradiction; only feeding the machine <b>itself</b> turns D's question back onto D.</p>
+                                <p class="halt-lead" style="margin-top: 1.25rem;"><b>Why must D be its own input?</b> The contradiction only springs when the machine H is asked about is the very same machine we then run. That is why D asks about <span class="mono">w</span> on <span class="mono">w</span> and we hand it its own code. If D instead asked about some <b>fixed</b> input <span class="mono">I</span> (&ldquo;does <span class="mono">w</span> halt on <span class="mono">I</span>?&rdquo;), then feeding D itself would have H judge &ldquo;D on <span class="mono">I</span>&rdquo; while the run actually happening is &ldquo;D on D,&rdquo; a different input. H's answer and D's behavior would be about two different computations, so nothing forces them to clash. No fixed <span class="mono">I</span> can guarantee the contradiction; only feeding the machine <b>itself</b> turns D's question back onto D.</p>
                             </div>
                             <div class="halting-game">
-                                <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself — make your prediction:</p>
+                                <p class="halting-prompt"><strong>You are H.</strong> D is about to run on itself. Make your prediction:</p>
                                 <div class="controls-row" style="justify-content: center;">
                                     <button class="btn halting-btn" id="halt-predict-halt">D will HALT</button>
                                     <button class="btn halting-btn" id="halt-predict-loop">D runs FOREVER</button>
@@ -626,28 +626,37 @@
 
                     <div class="section-block" style="margin-top: 2.5rem;">
                         <h3>The Missing Philosophical Tension</h3>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">A visitor will naturally think: <em>"Fine. No Turing machine can solve the Halting Problem. But I can still imagine such a machine."</em></p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">But notice what has actually been ruled out. The machine is not physically impossible. The machine is not logically contradictory. You can describe it perfectly: Input a machine and an input. Output HALTS or DOES NOT HALT. Always correct.</p>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem; font-weight: bold; color: var(--accent-orange);">The description is perfectly meaningful. Yet no Turing machine can instantiate it. So what is the ontological status of this thing?</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">A visitor will naturally think: <em>"Fine. No Turing machine can solve the Halting Problem. But I can still imagine such a machine."</em> It pays to slow down here, because two very different things ride on that one word, <em>machine</em>, and only one of them is a real puzzle.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">One is the <strong>decider itself</strong>, a single machine that reads any machine and input and always answers correctly. That one we did not merely fail to build; we <em>ruled it out</em>. The construction just above turns it into a flat contradiction, the same way <em>&not;G</em> forced a proof that could not exist. So there is no realist-versus-formalist question to ask about it: as a Turing machine it is impossible. The only thing left to wonder is what we are really doing when we picture it, a question we return to below.</p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The other thing is the <strong>halting function</strong>. It is not a machine at all, just the bare fact the decider was meant to report: for each machine (labelled by its <em>Gödel number</em>), <em>does it halt or run forever?</em> There is nothing contradictory in that. Every machine either halts on a given input or it does not; the function simply records which. It is perfectly well-defined. It is only <strong style="color: var(--accent-orange);">not computable</strong>, because no single machine can produce all of its answers. <em>This</em> is the object whose status is actually worth arguing about.</p>
+
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">And here is the surprise: on <em>this</em> object, the two camps that split over Gödel do not split at all.</p>
 
                         <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem;">
                             <div style="border-left: 4px solid var(--accent-blue); padding-left: 1rem;">
-                                <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">The Platonist Response</h4>
-                                <p style="font-size: 0.95rem;">A Platonist is often comfortable saying: The machine is impossible as a Turing machine, but the function it computes still exists. The halting relation itself is perfectly well-defined. For every machine M and input I, there is a fact of the matter. The inability of a Turing machine to determine all such facts does not eliminate the facts themselves. From this perspective, computability theory is not discovering the limits of truth. It is discovering the limits of a particular method of accessing truth. The Platonic realm contains more than algorithms can reach.</p>
+                                <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">The realist</h4>
+                                <p style="font-size: 0.95rem;">The function is simply out there. For every machine and input there is a fact of the matter, halts or does not, whether or not any procedure can reach it. Non-computability is not a limit on <em>truth</em>; it is a limit on one way of getting at it. Computability theory maps the reach of algorithms, not the edge of what is real.</p>
                             </div>
-                            
+
                             <div style="border-left: 4px solid var(--accent-yellow); padding-left: 1rem;">
-                                <h4 style="color: var(--accent-yellow); margin-bottom: 0.5rem;">The Formalist's Counterquestion</h4>
-                                <p style="font-size: 0.95rem;">The formalist immediately asks: <em>In what sense does this "machine" exist?</em> Not: Can we build it? but: What does existence mean here? The machine cannot be specified as a Turing machine. It cannot be generated by the formal system being discussed. So what exactly is being asserted when someone says: "It exists." Is existence being confused with description? Is the ability to imagine an object enough to grant it ontological status?</p>
+                                <h4 style="color: var(--accent-yellow); margin-bottom: 0.5rem;">The formalist agrees</h4>
+                                <p style="font-size: 0.95rem;">You might expect the formalist to object, but here they do not. The halting function is <em>definable inside ordinary mathematics</em>: the ordinary rules of arithmetic already settle the answer for every machine. And for the formalist, if the system settles it, that is enough for it to exist. So realist and formalist line up on this object, the same truce they reached over Gödel's <em>G</em>.</p>
+                            </div>
+
+                            <div style="border-left: 4px solid var(--accent-green); padding-left: 1rem;">
+                                <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">The constructivist dissents</h4>
+                                <p style="font-size: 0.95rem;">The genuine disagreement comes from a third, stricter school: the <strong>constructivists</strong> (or <strong>intuitionists</strong>). They refuse to call a fact settled until someone can actually <em>construct</em> the answer. Picture a machine that in truth runs forever, but for which no proof of that exists. The realist says, &ldquo;it never halts. That is the fact.&rdquo; The constructivist says there is nothing to point to yet, so the function has <em>no determinate value there</em>. The real fault-line is not &ldquo;exists versus just a label.&rdquo; It is this: <strong>does a fact need a construction to count as a fact?</strong></p>
                             </div>
                         </div>
 
+                        <p style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.05rem;">Notice the shape of it. Gödel's <em>G</em> was <strong>true but unprovable</strong>: the truth outran what the rules could derive. Here the halting function is <strong>well-defined but uncomputable</strong>: the object outruns what any machine can compute. The same gap in a new guise: in each case something is perfectly determinate and perfectly beyond mechanical reach. That is the through-line, not a new mystery.</p>
+
                         <h3 style="margin-top: 2.5rem;">Understanding, or Just a Label?</h3>
-                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">The formalist presses one question further. Have we actually <em>understood</em> this machine &mdash; or merely attached a label to a gap in our formal machinery? Saying <em>"a machine that always solves the Halting Problem"</em> may not be understanding at all; it may just be a placeholder. After all, one can as easily say <em>"a machine that answers every question."</em> <strong>The sentence is grammatically meaningful. That does not mean the object itself has been coherently specified.</strong></p>
+                        <p style="margin-bottom: 1rem; font-size: 1.05rem;">So return to the impossible machine, because the &ldquo;just a label&rdquo; worry belongs to <em>it</em>, not to the function. The function is genuinely specified; the <em>decider that would compute it</em> is not. Saying <em>"a machine that always solves the Halting Problem"</em> can feel like understanding when it is only a placeholder, no better specified than <em>"a machine that answers every question."</em> <strong>The phrase is grammatically perfect. That does not mean it names anything.</strong> The lesson is not that language has touched a hidden realm; it is that a well-formed sentence can point at a gap in the machinery and dress it up as an object.</p>
 
                         <div style="background: var(--surface-2); border: 1px solid var(--soft-orange-border); border-left: 4px solid var(--accent-orange); padding: 1.5rem; border-radius: 8px; margin-top: 2rem; font-weight: bold; text-align: center;">
                             <span style="display: block; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--accent-orange); margin-bottom: 0.5rem;">Final Question</span>
-                            <span style="font-size: 1.1rem; line-height: 1.5; color: var(--text-main);">Human beings can describe entities that exceed every Turing-computable procedure.<br><br>Does this reveal a deeper mathematical reality beyond computation, or does it merely reveal the ability of language to speak about things no formal system can generate?</span>
+                            <span style="font-size: 1.1rem; line-height: 1.5; color: var(--text-main);">We can write down a fact (the halting function) that no machine can compute, and describe a machine that no formal system can generate.<br><br>Does that point to a mathematical reality beyond computation? Or does it show two humbler things at once: that a fact can be perfectly definite without being mechanically reachable, and that language can name a machine that could never exist?</span>
                         </div>
                     </div>
                 </div>
@@ -985,7 +994,7 @@
                         <ul class="symbol-list" style="margin-bottom: 1.5rem; font-size: 1.05rem;">
                             <li><strong>1 &middot; Formal Systems.</strong> A formal system is only symbols moved by rules. MIU makes the formalist's starting point concrete: <span class="mono">MU</span> can never be reached, yet nothing here <em>means</em> anything &mdash; meaning is a layer laid on top, never carried by the symbols.</li>
                             <li><strong>2 &middot; Truth.</strong> Gödel's incompleteness separates truth from proof, and settles neither side. Lean on soundness and <em>G</em> is true though unprovable; or notice that denying <em>G</em> stays just as consistent &mdash; a different model, with its own questions worth asking.</li>
-                            <li><strong>3 &middot; Computability.</strong> A machine that answers every halting case is easy to describe and impossible to build. So when we say we "understand" it, the doubt is whether we've grasped a real structure or only laid a label over a gap in the machinery.</li>
+                            <li><strong>3 &middot; Computability.</strong> The halting function is perfectly well-defined yet no machine can compute it: existence outrunning computation, the twin of Gödel's truth outrunning proof. What splits people is not whether it exists, but whether a fact must be <em>constructed</em> to count, while the decider that would compute it stays a label over a gap in the machinery.</li>
                             <li><strong>4 &middot; Interpretation.</strong> Meaning is layered, and so is the glider: its motion is in our reading, not in Conway's four rules of birth and death. Emergence is that layer &mdash; which leaves it open whether an emergent thing is part of the system, or part of how we describe it.</li>
                             <li><strong>5 &middot; Reverse Mathematics.</strong> Every explanation we reach is a formal model fitted to what we observe. If that is all we ever have, then "truth" may never be something found outside the models &mdash; only the fit between the record and the rules that still hold.</li>
                         </ul>
