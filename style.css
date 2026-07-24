@@ -403,6 +403,9 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 .stats-bar {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     background: var(--surface);
     padding: 1rem;
     border-radius: var(--radius-sm);
@@ -459,7 +462,7 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
     100% { background: transparent; }
 }
 
-.history-controls { display: flex; gap: 0.5rem; }
+.history-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .btn-icon { padding: 0.4rem 0.8rem; font-size: 0.9rem; background: var(--soft-blue); border: 1px solid var(--soft-blue-border); color: var(--accent-blue); margin-top: 0; }
 .btn-icon:hover:not(:disabled) { background: var(--soft-blue-border); }
 .btn-icon:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -544,7 +547,7 @@ header p { font-size: 1.2rem; color: var(--text-muted); margin: 0; font-weight: 
 
 .formula-error { border-color: var(--accent-red) !important; animation: shake 0.4s; }
 
-.formula-actions { display: flex; gap: 1rem; }
+.formula-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 .save-dropdown { position: relative; display: inline-block; flex: 2; }
 .dropdown-content {
     display: none;

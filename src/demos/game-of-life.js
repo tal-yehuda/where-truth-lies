@@ -18,6 +18,11 @@ let isDrawing = false;
 let golLastMousePos = { x: 0, y: 0 };
 let golPlayback = null;
 
+// Touch state (mobile): one finger draws, two fingers pan + pinch-zoom.
+let touchMode = null; // 'draw' | 'gesture' | null
+let lastTouchDist = 0;
+let lastTouchCentroid = { x: 0, y: 0 };
+
 // Challenge state
 let golHistory = []; // { gen, key, norm, pop } snapshots for phenomenon detection
 const golCompleted = new Set();
@@ -41,12 +46,18 @@ const GOALS = {
   },
 };
 
-function getGridPos(clientX, clientY) {
+// Convert a client (screen) point into canvas-pixel space, accounting for the
+// canvas being displayed at a different CSS size than its backing resolution.
+function toCanvasPx(clientX, clientY) {
   const rect = golCanvas.getBoundingClientRect();
-  const scaleX = golCanvas.width / rect.width;
-  const scaleY = golCanvas.height / rect.height;
-  const x = (clientX - rect.left) * scaleX;
-  const y = (clientY - rect.top) * scaleY;
+  return {
+    x: (clientX - rect.left) * (golCanvas.width / rect.width),
+    y: (clientY - rect.top) * (golCanvas.height / rect.height),
+  };
+}
+
+function getGridPos(clientX, clientY) {
+  const { x, y } = toCanvasPx(clientX, clientY);
   const worldX = x - golOffsetX - golCanvas.width / 2;
   const worldY = y - golOffsetY - golCanvas.height / 2;
   return { cx: Math.floor(worldX / golCellSize), cy: Math.floor(worldY / golCellSize) };
@@ -93,6 +104,67 @@ function golWheel(e) {
   else golCellSize /= zoomFactor;
   golCellSize = Math.max(3, Math.min(golCellSize, 50));
   renderGOL();
+}
+
+// ---------- touch (mobile) ----------
+function touchDist(a, b) {
+  return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+}
+function touchCentroid(a, b) {
+  return toCanvasPx((a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2);
+}
+
+function golTouchStart(e) {
+  e.preventDefault();
+  if (e.touches.length === 1) {
+    // One finger: draw, mirroring a left-click toggle then drag.
+    touchMode = 'draw';
+    const t = e.touches[0];
+    const pos = getGridPos(t.clientX, t.clientY);
+    const key = `${pos.cx},${pos.cy}`;
+    if (golGrid[key]) delete golGrid[key];
+    else golGrid[key] = true;
+    resetHistory();
+    renderGOL();
+  } else if (e.touches.length === 2) {
+    // Two fingers: pan (centroid drag) + pinch-zoom (distance ratio).
+    touchMode = 'gesture';
+    lastTouchDist = touchDist(e.touches[0], e.touches[1]);
+    lastTouchCentroid = touchCentroid(e.touches[0], e.touches[1]);
+  }
+}
+
+function golTouchMove(e) {
+  e.preventDefault();
+  if (touchMode === 'draw' && e.touches.length === 1) {
+    const pos = getGridPos(e.touches[0].clientX, e.touches[0].clientY);
+    golGrid[`${pos.cx},${pos.cy}`] = true;
+    resetHistory();
+    renderGOL();
+  } else if (touchMode === 'gesture' && e.touches.length === 2) {
+    const centroid = touchCentroid(e.touches[0], e.touches[1]);
+    const dist = touchDist(e.touches[0], e.touches[1]);
+    // Pan by the centroid's movement.
+    golOffsetX += centroid.x - lastTouchCentroid.x;
+    golOffsetY += centroid.y - lastTouchCentroid.y;
+    // Pinch-zoom anchored so the world point under the centroid stays put.
+    if (lastTouchDist > 0) {
+      const worldX = (centroid.x - golOffsetX - golCanvas.width / 2) / golCellSize;
+      const worldY = (centroid.y - golOffsetY - golCanvas.height / 2) / golCellSize;
+      golCellSize = Math.max(3, Math.min(golCellSize * (dist / lastTouchDist), 50));
+      golOffsetX = centroid.x - golCanvas.width / 2 - worldX * golCellSize;
+      golOffsetY = centroid.y - golCanvas.height / 2 - worldY * golCellSize;
+    }
+    lastTouchDist = dist;
+    lastTouchCentroid = centroid;
+    renderGOL();
+  }
+}
+
+function golTouchEnd(e) {
+  // Only resume interaction on a fresh touchstart, so lifting one finger of a
+  // two-finger gesture never accidentally draws.
+  if (e.touches.length === 0) touchMode = null;
 }
 
 function renderGOL() {
@@ -309,6 +381,10 @@ export function init() {
   golCanvas.addEventListener('mousemove', golMouseMove);
   window.addEventListener('mouseup', golMouseUp);
   golCanvas.addEventListener('wheel', golWheel, { passive: false });
+  golCanvas.addEventListener('touchstart', golTouchStart, { passive: false });
+  golCanvas.addEventListener('touchmove', golTouchMove, { passive: false });
+  golCanvas.addEventListener('touchend', golTouchEnd);
+  golCanvas.addEventListener('touchcancel', golTouchEnd);
   golCanvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
   golPlayback = createPlayback({

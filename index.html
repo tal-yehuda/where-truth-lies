@@ -673,7 +673,7 @@
 
                     <div class="section-block">
                         <h3>Interactive Grid</h3>
-                        <p>Draw on the grid to create life, then step or run it continuously (scroll to zoom, right-drag to pan). The four rules below never mention "objects" or "motion" &mdash; yet try the <strong>pattern challenges</strong>: build a shape that survives unchanged, one that pulses forever, or one that <em>glides</em>. The game detects each the moment it emerges.</p>
+                        <p>Draw on the grid to create life, then step or run it continuously (scroll or pinch to zoom, right-drag or two-finger drag to pan). The four rules below never mention "objects" or "motion" &mdash; yet try the <strong>pattern challenges</strong>: build a shape that survives unchanged, one that pulses forever, or one that <em>glides</em>. The game detects each the moment it emerges.</p>
                         
                         <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--soft-purple-border);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
@@ -690,8 +690,8 @@
                             </div>
                             
                             <div style="width: 100%; aspect-ratio: 16/9; background: var(--surface); border: 2px solid var(--accent-purple); border-radius: 8px; overflow: hidden; position: relative; cursor: crosshair;">
-                                <canvas id="gol-canvas" style="display: block; width: 100%; height: 100%;" role="img" aria-label="Game of Life grid: left-drag to draw cells, scroll to zoom, right-drag to pan"></canvas>
-                                <div style="position: absolute; bottom: 10px; right: 10px; background: var(--overlay); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted); pointer-events: none;">Scroll to Zoom | Right-drag to Pan</div>
+                                <canvas id="gol-canvas" style="display: block; width: 100%; height: 100%; touch-action: none;" role="img" aria-label="Game of Life grid: drag or one-finger to draw cells, scroll or pinch to zoom, right-drag or two-finger to pan"></canvas>
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: var(--overlay); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; color: var(--text-muted); pointer-events: none;">Scroll / pinch to zoom &middot; right-drag / two-finger to pan</div>
                             </div>
 
                             <div class="gol-challenges">
